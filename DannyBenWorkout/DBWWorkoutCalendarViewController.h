@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  DBWWorkoutCalendarViewController.h
 //  DannyBenWorkout
 //
 //  Created by Ben Rosen on 7/27/17.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface DBWWorkoutCalendarViewController : UICollectionViewController
 
 @end
-

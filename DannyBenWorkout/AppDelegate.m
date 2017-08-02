@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import "DBWWorkoutTodayViewController.h"
+#import "DBWWorkoutCalendarViewController.h"
+#import "DBWWorkoutManager.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +20,31 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackTranslucent];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.201 green:0.220 blue:0.376 alpha:1.00]];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
+    [[UINavigationBar appearance] setTranslucent:NO];
+    
+    _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    _window.backgroundColor = [UIColor clearColor];
+    [_window makeKeyAndVisible];
+    
+    [DBWWorkoutManager directoryInitialization];
+    
+    DBWWorkoutTodayViewController *todayVC = [[DBWWorkoutTodayViewController alloc] init];
+    todayVC.title = @"Today's Gains";
+    
+    DBWWorkoutCalendarViewController *calendarVC = [[DBWWorkoutCalendarViewController alloc] init];
+    calendarVC.title = @"Past Gains";
+    
+    UITabBarController *tab = [[UITabBarController alloc] init];
+    tab.viewControllers = @[[[UINavigationController alloc] initWithRootViewController:calendarVC], [[UINavigationController alloc] initWithRootViewController:todayVC]];
+    
+    _window.rootViewController = tab;
+    
     return YES;
 }
 

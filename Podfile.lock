@@ -1,0 +1,12 @@
+PODS:
+  - CompactConstraint (0.1.0)
+
+DEPENDENCIES:
+  - CompactConstraint
+
+SPEC CHECKSUMS:
+  CompactConstraint: 562187c821afcc510536a3df799a16c25bea3d9b
+
+PODFILE CHECKSUM: 65074cee039ac98f46a73190c5d98c36bf8aad98
+
+COCOAPODS: 1.2.1
