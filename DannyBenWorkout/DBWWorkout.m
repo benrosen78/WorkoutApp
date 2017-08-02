@@ -99,7 +99,7 @@
         [workout.exercises addObject:[DBWExercise exerciseWithName:@"Leg press" baseNumberOfSets:3]];
         [workout.exercises addObject:[DBWExercise exerciseWithName:@"Leg curls" baseNumberOfSets:3]];
         [workout.exercises addObject:[DBWExercise exerciseWithName:@"Calf raises" baseNumberOfSets:3]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Pullups" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Pullups" baseNumberOfSets:5]];
         [workout.exercises addObject:[DBWExercise exerciseWithName:@"Chinups" baseNumberOfSets:3]];
 
     }

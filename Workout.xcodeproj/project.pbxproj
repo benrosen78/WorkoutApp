@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4B8588CE6D9945324A7EF392 /* Pods_DannyBenWorkout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E4133C1B9B963E41773189B /* Pods_DannyBenWorkout.framework */; };
+		B520226B1F322F71005C5D7B /* DBWExerciseSetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B520226A1F322F71005C5D7B /* DBWExerciseSetTableViewCell.m */; };
 		B5713D881F2E4337006B95D1 /* DBWWorkoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B5713D871F2E4337006B95D1 /* DBWWorkoutManager.m */; };
 		B5713D8B1F2E95FA006B95D1 /* DBWWorkoutTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5713D8A1F2E95FA006B95D1 /* DBWWorkoutTableViewController.m */; };
 		B596A3381F2F9BAE00524503 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B596A3371F2F9BAE00524503 /* Launch Screen.storyboard */; };
@@ -45,6 +46,8 @@
 		0E4133C1B9B963E41773189B /* Pods_DannyBenWorkout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DannyBenWorkout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		271DEE926CA2C7D9100D4A23 /* Pods-DannyBenWorkout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DannyBenWorkout.release.xcconfig"; path = "Pods/Target Support Files/Pods-DannyBenWorkout/Pods-DannyBenWorkout.release.xcconfig"; sourceTree = "<group>"; };
 		A0F3AB7DBBFF19EFB1619676 /* Pods-DannyBenWorkout.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DannyBenWorkout.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DannyBenWorkout/Pods-DannyBenWorkout.debug.xcconfig"; sourceTree = "<group>"; };
+		B52022691F322F71005C5D7B /* DBWExerciseSetTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWExerciseSetTableViewCell.h; sourceTree = "<group>"; };
+		B520226A1F322F71005C5D7B /* DBWExerciseSetTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWExerciseSetTableViewCell.m; sourceTree = "<group>"; };
 		B5713D861F2E4337006B95D1 /* DBWWorkoutManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWWorkoutManager.h; sourceTree = "<group>"; };
 		B5713D871F2E4337006B95D1 /* DBWWorkoutManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWWorkoutManager.m; sourceTree = "<group>"; };
 		B5713D891F2E95FA006B95D1 /* DBWWorkoutTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWWorkoutTableViewController.h; sourceTree = "<group>"; };
@@ -154,6 +157,8 @@
 				B5713D8A1F2E95FA006B95D1 /* DBWWorkoutTableViewController.m */,
 				B5D2E31E1F2ADF4700CB4540 /* DBWExerciseTableViewController.h */,
 				B5D2E31F1F2ADF4700CB4540 /* DBWExerciseTableViewController.m */,
+				B52022691F322F71005C5D7B /* DBWExerciseSetTableViewCell.h */,
+				B520226A1F322F71005C5D7B /* DBWExerciseSetTableViewCell.m */,
 				B5D2E3151F2AB33100CB4540 /* DBWWorkout.h */,
 				B5D2E3161F2AB33100CB4540 /* DBWWorkout.m */,
 				B5D2E3181F2AB34A00CB4540 /* DBWExercise.h */,
@@ -370,6 +375,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5D2E31D1F2AC97300CB4540 /* DBWSet.m in Sources */,
+				B520226B1F322F71005C5D7B /* DBWExerciseSetTableViewCell.m in Sources */,
 				B5D2E3111F2A944400CB4540 /* DBWWorkoutCalendarViewController.m in Sources */,
 				B5713D881F2E4337006B95D1 /* DBWWorkoutManager.m in Sources */,
 				B5713D8B1F2E95FA006B95D1 /* DBWWorkoutTableViewController.m in Sources */,

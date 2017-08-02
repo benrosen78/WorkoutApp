@@ -11,7 +11,9 @@
 #import <CompactConstraint/CompactConstraint.h>
 #import "DBWSet.h"
 #import "DBWWorkoutManager.h"
+#import "DBWExerciseSetTableViewCell.h"
 
+static NSString *const kCellIdentifier = @"set-cell-identifier";
 
 @interface DBWExerciseTableViewController () <UITextFieldDelegate>
 
@@ -36,11 +38,7 @@
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(add:)];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self.tableView registerClass:[DBWExerciseSetTableViewCell class] forCellReuseIdentifier:kCellIdentifier];
 }
 
 - (void)add:(UIBarButtonItem *)item {
@@ -62,126 +60,59 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reuseIdentifier"];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"reuseIdentifier"];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        UITextField *textField = [[UITextField alloc] init];
-        textField.adjustsFontSizeToFitWidth = YES;
-        textField.textColor = [UIColor blackColor];
-        textField.delegate = self;
-        
-        textField.placeholder = @"Required";
-        textField.keyboardType = UIKeyboardTypeNumberPad;
-        textField.returnKeyType = UIReturnKeyDone;
-        textField.backgroundColor = [UIColor whiteColor];
-        textField.autocorrectionType = UITextAutocorrectionTypeNo; // no auto correction support
-        textField.autocapitalizationType = UITextAutocapitalizationTypeNone; // no auto capitalization support
-        textField.textAlignment = NSTextAlignmentLeft;
-        textField.tag = 1;
-        
-        textField.clearButtonMode = UITextFieldViewModeNever; // no clear 'x' button to the right
-        [textField setEnabled: YES];
-        textField.translatesAutoresizingMaskIntoConstraints = NO;
-        [cell.contentView addSubview:textField];
-        
-        [cell.contentView addCompactConstraints:@[@"text.right = view.right - 10",
-                                                  @"text.top = view.top + 5",
-                                                  @"text.bottom = view.bottom - 5"]
-                                        metrics:nil
-                                          views:@{@"text": textField,
-                                                  @"view": cell.contentView
-                                                  }];
-
-    }
-    cell.textLabel.text = indexPath.row == 0 ? @"Weight" : @"Reps";
+    DBWExerciseSetTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    UITextField *field = [cell viewWithTag:1];
+    UITextField *weightTF = cell.textFields[0];
+    UITextField *repsTF = cell.textFields[1];
+    weightTF.delegate = self;
+    repsTF.delegate = self;
     
-    field.placeholder = indexPath.row == 0 ? @"Weight" : @"Reps";
+    weightTF.tag = 1;
+    repsTF.tag = 2;
     
     DBWSet *set = _exercise.sets[indexPath.section];
-    if (indexPath.row == 0) {
-        NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-        formatter.numberStyle = NSNumberFormatterDecimalStyle;
-        formatter.maximumFractionDigits = 20;
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    formatter.numberStyle = NSNumberFormatterDecimalStyle;
+    formatter.maximumFractionDigits = 20;
         
-        field.text = set.weight ? [NSString stringWithFormat:@"%@", [formatter stringFromNumber:@(set.weight)]] : @"";
-        field.placeholder = @"Weight";
-    } else if (indexPath.row == 1) {
-        field.text = set.reps ? [NSString stringWithFormat:@"%lu", set.reps] : @"";
-        field.placeholder = @"Reps";
-    }
+    weightTF.text = set.weight ? [NSString stringWithFormat:@"%@", [formatter stringFromNumber:@(set.weight)]] : @"";
+    repsTF.text = set.reps ? [NSString stringWithFormat:@"%lu", set.reps] : @"";
     
-    cell.accessoryView = [[UITextField alloc] init];
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 50;
+    return 100;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField reason:(UITextFieldDidEndEditingReason)reason {
-    UITableViewCell *cell = (UITableViewCell *)textField.superview.superview;
+    UITableViewCell *cell = (UITableViewCell *)textField.superview.superview.superview;
     NSIndexPath *path = [self.tableView indexPathForCell:cell];
     
     DBWSet *set = _exercise.sets[path.section];
-    if (path.row == 0) {
+    if (textField.tag == 1) {
         set.weight = [textField.text floatValue];
-    } else if (path.row == 1) {
+    } else if (textField.tag == 2) {
         set.reps = [textField.text integerValue];
     }
+    
     [DBWWorkoutManager saveWorkout:_exercise.workout];
-
 }
 
-/*
-// Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
     return YES;
 }
-*/
 
-/*
-// Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+        [_exercise.sets removeObjectAtIndex:indexPath.section];
+        [tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
 }
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
