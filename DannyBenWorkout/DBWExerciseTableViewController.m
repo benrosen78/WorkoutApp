@@ -91,7 +91,6 @@
         [cell.contentView addSubview:textField];
         
         [cell.contentView addCompactConstraints:@[@"text.right = view.right - 10",
-                                                  @"text.width = 200",
                                                   @"text.top = view.top + 5",
                                                   @"text.bottom = view.bottom - 5"]
                                         metrics:nil
@@ -124,7 +123,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 100;
+    return 50;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField reason:(UITextFieldDidEndEditingReason)reason {
