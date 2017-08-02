@@ -23,8 +23,9 @@ static NSString *path = nil;
     } else {
         configurationDictionary = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
     }
-    configurationDictionary = [NSMutableDictionary dictionaryWithDictionary:@{@"data": [NSMutableArray array]}];
-    [NSKeyedArchiver archiveRootObject:configurationDictionary toFile:path];
+    
+    /*configurationDictionary = [NSMutableDictionary dictionaryWithDictionary:@{@"data": [NSMutableArray array]}];
+    [NSKeyedArchiver archiveRootObject:configurationDictionary toFile:path];*/
 }
 
 + (void)saveWorkout:(DBWWorkout *)workout {
