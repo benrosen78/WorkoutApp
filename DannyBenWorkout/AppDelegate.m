@@ -27,6 +27,7 @@
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
     [[UINavigationBar appearance] setTranslucent:NO];
+    [[UITabBar appearance] setTintColor:[UIColor colorWithRed:0.201 green:0.220 blue:0.376 alpha:1.00]];
     
     _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     _window.backgroundColor = [UIColor clearColor];
@@ -36,10 +37,12 @@
     
     DBWWorkoutTodayViewController *todayVC = [[DBWWorkoutTodayViewController alloc] init];
     todayVC.title = @"Today's Gains";
+    todayVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Today's Gains" image:[[UIImage imageNamed:@"today"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] tag:0];
     
     DBWWorkoutCalendarViewController *calendarVC = [[DBWWorkoutCalendarViewController alloc] init];
     calendarVC.title = @"Past Gains";
-    
+    calendarVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Today's Gains" image:[[UIImage imageNamed:@"calendar"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] tag:1];
+
     UITabBarController *tab = [[UITabBarController alloc] init];
     tab.viewControllers = @[[[UINavigationController alloc] initWithRootViewController:calendarVC], [[UINavigationController alloc] initWithRootViewController:todayVC]];
     
