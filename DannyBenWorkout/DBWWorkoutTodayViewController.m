@@ -51,7 +51,7 @@
     if (!_workout) {
         return 1;
     } else {
-        return tableView.isEditing ? [_workout.exercises count] + 1 : [_workout.exercises count];
+        return tableView.editing ? [_workout.exercises count] + 1 : [_workout.exercises count];
     }
 }
 
@@ -107,6 +107,7 @@
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
+    
     [self.tableView beginUpdates];
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
@@ -119,10 +120,7 @@
         // Delete the row from the data source
         [_workout.exercises removeObjectAtIndex:indexPath.row];
         [DBWWorkoutManager saveWorkout:_workout];
-        
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         [self.tableView reloadData];
-        [self setEditing:NO];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         
