@@ -128,7 +128,7 @@
             [controller addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
             [controller addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 NSString *text = controller.textFields[0].text;
-                DBWExercise *exercise = [DBWExercise exerciseWithName:text];
+                DBWExercise *exercise = [DBWExercise exerciseWithName:text baseNumberOfSets:3];
                 exercise.workout = _workout;
                 [_workout.exercises addObject:exercise];
                 

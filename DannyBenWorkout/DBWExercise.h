@@ -16,8 +16,10 @@
 
 @property (strong, nonatomic) NSMutableArray <DBWSet *> *sets;
 
+@property (nonatomic) NSInteger baseNumberOfSets;
+
 @property (weak, nonatomic) DBWWorkout *workout;
 
-+ (instancetype)exerciseWithName:(NSString *)name;
++ (instancetype)exerciseWithName:(NSString *)name baseNumberOfSets:(NSInteger)numberOfSets;
 
 @end

@@ -3,7 +3,7 @@
 //  DannyBenWorkout
 //
 //  Created by Ben Rosen on 7/27/17.
-//  Copyright © 2017 Ben Rosen. All rights reserved.
+//  Copyright © 2317 Ben Rosen. All rights reserved.
 //
 
 #import "DBWWorkout.h"
@@ -39,68 +39,68 @@
     workout.template = workoutTemplate;
     
     if (workoutTemplate == DBWWorkoutPull1) {
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Deadlifts"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Pullups"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Barbell rows"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Chin ups"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Seated rows"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Dumbbell curls"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Hammer curls"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Face pulls"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Ab machine curls"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Hanging leg raises"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Weighted planks"]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Deadlifts" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Pullups" baseNumberOfSets:5]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Barbell rows" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Chin ups" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Seated rows" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Dumbbell curls" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Hammer curls" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Face pulls" baseNumberOfSets:5]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Ab machine curls" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Hanging leg raises" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Weighted planks" baseNumberOfSets:3]];
 
 
     } else if (workoutTemplate == DBWWorkoutPush1) {
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Bench press"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Overhead press"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Incline dumbbell bench"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Narrow grip bench"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Triceps pushdown"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Overhead tricep ext."]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Lat raises"]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Bench press" baseNumberOfSets:5]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Overhead press" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Incline dumbbell bench" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Narrow grip bench" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Triceps pushdown" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Overhead tricep ext." baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Lat raises" baseNumberOfSets:5]];
 
 
     } else if (workoutTemplate == DBWWorkoutLegs1) {
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Squat"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Romanian deadlift"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Leg press"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Leg curls"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Calf raises"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Ab machine curls"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Hanging leg raises"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Weighted planks"]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Squat" baseNumberOfSets:5]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Romanian deadlift" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Leg press" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Leg curls" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Calf raises" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Ab machine curls" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Hanging leg raises" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Weighted planks" baseNumberOfSets:3]];
 
     } else if (workoutTemplate == DBWWorkoutPull2) {
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Barbell rows"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Chinups"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Seated rows"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Pullups"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Face pulls"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Hammer curls"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Dumbbell Curls"]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Barbell rows" baseNumberOfSets:5]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Chinups" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Seated rows" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Pullups" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Face pulls" baseNumberOfSets:5]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Hammer curls" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Dumbbell Curls" baseNumberOfSets:3]];
 
     } else if (workoutTemplate == DBWWorkoutPush2) {
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Overhead press"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Barbell bench"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Incline dumbbell bench"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Narrow grip bench"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Triceps pushdown"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Overhead tricep ext."]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Lat raises"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Ab machine curls"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Hanging leg raises"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Weighted planks"]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Overhead press" baseNumberOfSets:5]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Barbell bench" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Incline dumbbell bench" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Narrow grip bench" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Triceps pushdown" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Overhead tricep ext." baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Lat raises" baseNumberOfSets:5]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Ab machine curls" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Hanging leg raises" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Weighted planks" baseNumberOfSets:3]];
 
     } else if (workoutTemplate == DBWWorkoutLegs2Pull3) {
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Squat"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Romanian deadlift"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Leg press"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Leg curls"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Calf raises"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Pullups"]];
-        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Chinups"]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Squat" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Romanian deadlift" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Leg press" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Leg curls" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Calf raises" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Pullups" baseNumberOfSets:3]];
+        [workout.exercises addObject:[DBWExercise exerciseWithName:@"Chinups" baseNumberOfSets:3]];
 
     }
     for (DBWExercise *exercise in workout.exercises) {
