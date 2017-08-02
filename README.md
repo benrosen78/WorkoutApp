@@ -7,10 +7,10 @@ I've been on the same workout plan as my brother for a while now. Instead of log
 Record your sets for the day. You can choose a weight and # of reps for each set. Easily look back at your numbers from any previous day by going to the calendar. The calendar also has a blue color if you recorded that day, so you can easily see when your off days were.
 
 # Screenshots
+|  Calendar                                                                                  	| Workout                                                                                       	| Exercise |
+|--------------------------------------------------------------------------------------------	|---------------------------------------------------------------------------------------------	| ---------------------------------------------------------------------------------------------	| 
+| ![](https://raw.githubusercontent.com/benrosen78/workoutapp/master/Screenshots/calendar.png) | ![](https://raw.githubusercontent.com/benrosen78/workoutapp/master/Screenshots/workout.png) | ![](https://raw.githubusercontent.com/benrosen78/workoutapp/master/Screenshots/exercise.png) |
 
-|  Calendar                                                                                  | Exercise                                                                              | Workout                                                                                   |
-|-------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
-| Click on any date to view your numbers.![](https://raw.githubusercontent.com/benrosen78/workoutapp/master/Screenshots/calendar.png)| As you do today's workout, click on each exercise.![](https://raw.githubusercontent.com/benrosen78/workoutapp/master/Screenshots/workout.png) | Fill in your sets for each exercise. ![](https://raw.githubusercontent.com/benrosen78/workoutapp/master/Screenshots/exercise.png) |
 
 # License
 Open sourced under the [MIT License](https://github.com/benrosen78/workoutapp/blob/master/LICENSE).
