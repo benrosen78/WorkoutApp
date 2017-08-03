@@ -1,12 +1,15 @@
 PODS:
   - CompactConstraint (0.1.0)
+  - VTAcknowledgementsViewController (1.2.1)
 
 DEPENDENCIES:
   - CompactConstraint
+  - VTAcknowledgementsViewController
 
 SPEC CHECKSUMS:
   CompactConstraint: 562187c821afcc510536a3df799a16c25bea3d9b
+  VTAcknowledgementsViewController: e1de80f2c0ce31cc7e1c6f1c8aaeec2770371f09
 
-PODFILE CHECKSUM: fefd6789049b3995015515c36a96a4b4a3c0f1d7
+PODFILE CHECKSUM: 4e6bd15416adedd41b5e074955da4e4fd6e55835
 
 COCOAPODS: 1.2.1

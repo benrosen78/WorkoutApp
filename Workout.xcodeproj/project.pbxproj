@@ -17,6 +17,9 @@
 		B53CF2D01F33661300F30CB8 /* DBWWorkout.m in Sources */ = {isa = PBXBuildFile; fileRef = B53CF2BA1F3365DE00F30CB8 /* DBWWorkout.m */; };
 		B53CF2D11F33661300F30CB8 /* DBWWorkoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B53CF2BC1F3365DE00F30CB8 /* DBWWorkoutManager.m */; };
 		B53CF2D51F3366D000F30CB8 /* DBWSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B53CF2D41F3366D000F30CB8 /* DBWSettingsTableViewController.m */; };
+		B53CF2D81F336C8900F30CB8 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B53CF2D71F336C8900F30CB8 /* Settings.bundle */; };
+		B53CF2E11F339F0300F30CB8 /* Acknowledgements.plist in Resources */ = {isa = PBXBuildFile; fileRef = B53CF2E01F339F0300F30CB8 /* Acknowledgements.plist */; };
+		B53CF2E41F33A8F300F30CB8 /* DBWAboutTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B53CF2E31F33A8F300F30CB8 /* DBWAboutTableViewController.m */; };
 		B596A3381F2F9BAE00524503 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B596A3371F2F9BAE00524503 /* Launch Screen.storyboard */; };
 		B5D2E2DF1F2A93B800CB4540 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D2E2DE1F2A93B800CB4540 /* AppDelegate.m */; };
 		B5D2E2E71F2A93B800CB4540 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5D2E2E61F2A93B800CB4540 /* Assets.xcassets */; };
@@ -69,6 +72,10 @@
 		B53CF2C81F3365DE00F30CB8 /* DBWWorkoutTodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWWorkoutTodayViewController.m; sourceTree = "<group>"; };
 		B53CF2D31F3366D000F30CB8 /* DBWSettingsTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWSettingsTableViewController.h; sourceTree = "<group>"; };
 		B53CF2D41F3366D000F30CB8 /* DBWSettingsTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWSettingsTableViewController.m; sourceTree = "<group>"; };
+		B53CF2D71F336C8900F30CB8 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		B53CF2E01F339F0300F30CB8 /* Acknowledgements.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Acknowledgements.plist; path = Workout/Resources/Settings.bundle/Acknowledgements.plist; sourceTree = "<group>"; };
+		B53CF2E21F33A8F300F30CB8 /* DBWAboutTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWAboutTableViewController.h; sourceTree = "<group>"; };
+		B53CF2E31F33A8F300F30CB8 /* DBWAboutTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWAboutTableViewController.m; sourceTree = "<group>"; };
 		B596A3371F2F9BAE00524503 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		B5D2E2DA1F2A93B800CB4540 /* Workout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Workout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5D2E2DD1F2A93B800CB4540 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -125,6 +132,7 @@
 		2ACEDE84D254E951367CB3EE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B53CF2E01F339F0300F30CB8 /* Acknowledgements.plist */,
 				0E4133C1B9B963E41773189B /* Pods_DannyBenWorkout.framework */,
 				C05FB80146D5BA29DE434BD3 /* Pods_Workout.framework */,
 			);
@@ -182,8 +190,18 @@
 			children = (
 				B53CF2D31F3366D000F30CB8 /* DBWSettingsTableViewController.h */,
 				B53CF2D41F3366D000F30CB8 /* DBWSettingsTableViewController.m */,
+				B53CF2E21F33A8F300F30CB8 /* DBWAboutTableViewController.h */,
+				B53CF2E31F33A8F300F30CB8 /* DBWAboutTableViewController.m */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		B53CF2D61F336C7E00F30CB8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B53CF2D71F336C8900F30CB8 /* Settings.bundle */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		B5D2E2D11F2A93B800CB4540 = {
@@ -218,6 +236,7 @@
 				B53CF2B41F3365DE00F30CB8 /* Objects */,
 				B53CF2B31F3365DE00F30CB8 /* Workout */,
 				B53CF2D21F33665900F30CB8 /* Settings */,
+				B53CF2D61F336C7E00F30CB8 /* Resources */,
 				B596A3371F2F9BAE00524503 /* Launch Screen.storyboard */,
 				B5D2E2E61F2A93B800CB4540 /* Assets.xcassets */,
 				B5D2E2EB1F2A93B800CB4540 /* Info.plist */,
@@ -257,6 +276,7 @@
 				B5D2E2D81F2A93B800CB4540 /* Resources */,
 				E9527289585BF224908FCB04 /* [CP] Embed Pods Frameworks */,
 				C03C5116EE2B633C8A1D3E9A /* [CP] Copy Pods Resources */,
+				B53CF2E51F33AD3900F30CB8 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -352,6 +372,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B596A3381F2F9BAE00524503 /* Launch Screen.storyboard in Resources */,
+				B53CF2E11F339F0300F30CB8 /* Acknowledgements.plist in Resources */,
+				B53CF2D81F336C8900F30CB8 /* Settings.bundle in Resources */,
 				B5D2E2E71F2A93B800CB4540 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -387,6 +409,19 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		B53CF2E51F33AD3900F30CB8 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$INFOPLIST_FILE\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$INFOPLIST_FILE\"\n";
 		};
 		C03C5116EE2B633C8A1D3E9A /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -433,6 +468,7 @@
 				B53CF2CA1F33660000F30CB8 /* DBWExerciseSetTableViewCell.m in Sources */,
 				B53CF2CC1F33660500F30CB8 /* DBWWorkoutTableViewController.m in Sources */,
 				B53CF2CD1F33660600F30CB8 /* DBWWorkoutTodayViewController.m in Sources */,
+				B53CF2E41F33A8F300F30CB8 /* DBWAboutTableViewController.m in Sources */,
 				B53CF2CE1F33661300F30CB8 /* DBWExercise.m in Sources */,
 				B53CF2CF1F33661300F30CB8 /* DBWSet.m in Sources */,
 				B53CF2D01F33661300F30CB8 /* DBWWorkout.m in Sources */,

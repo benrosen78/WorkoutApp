@@ -3,5 +3,13 @@ target 'Workout' do
   use_frameworks!
 
   pod 'CompactConstraint'
+  pod 'VTAcknowledgementsViewController'
+  
+  post_install do | installer |
+      require 'fileutils'
+      FileUtils.cp_r('Pods/Target Support Files/Pods-Workout/Pods-Workout-Acknowledgements.plist', 'Workout/Resources/Settings.bundle/Acknowledgements.plist', :remove_destination => true)
+  end
+  
 end
+
 

@@ -3,25 +3,44 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		17C5F2DD267C85CE151345476ADCDCDA /* CompactConstraint-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F945C3F8F9EFD3C7B849C94EE2FA54 /* CompactConstraint-dummy.m */; };
+		0E4403666F42E2D32E97DB032C006D38 /* VTAcknowledgementViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5378A9FF1163A824A54BFDC083470B95 /* VTAcknowledgementViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0FAB4DC62D27DE999AFF4BDF7A63BBA6 /* Pods-Workout-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C72F7C314EDF6B295B04075DBD6511ED /* Pods-Workout-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		17C5F2DD267C85CE151345476ADCDCDA /* CompactConstraint-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD38C5C69F9E340A9416ADB232527C7 /* CompactConstraint-dummy.m */; };
 		1B72A73AE7C6873E4B9F6D4EC973B082 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
-		24FE509D5D47628CF4566DAA097E11D4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
-		4DE2E6A9C5ACE068E3169EB994CED9F5 /* NSLayoutConstraint+CompactConstraint.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F99A2369948556CFA0DF18FA13DB57 /* NSLayoutConstraint+CompactConstraint.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6BA17E008DD9E01E514261F87D80A1AC /* UIView+CompactConstraint.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB153CBE5020C210A2F43C33A3F7E3A /* UIView+CompactConstraint.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		84CCC3EDF784911581BD2D530294EF14 /* UIView+CompactConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 833239441FD04DB65EBFB4D95FD52866 /* UIView+CompactConstraint.m */; };
-		85833A8722665D1A56AD7E47D373C95B /* CompactConstraint.h in Headers */ = {isa = PBXBuildFile; fileRef = F14F78307FFF0521DAFB8B693D249089 /* CompactConstraint.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		98F76B77117816E4DC41AA9139C2497E /* Pods-Workout-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A35E055413196354C436B872419D57DE /* Pods-Workout-dummy.m */; };
-		A30A10A35DFE10FA52A288DD5A7FAFC0 /* NSLayoutConstraint+CompactConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 530A194FB90CF4330A45984275C64174 /* NSLayoutConstraint+CompactConstraint.m */; };
-		B33519F533781F2C37824FD297AD8B48 /* Pods-Workout-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C72F7C314EDF6B295B04075DBD6511ED /* Pods-Workout-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EDA9FB31E81BC939F48CE0D472C10744 /* CompactConstraint-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = FF59901EEE80695746FCE269053F2689 /* CompactConstraint-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		216F04E365A0AD5BB910F0663B74C2B7 /* VTAcknowledgementsParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D0612CA3AD2D878C4EA80C997F5F5FBD /* VTAcknowledgementsParser.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		269E42F90E3A1E09193055F7BB684D16 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		3A7092F8BA91192CBD22E54312935E63 /* VTAcknowledgementsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC3C1707F467D690A77C28ECE4FC3F5B /* VTAcknowledgementsViewController.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		4DE2E6A9C5ACE068E3169EB994CED9F5 /* NSLayoutConstraint+CompactConstraint.h in Headers */ = {isa = PBXBuildFile; fileRef = E1D01A0E09D325A0B2196EB90A378649 /* NSLayoutConstraint+CompactConstraint.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6BA17E008DD9E01E514261F87D80A1AC /* UIView+CompactConstraint.h in Headers */ = {isa = PBXBuildFile; fileRef = FB3483540072663D905E9562D68C68CD /* UIView+CompactConstraint.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7BA54302EF3CDC6CEA209D9DC97A0469 /* Pods-Workout-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A35E055413196354C436B872419D57DE /* Pods-Workout-dummy.m */; };
+		84CCC3EDF784911581BD2D530294EF14 /* UIView+CompactConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EDDCB9BA1D66BA616A4DA7A8A34DC25 /* UIView+CompactConstraint.m */; };
+		85833A8722665D1A56AD7E47D373C95B /* CompactConstraint.h in Headers */ = {isa = PBXBuildFile; fileRef = 65CDB38E1BEFF31F067EA8803A64B6EA /* CompactConstraint.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8F2BB750010C2DA46AA965D3F8717B22 /* VTAcknowledgementsViewController-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B43C3E096FFED3C660F95799ABF61B2A /* VTAcknowledgementsViewController-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A2F6E8D94F43D0641CA04680495C461E /* VTAcknowledgementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D60CA36DF5C8B546BCEE27E1056888E9 /* VTAcknowledgementViewController.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		A30A10A35DFE10FA52A288DD5A7FAFC0 /* NSLayoutConstraint+CompactConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 42258417DDBD05659FCB59DDAB559DC4 /* NSLayoutConstraint+CompactConstraint.m */; };
+		AB2BB1CC9F1BBC3B01544B537DEE9CCC /* VTAcknowledgementsParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 0738AEF37FF615B0495699BCCDD7A9C0 /* VTAcknowledgementsParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B85AF43AD8A0DBDFCF210F9D1A004359 /* VTAcknowledgementsViewController-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF5A0BB7CAA8E596CEC6C0157B21B50 /* VTAcknowledgementsViewController-dummy.m */; };
+		C0BAAF3001AB8E047BCC2122E972C297 /* VTAcknowledgementsViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 094DC4626AAFC2229519DA8992513A4B /* VTAcknowledgementsViewController.bundle */; };
+		D4545191A6D3982DCBC514176814C499 /* VTAcknowledgement.h in Headers */ = {isa = PBXBuildFile; fileRef = 84FA63B2CA9C78BC22DE80C6BDEBB77A /* VTAcknowledgement.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D7679D23AC67A8B0145936883923858F /* VTAcknowledgement.m in Sources */ = {isa = PBXBuildFile; fileRef = 71DBD22EC51D4EC61AA42B035D183911 /* VTAcknowledgement.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		EDA9FB31E81BC939F48CE0D472C10744 /* CompactConstraint-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 69FB16C197B7708DB5A9A785F51AF8AB /* CompactConstraint-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F3353487A9348CBEE8E6A17668C8BC88 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		F5DBE5C779886F6DC3919CE9D03BF7B2 /* VTAcknowledgementsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 58858A61717B5AC590BD9A17AE6C44AF /* VTAcknowledgementsViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		8916962C78F9C3EE05E430B247793C0F /* PBXContainerItemProxy */ = {
+		83403E44F649B2724B753B52979D0315 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CB3241AA8711706677F9F7ACBD3C2660;
+			remoteInfo = VTAcknowledgementsViewController;
+		};
+		B120490FA1CF56C82AA385739E40EA96 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
@@ -31,31 +50,48 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		023837EE222480844D4A403C3927DE81 /* CompactConstraint-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CompactConstraint-prefix.pch"; sourceTree = "<group>"; };
 		052673FD9E4DDABE734BA17B1970D2E5 /* Pods-Workout-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Workout-acknowledgements.plist"; sourceTree = "<group>"; };
+		0738AEF37FF615B0495699BCCDD7A9C0 /* VTAcknowledgementsParser.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VTAcknowledgementsParser.h; path = Classes/VTAcknowledgementsParser.h; sourceTree = "<group>"; };
+		094DC4626AAFC2229519DA8992513A4B /* VTAcknowledgementsViewController.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; path = VTAcknowledgementsViewController.bundle; sourceTree = "<group>"; };
 		1174CCA9014F0F0AADA58E4575934AFC /* Pods-Workout-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Workout-resources.sh"; sourceTree = "<group>"; };
+		1C140E3C8491C29AABF591B753536E75 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1C8B77441E26A05BC35626A583F596E4 /* Pods-Workout.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Workout.debug.xcconfig"; sourceTree = "<group>"; };
 		203FF4D71CF62487AEEE5053A48769FB /* Pods-Workout-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Workout-acknowledgements.markdown"; sourceTree = "<group>"; };
-		50F99A2369948556CFA0DF18FA13DB57 /* NSLayoutConstraint+CompactConstraint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSLayoutConstraint+CompactConstraint.h"; path = "CompactConstraint/NSLayoutConstraint+CompactConstraint.h"; sourceTree = "<group>"; };
-		530A194FB90CF4330A45984275C64174 /* NSLayoutConstraint+CompactConstraint.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSLayoutConstraint+CompactConstraint.m"; path = "CompactConstraint/NSLayoutConstraint+CompactConstraint.m"; sourceTree = "<group>"; };
-		626D034ADAF0C7AA2A8817E47BD06C80 /* CompactConstraint-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CompactConstraint-prefix.pch"; sourceTree = "<group>"; };
+		42258417DDBD05659FCB59DDAB559DC4 /* NSLayoutConstraint+CompactConstraint.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSLayoutConstraint+CompactConstraint.m"; path = "CompactConstraint/NSLayoutConstraint+CompactConstraint.m"; sourceTree = "<group>"; };
+		447140F7C5CAA382E549D4A33D3B7D97 /* VTAcknowledgementsViewController.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = VTAcknowledgementsViewController.modulemap; sourceTree = "<group>"; };
+		5378A9FF1163A824A54BFDC083470B95 /* VTAcknowledgementViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VTAcknowledgementViewController.h; path = Classes/VTAcknowledgementViewController.h; sourceTree = "<group>"; };
+		58858A61717B5AC590BD9A17AE6C44AF /* VTAcknowledgementsViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VTAcknowledgementsViewController.h; path = Classes/VTAcknowledgementsViewController.h; sourceTree = "<group>"; };
+		5D53EBD0C17744C991B6EFB086F93A03 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		65CDB38E1BEFF31F067EA8803A64B6EA /* CompactConstraint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CompactConstraint.h; path = CompactConstraint/CompactConstraint.h; sourceTree = "<group>"; };
 		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		7E1AE5C60630CD1974DBC502CEE1CFFC /* CompactConstraint.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CompactConstraint.xcconfig; sourceTree = "<group>"; };
-		833239441FD04DB65EBFB4D95FD52866 /* UIView+CompactConstraint.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIView+CompactConstraint.m"; path = "CompactConstraint/UIView+CompactConstraint.m"; sourceTree = "<group>"; };
+		69FB16C197B7708DB5A9A785F51AF8AB /* CompactConstraint-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CompactConstraint-umbrella.h"; sourceTree = "<group>"; };
+		71DBD22EC51D4EC61AA42B035D183911 /* VTAcknowledgement.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = VTAcknowledgement.m; path = Classes/VTAcknowledgement.m; sourceTree = "<group>"; };
+		7EDDCB9BA1D66BA616A4DA7A8A34DC25 /* UIView+CompactConstraint.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIView+CompactConstraint.m"; path = "CompactConstraint/UIView+CompactConstraint.m"; sourceTree = "<group>"; };
+		84FA63B2CA9C78BC22DE80C6BDEBB77A /* VTAcknowledgement.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = VTAcknowledgement.h; path = Classes/VTAcknowledgement.h; sourceTree = "<group>"; };
+		88EBD48C0DA78474C7C7F60D368E99B9 /* VTAcknowledgementsViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VTAcknowledgementsViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		89BCF835993FB496C0888D542387C27A /* Pods-Workout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Workout.release.xcconfig"; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		993C82BD0CCD6C822A16792B23A1D670 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9AABEDA5240CDB0B817B58128C68AD0A /* CompactConstraint.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CompactConstraint.xcconfig; sourceTree = "<group>"; };
+		A021E240F911FE9296416B47AE12261F /* CompactConstraint.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CompactConstraint.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A35E055413196354C436B872419D57DE /* Pods-Workout-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Workout-dummy.m"; sourceTree = "<group>"; };
-		BF51FA0A981FA882DDDE98D1E8F398D1 /* CompactConstraint.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = CompactConstraint.modulemap; sourceTree = "<group>"; };
+		B0C2979248856C74607EC7281F7E938B /* CompactConstraint.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = CompactConstraint.modulemap; sourceTree = "<group>"; };
+		B43C3E096FFED3C660F95799ABF61B2A /* VTAcknowledgementsViewController-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "VTAcknowledgementsViewController-umbrella.h"; sourceTree = "<group>"; };
+		B53CF2DB1F339C6900F30CB8 /* Pods-Workout-acknowledgements.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Pods-Workout-acknowledgements.plist"; path = "../../../Pods-Workout-acknowledgements.plist"; sourceTree = "<group>"; };
+		C08CB54654B56AFBEB9F33C4DDB846DC /* VTAcknowledgementsViewController-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "VTAcknowledgementsViewController-prefix.pch"; sourceTree = "<group>"; };
+		C4021E7DF2F935C299490963AF91FA10 /* VTAcknowledgementsViewController.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = VTAcknowledgementsViewController.xcconfig; sourceTree = "<group>"; };
 		C4F7F9E7C77288DD832F337FF605C3CA /* Pods-Workout-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Workout-frameworks.sh"; sourceTree = "<group>"; };
 		C72F7C314EDF6B295B04075DBD6511ED /* Pods-Workout-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Workout-umbrella.h"; sourceTree = "<group>"; };
-		D2F945C3F8F9EFD3C7B849C94EE2FA54 /* CompactConstraint-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CompactConstraint-dummy.m"; sourceTree = "<group>"; };
-		D6E07DA585A88F3043A70BDE26408C8E /* Pods_Workout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Workout.framework; path = "Pods-Workout.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		EDB153CBE5020C210A2F43C33A3F7E3A /* UIView+CompactConstraint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIView+CompactConstraint.h"; path = "CompactConstraint/UIView+CompactConstraint.h"; sourceTree = "<group>"; };
+		C7B08E1757B32A36C3FA2FF741DB8FB6 /* Pods_Workout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Workout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDF5A0BB7CAA8E596CEC6C0157B21B50 /* VTAcknowledgementsViewController-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "VTAcknowledgementsViewController-dummy.m"; sourceTree = "<group>"; };
+		D0612CA3AD2D878C4EA80C997F5F5FBD /* VTAcknowledgementsParser.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = VTAcknowledgementsParser.m; path = Classes/VTAcknowledgementsParser.m; sourceTree = "<group>"; };
+		D60CA36DF5C8B546BCEE27E1056888E9 /* VTAcknowledgementViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = VTAcknowledgementViewController.m; path = Classes/VTAcknowledgementViewController.m; sourceTree = "<group>"; };
+		E1D01A0E09D325A0B2196EB90A378649 /* NSLayoutConstraint+CompactConstraint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSLayoutConstraint+CompactConstraint.h"; path = "CompactConstraint/NSLayoutConstraint+CompactConstraint.h"; sourceTree = "<group>"; };
+		EC3C1707F467D690A77C28ECE4FC3F5B /* VTAcknowledgementsViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = VTAcknowledgementsViewController.m; path = Classes/VTAcknowledgementsViewController.m; sourceTree = "<group>"; };
 		EF7D8748A8B0488C57414C4B509693D4 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F14F78307FFF0521DAFB8B693D249089 /* CompactConstraint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CompactConstraint.h; path = CompactConstraint/CompactConstraint.h; sourceTree = "<group>"; };
-		F8C31954C50CDB5062DFB405EA2BE2AB /* CompactConstraint.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = CompactConstraint.framework; path = CompactConstraint.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FC80FE4FF7D222B46CDB7774D70FCFA9 /* Pods-Workout.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-Workout.modulemap"; sourceTree = "<group>"; };
-		FF59901EEE80695746FCE269053F2689 /* CompactConstraint-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CompactConstraint-umbrella.h"; sourceTree = "<group>"; };
+		EFD38C5C69F9E340A9416ADB232527C7 /* CompactConstraint-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CompactConstraint-dummy.m"; sourceTree = "<group>"; };
+		FB3483540072663D905E9562D68C68CD /* UIView+CompactConstraint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIView+CompactConstraint.h"; path = "CompactConstraint/UIView+CompactConstraint.h"; sourceTree = "<group>"; };
+		FC80FE4FF7D222B46CDB7774D70FCFA9 /* Pods-Workout.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-Workout.modulemap"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,38 +103,37 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7C17199FBA6BDF5874C1BCAF7B24A19D /* Frameworks */ = {
+		BEADCF48548D9455217CA8F6B1009A26 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				24FE509D5D47628CF4566DAA097E11D4 /* Foundation.framework in Frameworks */,
+				269E42F90E3A1E09193055F7BB684D16 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F22314F7524F54E09AF959ADCA344F89 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F3353487A9348CBEE8E6A17668C8BC88 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0F8E7284D2FA16A6690CB9962B1F788B /* Support Files */ = {
+		01F889187B6B827C4607537F7A1F0482 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				BF51FA0A981FA882DDDE98D1E8F398D1 /* CompactConstraint.modulemap */,
-				7E1AE5C60630CD1974DBC502CEE1CFFC /* CompactConstraint.xcconfig */,
-				D2F945C3F8F9EFD3C7B849C94EE2FA54 /* CompactConstraint-dummy.m */,
-				626D034ADAF0C7AA2A8817E47BD06C80 /* CompactConstraint-prefix.pch */,
-				FF59901EEE80695746FCE269053F2689 /* CompactConstraint-umbrella.h */,
-				993C82BD0CCD6C822A16792B23A1D670 /* Info.plist */,
+				5D53EBD0C17744C991B6EFB086F93A03 /* Info.plist */,
+				447140F7C5CAA382E549D4A33D3B7D97 /* VTAcknowledgementsViewController.modulemap */,
+				C4021E7DF2F935C299490963AF91FA10 /* VTAcknowledgementsViewController.xcconfig */,
+				CDF5A0BB7CAA8E596CEC6C0157B21B50 /* VTAcknowledgementsViewController-dummy.m */,
+				C08CB54654B56AFBEB9F33C4DDB846DC /* VTAcknowledgementsViewController-prefix.pch */,
+				B43C3E096FFED3C660F95799ABF61B2A /* VTAcknowledgementsViewController-umbrella.h */,
 			);
 			name = "Support Files";
-			path = "../Target Support Files/CompactConstraint";
-			sourceTree = "<group>";
-		};
-		0FFF3D0B4398C48D38D5393E9B454F2B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				F8C31954C50CDB5062DFB405EA2BE2AB /* CompactConstraint.framework */,
-				D6E07DA585A88F3043A70BDE26408C8E /* Pods_Workout.framework */,
-			);
-			name = Products;
+			path = "../Target Support Files/VTAcknowledgementsViewController";
 			sourceTree = "<group>";
 		};
 		2CD80E20363198E1CBB72AA943BC37A2 /* Pods-Workout */ = {
@@ -108,6 +143,7 @@
 				FC80FE4FF7D222B46CDB7774D70FCFA9 /* Pods-Workout.modulemap */,
 				203FF4D71CF62487AEEE5053A48769FB /* Pods-Workout-acknowledgements.markdown */,
 				052673FD9E4DDABE734BA17B1970D2E5 /* Pods-Workout-acknowledgements.plist */,
+				B53CF2DB1F339C6900F30CB8 /* Pods-Workout-acknowledgements.plist */,
 				A35E055413196354C436B872419D57DE /* Pods-Workout-dummy.m */,
 				C4F7F9E7C77288DD832F337FF605C3CA /* Pods-Workout-frameworks.sh */,
 				1174CCA9014F0F0AADA58E4575934AFC /* Pods-Workout-resources.sh */,
@@ -119,37 +155,64 @@
 			path = "Target Support Files/Pods-Workout";
 			sourceTree = "<group>";
 		};
-		30054B2090782AF697DB2A3BBB374BCB /* CompactConstraint */ = {
-			isa = PBXGroup;
-			children = (
-				F14F78307FFF0521DAFB8B693D249089 /* CompactConstraint.h */,
-				50F99A2369948556CFA0DF18FA13DB57 /* NSLayoutConstraint+CompactConstraint.h */,
-				530A194FB90CF4330A45984275C64174 /* NSLayoutConstraint+CompactConstraint.m */,
-				EDB153CBE5020C210A2F43C33A3F7E3A /* UIView+CompactConstraint.h */,
-				833239441FD04DB65EBFB4D95FD52866 /* UIView+CompactConstraint.m */,
-				0F8E7284D2FA16A6690CB9962B1F788B /* Support Files */,
-			);
-			name = CompactConstraint;
-			path = CompactConstraint;
-			sourceTree = "<group>";
-		};
 		7DB346D0F39D3F0E887471402A8071AB = {
 			isa = PBXGroup;
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
 				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
-				9E60B45E2BFB3BB901958F41A3CE8395 /* Pods */,
-				0FFF3D0B4398C48D38D5393E9B454F2B /* Products */,
+				FB9AA69756CC917BB3F545AE0309EC9E /* Pods */,
+				A04B79B74DEA73FFDBB9C56F599CA5E9 /* Products */,
 				CAF55E1F11C3E2FD514C4FC7ADD73994 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
-		9E60B45E2BFB3BB901958F41A3CE8395 /* Pods */ = {
+		83D6936539969F9DB8751157D0658304 /* VTAcknowledgementsViewController */ = {
 			isa = PBXGroup;
 			children = (
-				30054B2090782AF697DB2A3BBB374BCB /* CompactConstraint */,
+				84FA63B2CA9C78BC22DE80C6BDEBB77A /* VTAcknowledgement.h */,
+				71DBD22EC51D4EC61AA42B035D183911 /* VTAcknowledgement.m */,
+				0738AEF37FF615B0495699BCCDD7A9C0 /* VTAcknowledgementsParser.h */,
+				D0612CA3AD2D878C4EA80C997F5F5FBD /* VTAcknowledgementsParser.m */,
+				58858A61717B5AC590BD9A17AE6C44AF /* VTAcknowledgementsViewController.h */,
+				EC3C1707F467D690A77C28ECE4FC3F5B /* VTAcknowledgementsViewController.m */,
+				5378A9FF1163A824A54BFDC083470B95 /* VTAcknowledgementViewController.h */,
+				D60CA36DF5C8B546BCEE27E1056888E9 /* VTAcknowledgementViewController.m */,
+				94EAF3DE828E1B9CB4F8E8BEBD0ADD7B /* Resources */,
+				01F889187B6B827C4607537F7A1F0482 /* Support Files */,
 			);
-			name = Pods;
+			path = VTAcknowledgementsViewController;
+			sourceTree = "<group>";
+		};
+		94EAF3DE828E1B9CB4F8E8BEBD0ADD7B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				094DC4626AAFC2229519DA8992513A4B /* VTAcknowledgementsViewController.bundle */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		A04B79B74DEA73FFDBB9C56F599CA5E9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A021E240F911FE9296416B47AE12261F /* CompactConstraint.framework */,
+				C7B08E1757B32A36C3FA2FF741DB8FB6 /* Pods_Workout.framework */,
+				88EBD48C0DA78474C7C7F60D368E99B9 /* VTAcknowledgementsViewController.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BAD9A3485816CC08637FD2B69419D769 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				B0C2979248856C74607EC7281F7E938B /* CompactConstraint.modulemap */,
+				9AABEDA5240CDB0B817B58128C68AD0A /* CompactConstraint.xcconfig */,
+				EFD38C5C69F9E340A9416ADB232527C7 /* CompactConstraint-dummy.m */,
+				023837EE222480844D4A403C3927DE81 /* CompactConstraint-prefix.pch */,
+				69FB16C197B7708DB5A9A785F51AF8AB /* CompactConstraint-umbrella.h */,
+				1C140E3C8491C29AABF591B753536E75 /* Info.plist */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/CompactConstraint";
 			sourceTree = "<group>";
 		};
 		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
@@ -176,14 +239,48 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
+		EE71C253E91583E4989A9A0EFF4A3283 /* CompactConstraint */ = {
+			isa = PBXGroup;
+			children = (
+				65CDB38E1BEFF31F067EA8803A64B6EA /* CompactConstraint.h */,
+				E1D01A0E09D325A0B2196EB90A378649 /* NSLayoutConstraint+CompactConstraint.h */,
+				42258417DDBD05659FCB59DDAB559DC4 /* NSLayoutConstraint+CompactConstraint.m */,
+				FB3483540072663D905E9562D68C68CD /* UIView+CompactConstraint.h */,
+				7EDDCB9BA1D66BA616A4DA7A8A34DC25 /* UIView+CompactConstraint.m */,
+				BAD9A3485816CC08637FD2B69419D769 /* Support Files */,
+			);
+			path = CompactConstraint;
+			sourceTree = "<group>";
+		};
+		FB9AA69756CC917BB3F545AE0309EC9E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EE71C253E91583E4989A9A0EFF4A3283 /* CompactConstraint */,
+				83D6936539969F9DB8751157D0658304 /* VTAcknowledgementsViewController */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		78D629740F6932BD9020B11D85400317 /* Headers */ = {
+		4D785AFCF1EEBAA301332139CACF98B9 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B33519F533781F2C37824FD297AD8B48 /* Pods-Workout-umbrella.h in Headers */,
+				0FAB4DC62D27DE999AFF4BDF7A63BBA6 /* Pods-Workout-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		72DE68E21E629D5BB3BBBCA2494DE7E0 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4545191A6D3982DCBC514176814C499 /* VTAcknowledgement.h in Headers */,
+				AB2BB1CC9F1BBC3B01544B537DEE9CCC /* VTAcknowledgementsParser.h in Headers */,
+				8F2BB750010C2DA46AA965D3F8717B22 /* VTAcknowledgementsViewController-umbrella.h in Headers */,
+				F5DBE5C779886F6DC3919CE9D03BF7B2 /* VTAcknowledgementsViewController.h in Headers */,
+				0E4403666F42E2D32E97DB032C006D38 /* VTAcknowledgementViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,22 +298,41 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		A4E61A7D6FEE31547F1027A5ED54BFBA /* Pods-Workout */ = {
+		56852F14696C1D31D58AEF7C36D648EC /* Pods-Workout */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6B0E1050769F20A8B93D1B4C84818158 /* Build configuration list for PBXNativeTarget "Pods-Workout" */;
+			buildConfigurationList = F16634A015D93313E7E29AB81AA67AFB /* Build configuration list for PBXNativeTarget "Pods-Workout" */;
 			buildPhases = (
-				FF3C49DE327584108868E7A7584B9E72 /* Sources */,
-				7C17199FBA6BDF5874C1BCAF7B24A19D /* Frameworks */,
-				78D629740F6932BD9020B11D85400317 /* Headers */,
+				FC1E874281C9E89954A1F7038DCF4D09 /* Sources */,
+				BEADCF48548D9455217CA8F6B1009A26 /* Frameworks */,
+				4D785AFCF1EEBAA301332139CACF98B9 /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				9FB4A956A89DFC29EC861737961FF05D /* PBXTargetDependency */,
+				133597EA7DF1311B8C155944DE08CE63 /* PBXTargetDependency */,
+				5250B6029BEBE2DEB529CC597FC8A773 /* PBXTargetDependency */,
 			);
 			name = "Pods-Workout";
 			productName = "Pods-Workout";
-			productReference = D6E07DA585A88F3043A70BDE26408C8E /* Pods_Workout.framework */;
+			productReference = C7B08E1757B32A36C3FA2FF741DB8FB6 /* Pods_Workout.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		CB3241AA8711706677F9F7ACBD3C2660 /* VTAcknowledgementsViewController */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5D2C4FFFD5B9E21B1291669EFBC2EAA0 /* Build configuration list for PBXNativeTarget "VTAcknowledgementsViewController" */;
+			buildPhases = (
+				6F5804F240FB46427CD6BAA531059AD3 /* Sources */,
+				F22314F7524F54E09AF959ADCA344F89 /* Frameworks */,
+				72DE68E21E629D5BB3BBBCA2494DE7E0 /* Headers */,
+				8789326B996AFF982A2F0CF4B5435E8A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VTAcknowledgementsViewController;
+			productName = VTAcknowledgementsViewController;
+			productReference = 88EBD48C0DA78474C7C7F60D368E99B9 /* VTAcknowledgementsViewController.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		E92A07257ACFC73327D360F0F856E279 /* CompactConstraint */ = {
@@ -233,7 +349,7 @@
 			);
 			name = CompactConstraint;
 			productName = CompactConstraint;
-			productReference = F8C31954C50CDB5062DFB405EA2BE2AB /* CompactConstraint.framework */;
+			productReference = A021E240F911FE9296416B47AE12261F /* CompactConstraint.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -253,17 +369,41 @@
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = 0FFF3D0B4398C48D38D5393E9B454F2B /* Products */;
+			productRefGroup = A04B79B74DEA73FFDBB9C56F599CA5E9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				E92A07257ACFC73327D360F0F856E279 /* CompactConstraint */,
-				A4E61A7D6FEE31547F1027A5ED54BFBA /* Pods-Workout */,
+				56852F14696C1D31D58AEF7C36D648EC /* Pods-Workout */,
+				CB3241AA8711706677F9F7ACBD3C2660 /* VTAcknowledgementsViewController */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		8789326B996AFF982A2F0CF4B5435E8A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C0BAAF3001AB8E047BCC2122E972C297 /* VTAcknowledgementsViewController.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		6F5804F240FB46427CD6BAA531059AD3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7679D23AC67A8B0145936883923858F /* VTAcknowledgement.m in Sources */,
+				216F04E365A0AD5BB910F0663B74C2B7 /* VTAcknowledgementsParser.m in Sources */,
+				B85AF43AD8A0DBDFCF210F9D1A004359 /* VTAcknowledgementsViewController-dummy.m in Sources */,
+				3A7092F8BA91192CBD22E54312935E63 /* VTAcknowledgementsViewController.m in Sources */,
+				A2F6E8D94F43D0641CA04680495C461E /* VTAcknowledgementViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EBB41A2E2206C737C9802592A11035F4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -274,65 +414,67 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FF3C49DE327584108868E7A7584B9E72 /* Sources */ = {
+		FC1E874281C9E89954A1F7038DCF4D09 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				98F76B77117816E4DC41AA9139C2497E /* Pods-Workout-dummy.m in Sources */,
+				7BA54302EF3CDC6CEA209D9DC97A0469 /* Pods-Workout-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		9FB4A956A89DFC29EC861737961FF05D /* PBXTargetDependency */ = {
+		133597EA7DF1311B8C155944DE08CE63 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = CompactConstraint;
 			target = E92A07257ACFC73327D360F0F856E279 /* CompactConstraint */;
-			targetProxy = 8916962C78F9C3EE05E430B247793C0F /* PBXContainerItemProxy */;
+			targetProxy = B120490FA1CF56C82AA385739E40EA96 /* PBXContainerItemProxy */;
+		};
+		5250B6029BEBE2DEB529CC597FC8A773 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = VTAcknowledgementsViewController;
+			target = CB3241AA8711706677F9F7ACBD3C2660 /* VTAcknowledgementsViewController */;
+			targetProxy = 83403E44F649B2724B753B52979D0315 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		15DBAB2A3E24977FF02F0BF5F6D1CD42 /* Debug */ = {
+		1043B1C1E68418E84377E0EC892E7028 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1C8B77441E26A05BC35626A583F596E4 /* Pods-Workout.debug.xcconfig */;
+			baseConfigurationReference = C4021E7DF2F935C299490963AF91FA10 /* VTAcknowledgementsViewController.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-Workout/Info.plist";
+				GCC_PREFIX_HEADER = "Target Support Files/VTAcknowledgementsViewController/VTAcknowledgementsViewController-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/VTAcknowledgementsViewController/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-Workout/Pods-Workout.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_Workout;
+				MODULEMAP_FILE = "Target Support Files/VTAcknowledgementsViewController/VTAcknowledgementsViewController.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = VTAcknowledgementsViewController;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Debug;
+			name = Release;
 		};
 		1C3EBEDAAA6B5EC3C7172C048C20C8E1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7E1AE5C60630CD1974DBC502CEE1CFFC /* CompactConstraint.xcconfig */;
+			baseConfigurationReference = 9AABEDA5240CDB0B817B58128C68AD0A /* CompactConstraint.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -364,7 +506,7 @@
 		};
 		5D0723B225E55DF49C9BA01F36094C28 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7E1AE5C60630CD1974DBC502CEE1CFFC /* CompactConstraint.xcconfig */;
+			baseConfigurationReference = 9AABEDA5240CDB0B817B58128C68AD0A /* CompactConstraint.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -442,7 +584,7 @@
 			};
 			name = Debug;
 		};
-		77BFCE744955DBC29AEF64E6BBD68E16 /* Release */ = {
+		83CF05CB081A2655F8E408BD4C3A54B4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 89BCF835993FB496C0888D542387C27A /* Pods-Workout.release.xcconfig */;
 			buildSettings = {
@@ -477,6 +619,38 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
+		};
+		ADB06E04422DC797B683A28827451E9C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C4021E7DF2F935C299490963AF91FA10 /* VTAcknowledgementsViewController.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/VTAcknowledgementsViewController/VTAcknowledgementsViewController-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/VTAcknowledgementsViewController/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/VTAcknowledgementsViewController/VTAcknowledgementsViewController.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = VTAcknowledgementsViewController;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
 		};
 		C03B8870130C98D1B02B59D003687524 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -522,6 +696,42 @@
 			};
 			name = Release;
 		};
+		C73DF0209F63372EB16CDC89FB649A90 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1C8B77441E26A05BC35626A583F596E4 /* Pods-Workout.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-Workout/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Workout/Pods-Workout.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_Workout;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -543,11 +753,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6B0E1050769F20A8B93D1B4C84818158 /* Build configuration list for PBXNativeTarget "Pods-Workout" */ = {
+		5D2C4FFFD5B9E21B1291669EFBC2EAA0 /* Build configuration list for PBXNativeTarget "VTAcknowledgementsViewController" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				15DBAB2A3E24977FF02F0BF5F6D1CD42 /* Debug */,
-				77BFCE744955DBC29AEF64E6BBD68E16 /* Release */,
+				ADB06E04422DC797B683A28827451E9C /* Debug */,
+				1043B1C1E68418E84377E0EC892E7028 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F16634A015D93313E7E29AB81AA67AFB /* Build configuration list for PBXNativeTarget "Pods-Workout" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C73DF0209F63372EB16CDC89FB649A90 /* Debug */,
+				83CF05CB081A2655F8E408BD4C3A54B4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
