@@ -10,6 +10,7 @@
 #import "DBWWorkoutTodayViewController.h"
 #import "DBWWorkoutCalendarViewController.h"
 #import "DBWWorkoutManager.h"
+#import "DBWSettingsTableViewController.h"
 
 @interface AppDelegate ()
 
@@ -43,8 +44,12 @@
     calendarVC.title = @"Past Gains";
     calendarVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Today's Gains" image:[[UIImage imageNamed:@"calendar"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] tag:1];
 
+    DBWSettingsTableViewController *settingsVC = [[DBWSettingsTableViewController alloc] init];
+    settingsVC.title = @"Settings";
+    settingsVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Settings" image:[[UIImage imageNamed:@"settings"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] tag:2];
+    
     UITabBarController *tab = [[UITabBarController alloc] init];
-    tab.viewControllers = @[[[UINavigationController alloc] initWithRootViewController:calendarVC], [[UINavigationController alloc] initWithRootViewController:todayVC]];
+    tab.viewControllers = @[[[UINavigationController alloc] initWithRootViewController:calendarVC], [[UINavigationController alloc] initWithRootViewController:todayVC], [[UINavigationController alloc] initWithRootViewController:settingsVC]];
     
     _window.rootViewController = tab;
     
