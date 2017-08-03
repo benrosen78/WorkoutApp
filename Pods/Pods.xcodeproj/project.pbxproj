@@ -9,19 +9,19 @@
 /* Begin PBXBuildFile section */
 		17C5F2DD267C85CE151345476ADCDCDA /* CompactConstraint-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F945C3F8F9EFD3C7B849C94EE2FA54 /* CompactConstraint-dummy.m */; };
 		1B72A73AE7C6873E4B9F6D4EC973B082 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
-		31CB61E996275F714A894BFA284E6C9D /* Pods-DannyBenWorkout-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 94C5183BD7EE4630464475AA9CE7B4CC /* Pods-DannyBenWorkout-dummy.m */; };
+		24FE509D5D47628CF4566DAA097E11D4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		4DE2E6A9C5ACE068E3169EB994CED9F5 /* NSLayoutConstraint+CompactConstraint.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F99A2369948556CFA0DF18FA13DB57 /* NSLayoutConstraint+CompactConstraint.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		580155713D2D142EDEBCA9B0B74BA703 /* Pods-DannyBenWorkout-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9E16BEDAE81F4F5BE96A1EAE5D9B4A1F /* Pods-DannyBenWorkout-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6BA17E008DD9E01E514261F87D80A1AC /* UIView+CompactConstraint.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB153CBE5020C210A2F43C33A3F7E3A /* UIView+CompactConstraint.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6DBEF6B681765A58088108ECCFD941A5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		84CCC3EDF784911581BD2D530294EF14 /* UIView+CompactConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 833239441FD04DB65EBFB4D95FD52866 /* UIView+CompactConstraint.m */; };
 		85833A8722665D1A56AD7E47D373C95B /* CompactConstraint.h in Headers */ = {isa = PBXBuildFile; fileRef = F14F78307FFF0521DAFB8B693D249089 /* CompactConstraint.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		98F76B77117816E4DC41AA9139C2497E /* Pods-Workout-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A35E055413196354C436B872419D57DE /* Pods-Workout-dummy.m */; };
 		A30A10A35DFE10FA52A288DD5A7FAFC0 /* NSLayoutConstraint+CompactConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 530A194FB90CF4330A45984275C64174 /* NSLayoutConstraint+CompactConstraint.m */; };
+		B33519F533781F2C37824FD297AD8B48 /* Pods-Workout-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C72F7C314EDF6B295B04075DBD6511ED /* Pods-Workout-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EDA9FB31E81BC939F48CE0D472C10744 /* CompactConstraint-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = FF59901EEE80695746FCE269053F2689 /* CompactConstraint-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		B54F9C0309C76CE120923AD927932AA5 /* PBXContainerItemProxy */ = {
+		8916962C78F9C3EE05E430B247793C0F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
@@ -31,30 +31,30 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		236F37FF436BD23A28F7B848D59F0A21 /* Pods-DannyBenWorkout.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DannyBenWorkout.debug.xcconfig"; sourceTree = "<group>"; };
-		3075A15A7952AAC6D542887A1BA0F47B /* CompactConstraint.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = CompactConstraint.framework; path = CompactConstraint.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		34D060E8FEC99E5C48A99D9FEF1FDEA7 /* Pods-DannyBenWorkout-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DannyBenWorkout-frameworks.sh"; sourceTree = "<group>"; };
-		3E8793BC8358F4BFD1721DC67166BDBB /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3FD8E5578F7B0B73D71A4C3F4081A2F2 /* Pods_DannyBenWorkout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_DannyBenWorkout.framework; path = "Pods-DannyBenWorkout.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		46E4A86E20BDE9ED062722E4E38FDBB7 /* Pods-DannyBenWorkout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DannyBenWorkout.release.xcconfig"; sourceTree = "<group>"; };
+		052673FD9E4DDABE734BA17B1970D2E5 /* Pods-Workout-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Workout-acknowledgements.plist"; sourceTree = "<group>"; };
+		1174CCA9014F0F0AADA58E4575934AFC /* Pods-Workout-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Workout-resources.sh"; sourceTree = "<group>"; };
+		1C8B77441E26A05BC35626A583F596E4 /* Pods-Workout.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Workout.debug.xcconfig"; sourceTree = "<group>"; };
+		203FF4D71CF62487AEEE5053A48769FB /* Pods-Workout-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Workout-acknowledgements.markdown"; sourceTree = "<group>"; };
 		50F99A2369948556CFA0DF18FA13DB57 /* NSLayoutConstraint+CompactConstraint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSLayoutConstraint+CompactConstraint.h"; path = "CompactConstraint/NSLayoutConstraint+CompactConstraint.h"; sourceTree = "<group>"; };
 		530A194FB90CF4330A45984275C64174 /* NSLayoutConstraint+CompactConstraint.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSLayoutConstraint+CompactConstraint.m"; path = "CompactConstraint/NSLayoutConstraint+CompactConstraint.m"; sourceTree = "<group>"; };
 		626D034ADAF0C7AA2A8817E47BD06C80 /* CompactConstraint-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CompactConstraint-prefix.pch"; sourceTree = "<group>"; };
 		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		6CD6E0EFBFBCF30952D6A3EF7B0005FC /* Pods-DannyBenWorkout-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DannyBenWorkout-resources.sh"; sourceTree = "<group>"; };
 		7E1AE5C60630CD1974DBC502CEE1CFFC /* CompactConstraint.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CompactConstraint.xcconfig; sourceTree = "<group>"; };
 		833239441FD04DB65EBFB4D95FD52866 /* UIView+CompactConstraint.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIView+CompactConstraint.m"; path = "CompactConstraint/UIView+CompactConstraint.m"; sourceTree = "<group>"; };
+		89BCF835993FB496C0888D542387C27A /* Pods-Workout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Workout.release.xcconfig"; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		94C5183BD7EE4630464475AA9CE7B4CC /* Pods-DannyBenWorkout-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-DannyBenWorkout-dummy.m"; sourceTree = "<group>"; };
 		993C82BD0CCD6C822A16792B23A1D670 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9E16BEDAE81F4F5BE96A1EAE5D9B4A1F /* Pods-DannyBenWorkout-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-DannyBenWorkout-umbrella.h"; sourceTree = "<group>"; };
+		A35E055413196354C436B872419D57DE /* Pods-Workout-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Workout-dummy.m"; sourceTree = "<group>"; };
 		BF51FA0A981FA882DDDE98D1E8F398D1 /* CompactConstraint.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = CompactConstraint.modulemap; sourceTree = "<group>"; };
+		C4F7F9E7C77288DD832F337FF605C3CA /* Pods-Workout-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Workout-frameworks.sh"; sourceTree = "<group>"; };
+		C72F7C314EDF6B295B04075DBD6511ED /* Pods-Workout-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Workout-umbrella.h"; sourceTree = "<group>"; };
 		D2F945C3F8F9EFD3C7B849C94EE2FA54 /* CompactConstraint-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CompactConstraint-dummy.m"; sourceTree = "<group>"; };
-		D82ECFAA2F32CB483E7AAF0642C6BF7E /* Pods-DannyBenWorkout-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-DannyBenWorkout-acknowledgements.markdown"; sourceTree = "<group>"; };
+		D6E07DA585A88F3043A70BDE26408C8E /* Pods_Workout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Workout.framework; path = "Pods-Workout.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDB153CBE5020C210A2F43C33A3F7E3A /* UIView+CompactConstraint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIView+CompactConstraint.h"; path = "CompactConstraint/UIView+CompactConstraint.h"; sourceTree = "<group>"; };
-		F0C06298D261FD61F4451A160A87FFE2 /* Pods-DannyBenWorkout-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DannyBenWorkout-acknowledgements.plist"; sourceTree = "<group>"; };
+		EF7D8748A8B0488C57414C4B509693D4 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F14F78307FFF0521DAFB8B693D249089 /* CompactConstraint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CompactConstraint.h; path = CompactConstraint/CompactConstraint.h; sourceTree = "<group>"; };
-		F65CB88C62485E8AD2A1695DB14D7257 /* Pods-DannyBenWorkout.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-DannyBenWorkout.modulemap"; sourceTree = "<group>"; };
+		F8C31954C50CDB5062DFB405EA2BE2AB /* CompactConstraint.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = CompactConstraint.framework; path = CompactConstraint.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FC80FE4FF7D222B46CDB7774D70FCFA9 /* Pods-Workout.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-Workout.modulemap"; sourceTree = "<group>"; };
 		FF59901EEE80695746FCE269053F2689 /* CompactConstraint-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CompactConstraint-umbrella.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -67,11 +67,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		880D2CAE2997E61356DFE7F43672A860 /* Frameworks */ = {
+		7C17199FBA6BDF5874C1BCAF7B24A19D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6DBEF6B681765A58088108ECCFD941A5 /* Foundation.framework in Frameworks */,
+				24FE509D5D47628CF4566DAA097E11D4 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +92,33 @@
 			path = "../Target Support Files/CompactConstraint";
 			sourceTree = "<group>";
 		};
+		0FFF3D0B4398C48D38D5393E9B454F2B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F8C31954C50CDB5062DFB405EA2BE2AB /* CompactConstraint.framework */,
+				D6E07DA585A88F3043A70BDE26408C8E /* Pods_Workout.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2CD80E20363198E1CBB72AA943BC37A2 /* Pods-Workout */ = {
+			isa = PBXGroup;
+			children = (
+				EF7D8748A8B0488C57414C4B509693D4 /* Info.plist */,
+				FC80FE4FF7D222B46CDB7774D70FCFA9 /* Pods-Workout.modulemap */,
+				203FF4D71CF62487AEEE5053A48769FB /* Pods-Workout-acknowledgements.markdown */,
+				052673FD9E4DDABE734BA17B1970D2E5 /* Pods-Workout-acknowledgements.plist */,
+				A35E055413196354C436B872419D57DE /* Pods-Workout-dummy.m */,
+				C4F7F9E7C77288DD832F337FF605C3CA /* Pods-Workout-frameworks.sh */,
+				1174CCA9014F0F0AADA58E4575934AFC /* Pods-Workout-resources.sh */,
+				C72F7C314EDF6B295B04075DBD6511ED /* Pods-Workout-umbrella.h */,
+				1C8B77441E26A05BC35626A583F596E4 /* Pods-Workout.debug.xcconfig */,
+				89BCF835993FB496C0888D542387C27A /* Pods-Workout.release.xcconfig */,
+			);
+			name = "Pods-Workout";
+			path = "Target Support Files/Pods-Workout";
+			sourceTree = "<group>";
+		};
 		30054B2090782AF697DB2A3BBB374BCB /* CompactConstraint */ = {
 			isa = PBXGroup;
 			children = (
@@ -106,32 +133,14 @@
 			path = CompactConstraint;
 			sourceTree = "<group>";
 		};
-		5E079F77F3CF4BEAE1A433D059D8043B /* Pods-DannyBenWorkout */ = {
-			isa = PBXGroup;
-			children = (
-				3E8793BC8358F4BFD1721DC67166BDBB /* Info.plist */,
-				F65CB88C62485E8AD2A1695DB14D7257 /* Pods-DannyBenWorkout.modulemap */,
-				D82ECFAA2F32CB483E7AAF0642C6BF7E /* Pods-DannyBenWorkout-acknowledgements.markdown */,
-				F0C06298D261FD61F4451A160A87FFE2 /* Pods-DannyBenWorkout-acknowledgements.plist */,
-				94C5183BD7EE4630464475AA9CE7B4CC /* Pods-DannyBenWorkout-dummy.m */,
-				34D060E8FEC99E5C48A99D9FEF1FDEA7 /* Pods-DannyBenWorkout-frameworks.sh */,
-				6CD6E0EFBFBCF30952D6A3EF7B0005FC /* Pods-DannyBenWorkout-resources.sh */,
-				9E16BEDAE81F4F5BE96A1EAE5D9B4A1F /* Pods-DannyBenWorkout-umbrella.h */,
-				236F37FF436BD23A28F7B848D59F0A21 /* Pods-DannyBenWorkout.debug.xcconfig */,
-				46E4A86E20BDE9ED062722E4E38FDBB7 /* Pods-DannyBenWorkout.release.xcconfig */,
-			);
-			name = "Pods-DannyBenWorkout";
-			path = "Target Support Files/Pods-DannyBenWorkout";
-			sourceTree = "<group>";
-		};
 		7DB346D0F39D3F0E887471402A8071AB = {
 			isa = PBXGroup;
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
 				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
 				9E60B45E2BFB3BB901958F41A3CE8395 /* Pods */,
-				FE1F27B9E610134938B95CEA9B579CA9 /* Products */,
-				A4AEA39452B871155EFFDFF13A129AA8 /* Targets Support Files */,
+				0FFF3D0B4398C48D38D5393E9B454F2B /* Products */,
+				CAF55E1F11C3E2FD514C4FC7ADD73994 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
@@ -143,20 +152,20 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		A4AEA39452B871155EFFDFF13A129AA8 /* Targets Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				5E079F77F3CF4BEAE1A433D059D8043B /* Pods-DannyBenWorkout */,
-			);
-			name = "Targets Support Files";
-			sourceTree = "<group>";
-		};
 		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				D35AF013A5F0BAD4F32504907A52519E /* iOS */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CAF55E1F11C3E2FD514C4FC7ADD73994 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				2CD80E20363198E1CBB72AA943BC37A2 /* Pods-Workout */,
+			);
+			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
 		D35AF013A5F0BAD4F32504907A52519E /* iOS */ = {
@@ -167,23 +176,14 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		FE1F27B9E610134938B95CEA9B579CA9 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3075A15A7952AAC6D542887A1BA0F47B /* CompactConstraint.framework */,
-				3FD8E5578F7B0B73D71A4C3F4081A2F2 /* Pods_DannyBenWorkout.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		48618AC9294578909CAF510D88566F98 /* Headers */ = {
+		78D629740F6932BD9020B11D85400317 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				580155713D2D142EDEBCA9B0B74BA703 /* Pods-DannyBenWorkout-umbrella.h in Headers */,
+				B33519F533781F2C37824FD297AD8B48 /* Pods-Workout-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,22 +201,22 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		AF61D51EE7409C9E3BA06C859CB2981D /* Pods-DannyBenWorkout */ = {
+		A4E61A7D6FEE31547F1027A5ED54BFBA /* Pods-Workout */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 766F2BC1306F25865F5DFA3A52317B10 /* Build configuration list for PBXNativeTarget "Pods-DannyBenWorkout" */;
+			buildConfigurationList = 6B0E1050769F20A8B93D1B4C84818158 /* Build configuration list for PBXNativeTarget "Pods-Workout" */;
 			buildPhases = (
-				F15D60E28458863553E1C419AB89F294 /* Sources */,
-				880D2CAE2997E61356DFE7F43672A860 /* Frameworks */,
-				48618AC9294578909CAF510D88566F98 /* Headers */,
+				FF3C49DE327584108868E7A7584B9E72 /* Sources */,
+				7C17199FBA6BDF5874C1BCAF7B24A19D /* Frameworks */,
+				78D629740F6932BD9020B11D85400317 /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				56911A559D7F7D9BDB6A7094C3F864AE /* PBXTargetDependency */,
+				9FB4A956A89DFC29EC861737961FF05D /* PBXTargetDependency */,
 			);
-			name = "Pods-DannyBenWorkout";
-			productName = "Pods-DannyBenWorkout";
-			productReference = 3FD8E5578F7B0B73D71A4C3F4081A2F2 /* Pods_DannyBenWorkout.framework */;
+			name = "Pods-Workout";
+			productName = "Pods-Workout";
+			productReference = D6E07DA585A88F3043A70BDE26408C8E /* Pods_Workout.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		E92A07257ACFC73327D360F0F856E279 /* CompactConstraint */ = {
@@ -233,7 +233,7 @@
 			);
 			name = CompactConstraint;
 			productName = CompactConstraint;
-			productReference = 3075A15A7952AAC6D542887A1BA0F47B /* CompactConstraint.framework */;
+			productReference = F8C31954C50CDB5062DFB405EA2BE2AB /* CompactConstraint.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -253,12 +253,12 @@
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = FE1F27B9E610134938B95CEA9B579CA9 /* Products */;
+			productRefGroup = 0FFF3D0B4398C48D38D5393E9B454F2B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				E92A07257ACFC73327D360F0F856E279 /* CompactConstraint */,
-				AF61D51EE7409C9E3BA06C859CB2981D /* Pods-DannyBenWorkout */,
+				A4E61A7D6FEE31547F1027A5ED54BFBA /* Pods-Workout */,
 			);
 		};
 /* End PBXProject section */
@@ -274,69 +274,61 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F15D60E28458863553E1C419AB89F294 /* Sources */ = {
+		FF3C49DE327584108868E7A7584B9E72 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				31CB61E996275F714A894BFA284E6C9D /* Pods-DannyBenWorkout-dummy.m in Sources */,
+				98F76B77117816E4DC41AA9139C2497E /* Pods-Workout-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		56911A559D7F7D9BDB6A7094C3F864AE /* PBXTargetDependency */ = {
+		9FB4A956A89DFC29EC861737961FF05D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = CompactConstraint;
 			target = E92A07257ACFC73327D360F0F856E279 /* CompactConstraint */;
-			targetProxy = B54F9C0309C76CE120923AD927932AA5 /* PBXContainerItemProxy */;
+			targetProxy = 8916962C78F9C3EE05E430B247793C0F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		1A41B15D3AA834993ADDD808FA9D8764 /* Release */ = {
+		15DBAB2A3E24977FF02F0BF5F6D1CD42 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1C8B77441E26A05BC35626A583F596E4 /* Pods-Workout.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGNING_REQUIRED = NO;
-				COPY_PHASE_STRIP = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"POD_CONFIGURATION_RELEASE=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
-				STRIP_INSTALLED_PRODUCT = NO;
-				SYMROOT = "${SRCROOT}/../build";
-				VALIDATE_PRODUCT = YES;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-Workout/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Workout/Pods-Workout.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_Workout;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
-			name = Release;
+			name = Debug;
 		};
 		1C3EBEDAAA6B5EC3C7172C048C20C8E1 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -402,43 +394,7 @@
 			};
 			name = Debug;
 		};
-		608C13594296AFF73A5ACDF3E2DEEA51 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 236F37FF436BD23A28F7B848D59F0A21 /* Pods-DannyBenWorkout.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-DannyBenWorkout/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-DannyBenWorkout/Pods-DannyBenWorkout.modulemap";
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_DannyBenWorkout;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		7D144F724433A09597E3476A57631255 /* Debug */ = {
+		643C76AA582046977B7877822ED7A258 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -478,7 +434,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -486,9 +442,9 @@
 			};
 			name = Debug;
 		};
-		F499DE2161E0A9B48A329765F83AB469 /* Release */ = {
+		77BFCE744955DBC29AEF64E6BBD68E16 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 46E4A86E20BDE9ED062722E4E38FDBB7 /* Pods-DannyBenWorkout.release.xcconfig */;
+			baseConfigurationReference = 89BCF835993FB496C0888D542387C27A /* Pods-Workout.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -502,23 +458,67 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Target Support Files/Pods-DannyBenWorkout/Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-Workout/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-DannyBenWorkout/Pods-DannyBenWorkout.modulemap";
+				MODULEMAP_FILE = "Target Support Files/Pods-Workout/Pods-Workout.modulemap";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = Pods_DannyBenWorkout;
+				PRODUCT_NAME = Pods_Workout;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		C03B8870130C98D1B02B59D003687524 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -537,17 +537,17 @@
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7D144F724433A09597E3476A57631255 /* Debug */,
-				1A41B15D3AA834993ADDD808FA9D8764 /* Release */,
+				643C76AA582046977B7877822ED7A258 /* Debug */,
+				C03B8870130C98D1B02B59D003687524 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		766F2BC1306F25865F5DFA3A52317B10 /* Build configuration list for PBXNativeTarget "Pods-DannyBenWorkout" */ = {
+		6B0E1050769F20A8B93D1B4C84818158 /* Build configuration list for PBXNativeTarget "Pods-Workout" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				608C13594296AFF73A5ACDF3E2DEEA51 /* Debug */,
-				F499DE2161E0A9B48A329765F83AB469 /* Release */,
+				15DBAB2A3E24977FF02F0BF5F6D1CD42 /* Debug */,
+				77BFCE744955DBC29AEF64E6BBD68E16 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

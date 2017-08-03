@@ -117,7 +117,7 @@ static NSString *const headerIdentifier = @"header-cell";
     UIView *colorView = [cell viewWithTag:124] ?: [[UIView alloc] init];
     colorView.tag = 124;
     colorView.layer.masksToBounds = YES;
-    colorView.layer.cornerRadius = 30;
+    colorView.layer.cornerRadius = 25;
     colorView.backgroundColor = [UIColor colorWithRed:0.201 green:0.220 blue:0.376 alpha:1.00];
     colorView.translatesAutoresizingMaskIntoConstraints = NO;
     [cell.contentView addSubview:colorView];
@@ -133,8 +133,8 @@ static NSString *const headerIdentifier = @"header-cell";
                                               @"day.centerY = view.centerY",
                                               @"color.centerX = view.centerX",
                                               @"color.centerY = view.centerY",
-                                              @"color.width = 60",
-                                              @"color.height = 60"]
+                                              @"color.width = 50",
+                                              @"color.height = 50"]
                                     metrics:nil
                                       views:@{@"day": day,
                                               @"color": colorView,

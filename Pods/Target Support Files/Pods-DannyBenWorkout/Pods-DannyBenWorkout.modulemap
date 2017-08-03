@@ -1,6 +1,0 @@
-framework module Pods_DannyBenWorkout {
-  umbrella header "Pods-DannyBenWorkout-umbrella.h"
-
-  export *
-  module * { export * }
-}

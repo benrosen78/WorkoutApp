@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_DannyBenWorkoutVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_DannyBenWorkoutVersionString[];
+FOUNDATION_EXPORT double Pods_WorkoutVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_WorkoutVersionString[];
 

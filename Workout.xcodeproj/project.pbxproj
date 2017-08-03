@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4B8588CE6D9945324A7EF392 /* Pods_DannyBenWorkout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E4133C1B9B963E41773189B /* Pods_DannyBenWorkout.framework */; };
 		B520226B1F322F71005C5D7B /* DBWExerciseSetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B520226A1F322F71005C5D7B /* DBWExerciseSetTableViewCell.m */; };
 		B5713D881F2E4337006B95D1 /* DBWWorkoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B5713D871F2E4337006B95D1 /* DBWWorkoutManager.m */; };
 		B5713D8B1F2E95FA006B95D1 /* DBWWorkoutTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5713D8A1F2E95FA006B95D1 /* DBWWorkoutTableViewController.m */; };
@@ -23,6 +22,7 @@
 		B5D2E31A1F2AB34A00CB4540 /* DBWExercise.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D2E3191F2AB34A00CB4540 /* DBWExercise.m */; };
 		B5D2E31D1F2AC97300CB4540 /* DBWSet.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D2E31C1F2AC97300CB4540 /* DBWSet.m */; };
 		B5D2E3201F2ADF4700CB4540 /* DBWExerciseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D2E31F1F2ADF4700CB4540 /* DBWExerciseTableViewController.m */; };
+		C73C33F2E8B40A6707C8CE31 /* Pods_Workout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C05FB80146D5BA29DE434BD3 /* Pods_Workout.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,7 +43,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0344155D2C9BAA013FEE9B5A /* Pods-Workout.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Workout.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Workout/Pods-Workout.debug.xcconfig"; sourceTree = "<group>"; };
 		0E4133C1B9B963E41773189B /* Pods_DannyBenWorkout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DannyBenWorkout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1CD0FD741FEFA38936817806 /* Pods-Workout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Workout.release.xcconfig"; path = "Pods/Target Support Files/Pods-Workout/Pods-Workout.release.xcconfig"; sourceTree = "<group>"; };
 		271DEE926CA2C7D9100D4A23 /* Pods-DannyBenWorkout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DannyBenWorkout.release.xcconfig"; path = "Pods/Target Support Files/Pods-DannyBenWorkout/Pods-DannyBenWorkout.release.xcconfig"; sourceTree = "<group>"; };
 		A0F3AB7DBBFF19EFB1619676 /* Pods-DannyBenWorkout.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DannyBenWorkout.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DannyBenWorkout/Pods-DannyBenWorkout.debug.xcconfig"; sourceTree = "<group>"; };
 		B52022691F322F71005C5D7B /* DBWExerciseSetTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWExerciseSetTableViewCell.h; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 		B5D2E31C1F2AC97300CB4540 /* DBWSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWSet.m; sourceTree = "<group>"; };
 		B5D2E31E1F2ADF4700CB4540 /* DBWExerciseTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWExerciseTableViewController.h; sourceTree = "<group>"; };
 		B5D2E31F1F2ADF4700CB4540 /* DBWExerciseTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWExerciseTableViewController.m; sourceTree = "<group>"; };
+		C05FB80146D5BA29DE434BD3 /* Pods_Workout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Workout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,7 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B8588CE6D9945324A7EF392 /* Pods_DannyBenWorkout.framework in Frameworks */,
+				C73C33F2E8B40A6707C8CE31 /* Pods_Workout.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,6 +113,8 @@
 			children = (
 				A0F3AB7DBBFF19EFB1619676 /* Pods-DannyBenWorkout.debug.xcconfig */,
 				271DEE926CA2C7D9100D4A23 /* Pods-DannyBenWorkout.release.xcconfig */,
+				0344155D2C9BAA013FEE9B5A /* Pods-Workout.debug.xcconfig */,
+				1CD0FD741FEFA38936817806 /* Pods-Workout.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -118,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				0E4133C1B9B963E41773189B /* Pods_DannyBenWorkout.framework */,
+				C05FB80146D5BA29DE434BD3 /* Pods_Workout.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -125,9 +131,9 @@
 		B5D2E2D11F2A93B800CB4540 = {
 			isa = PBXGroup;
 			children = (
-				B5D2E2DC1F2A93B800CB4540 /* DannyBenWorkout */,
-				B5D2E2F51F2A93B800CB4540 /* DannyBenWorkoutTests */,
-				B5D2E3001F2A93B800CB4540 /* DannyBenWorkoutUITests */,
+				B5D2E2DC1F2A93B800CB4540 /* Workout */,
+				B5D2E2F51F2A93B800CB4540 /* WorkoutTests */,
+				B5D2E3001F2A93B800CB4540 /* WorkoutUITests */,
 				B5D2E2DB1F2A93B800CB4540 /* Products */,
 				1E1A84494D3D4DD03763D6C9 /* Pods */,
 				2ACEDE84D254E951367CB3EE /* Frameworks */,
@@ -144,7 +150,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B5D2E2DC1F2A93B800CB4540 /* DannyBenWorkout */ = {
+		B5D2E2DC1F2A93B800CB4540 /* Workout */ = {
 			isa = PBXGroup;
 			children = (
 				B5D2E2DD1F2A93B800CB4540 /* AppDelegate.h */,
@@ -172,25 +178,25 @@
 				B5D2E2EB1F2A93B800CB4540 /* Info.plist */,
 				B5D2E2EC1F2A93B800CB4540 /* main.m */,
 			);
-			path = DannyBenWorkout;
+			path = Workout;
 			sourceTree = "<group>";
 		};
-		B5D2E2F51F2A93B800CB4540 /* DannyBenWorkoutTests */ = {
+		B5D2E2F51F2A93B800CB4540 /* WorkoutTests */ = {
 			isa = PBXGroup;
 			children = (
 				B5D2E2F61F2A93B800CB4540 /* DannyBenWorkoutTests.m */,
 				B5D2E2F81F2A93B800CB4540 /* Info.plist */,
 			);
-			path = DannyBenWorkoutTests;
+			path = WorkoutTests;
 			sourceTree = "<group>";
 		};
-		B5D2E3001F2A93B800CB4540 /* DannyBenWorkoutUITests */ = {
+		B5D2E3001F2A93B800CB4540 /* WorkoutUITests */ = {
 			isa = PBXGroup;
 			children = (
 				B5D2E3011F2A93B800CB4540 /* DannyBenWorkoutUITests.m */,
 				B5D2E3031F2A93B800CB4540 /* Info.plist */,
 			);
-			path = DannyBenWorkoutUITests;
+			path = WorkoutUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -349,7 +355,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DannyBenWorkout/Pods-DannyBenWorkout-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Workout/Pods-Workout-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E9527289585BF224908FCB04 /* [CP] Embed Pods Frameworks */ = {
@@ -364,7 +370,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DannyBenWorkout/Pods-DannyBenWorkout-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Workout/Pods-Workout-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -526,13 +532,13 @@
 		};
 		B5D2E3071F2A93B800CB4540 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A0F3AB7DBBFF19EFB1619676 /* Pods-DannyBenWorkout.debug.xcconfig */;
+			baseConfigurationReference = 0344155D2C9BAA013FEE9B5A /* Pods-Workout.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Darryl Rosen (8V5J4G27BG)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 8V5J4G27BG;
-				INFOPLIST_FILE = DannyBenWorkout/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Workout/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.benrosen.DannyBenWorkout;
@@ -545,13 +551,13 @@
 		};
 		B5D2E3081F2A93B800CB4540 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 271DEE926CA2C7D9100D4A23 /* Pods-DannyBenWorkout.release.xcconfig */;
+			baseConfigurationReference = 1CD0FD741FEFA38936817806 /* Pods-Workout.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Darryl Rosen (8V5J4G27BG)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 8V5J4G27BG;
-				INFOPLIST_FILE = DannyBenWorkout/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Workout/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.benrosen.DannyBenWorkout;
