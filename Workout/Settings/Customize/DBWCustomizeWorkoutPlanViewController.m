@@ -68,7 +68,6 @@ static NSString *const cellIdentifier = @"day-identifier";
     
     DBWTemplateCustomizationTableViewController *customizationVC = [[DBWTemplateCustomizationTableViewController alloc] initWithTemplate:_templates[indexPath.row]];
     [self.navigationController pushViewController:customizationVC animated:YES];
-    
 }
 
 /*

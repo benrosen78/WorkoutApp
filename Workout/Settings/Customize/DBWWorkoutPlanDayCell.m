@@ -14,7 +14,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.contentView.layer.borderColor = [UIColor grayColor].CGColor;
+        self.contentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
         self.contentView.layer.borderWidth = 0.5;
         
         _titleLabel = [[UILabel alloc] init];
