@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class DBWWorkout;
+@class DBWWorkout, DBWWorkoutTemplate;
 
 @interface DBWWorkoutManager : NSObject
 
@@ -21,5 +21,7 @@
 + (DBWWorkout *)workoutForDay:(NSDate *)date;
 
 + (DBWWorkout *)workoutForDay:(NSInteger)day month:(NSInteger)month year:(NSInteger)year;
+
++ (NSMutableArray <DBWWorkoutTemplate *> *)templates;
 
 @end

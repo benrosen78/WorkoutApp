@@ -10,6 +10,7 @@
 #import <VTAcknowledgementsViewController/VTAcknowledgementsViewController.h>
 #import <VTAcknowledgementsViewController/VTAcknowledgement.h>
 #import "DBWAboutTableViewController.h"
+#import "DBWCustomizeWorkoutPlanViewController.h"
 
 @interface DBWSettingsTableViewController ()
 
@@ -33,11 +34,11 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return section == 0 ? 2 : 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -48,8 +49,9 @@
     
     if (indexPath.section == 0) {
         cell.textLabel.text = indexPath.row == 0 ? @"About" : @"Acknowledgements";
-        
-    }//else if ()
+    } else if (indexPath.section == 1) {
+        cell.textLabel.text = @"Customize workout plan";
+    }
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
@@ -58,7 +60,7 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return @"About";
+    return section == 0 ? @"About" : @"Workout";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -79,6 +81,9 @@
             acknowledgementsVC.acknowledgements = [acknowledgementsVC.acknowledgements arrayByAddingObjectsFromArray:@[customLicense]];
             [self.navigationController pushViewController:acknowledgementsVC animated:YES];
         }
+    } else if (indexPath.section == 1) {
+        DBWCustomizeWorkoutPlanViewController *customizeVC = [[DBWCustomizeWorkoutPlanViewController alloc] init];
+        [self.navigationController pushViewController:customizeVC animated:YES];
     }
 }
 

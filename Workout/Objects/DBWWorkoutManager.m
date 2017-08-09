@@ -9,6 +9,7 @@
 #import "DBWWorkoutManager.h"
 #import "DBWWorkout.h"
 #import "DBWExercise.h"
+#import "DBWWorkoutTemplate.h"
 
 static NSMutableDictionary *configurationDictionary = nil;
 static NSString *path = nil;
@@ -19,7 +20,7 @@ static NSString *path = nil;
     path = [[self documentsPath] stringByAppendingPathComponent:@"workouts.plist"];
     
     if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
-        configurationDictionary = [NSMutableDictionary dictionaryWithDictionary:@{@"data": [NSMutableArray array]}];
+        configurationDictionary = [NSMutableDictionary dictionaryWithDictionary:@{@"templates": [DBWWorkoutTemplate initialWorkoutTemplates], @"data": [NSMutableArray array]}];
     } else {
         configurationDictionary = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
     }
@@ -78,6 +79,10 @@ static NSString *path = nil;
         }
     }
     return nil;
+}
+
++ (NSMutableArray <DBWWorkoutTemplate *> *)templates {
+    return configurationDictionary[@"templates"];
 }
 
 @end
