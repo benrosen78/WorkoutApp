@@ -12,9 +12,9 @@
 #import <CompactConstraint/CompactConstraint.h>
 #import "DBWWorkoutManager.h"
 
-static NSString *const kDayCellIdentifier = @"day-cell";
 static NSString *const kShortDescCellIdentifier = @"desc-cell";
 static NSString *const kExerciseCellIdentifier = @"exercise-cell";
+static NSString *const kDeleteCellIdentifier = @"delete-cell";
 
 @interface DBWTemplateCustomizationTableViewController () <UITextViewDelegate>
 
@@ -35,7 +35,7 @@ static NSString *const kExerciseCellIdentifier = @"exercise-cell";
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.title = [NSString stringWithFormat:@"Day: %lu", _template.day];
+    self.title = [NSString stringWithFormat:@"Day: %lu", [[DBWWorkoutManager templates] indexOfObject:_template] + 1];
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.tableView.allowsSelectionDuringEditing = YES;
 }
@@ -48,11 +48,11 @@ static NSString *const kExerciseCellIdentifier = @"exercise-cell";
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
+    if (section == 0 || section == 2) {
         return 1;
     } else {
         if (tableView.editing) {
@@ -104,6 +104,14 @@ static NSString *const kExerciseCellIdentifier = @"exercise-cell";
             cell.textLabel.text = _template.exercises[indexPath.row].name;
         }
         return cell;
+    } else if (indexPath.section == 2) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kDeleteCellIdentifier];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kDeleteCellIdentifier];
+        }
+        cell.textLabel.text = @"Delete";
+        cell.textLabel.textColor = [UIColor redColor];
+        return cell;
     }
     return nil;
 }
@@ -113,6 +121,8 @@ static NSString *const kExerciseCellIdentifier = @"exercise-cell";
         return @"Short Description";
     } else if (section == 1) {
         return @"Exercises";
+    } else if (section == 2) {
+        return @"Delete";
     }
     return nil;
 }
@@ -173,6 +183,16 @@ static NSString *const kExerciseCellIdentifier = @"exercise-cell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 2) {
+        UIAlertController *deleteController = [UIAlertController alertControllerWithTitle:@"Workout App" message:@"Are you sure you want to delete this workout template? You can't recover it." preferredStyle:UIAlertControllerStyleAlert];
+        [deleteController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+        [deleteController addAction:[UIAlertAction actionWithTitle:@"I'm sure" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+            [DBWWorkoutManager removeTemplate:_template];
+            [self dismissViewControllerAnimated:YES completion:nil];
+            [self.navigationController popViewControllerAnimated:YES];
+        }]];
+        [self presentViewController:deleteController animated:YES completion:nil];
+    }
     if (tableView.isEditing && indexPath.row >= [_template.exercises count]) {
         [self tableView:tableView commitEditingStyle:UITableViewCellEditingStyleInsert forRowAtIndexPath:indexPath];
     }

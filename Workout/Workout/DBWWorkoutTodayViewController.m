@@ -171,7 +171,7 @@
         NSArray <DBWWorkoutTemplate *> *templates = [DBWWorkoutManager templates];
         for (int i = 0; i < [templates count]; i++) {
             DBWWorkoutTemplate *option = templates[i];
-            [controller addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:@"%lu - %@", option.day, option.shortDescription] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [controller addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:@"%d - %@", i + 1, option.shortDescription] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 _workout = [DBWWorkout todaysWorkoutWithTemplate:option];
                 [self.tableView reloadData];
                 [DBWWorkoutManager saveWorkout:_workout];

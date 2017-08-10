@@ -18,6 +18,8 @@
 
 + (void)saveTemplate:(DBWWorkoutTemplate *)workout;
 
++ (void)moveTemplate:(DBWWorkoutTemplate *)workoutTemplate toIndex:(NSInteger)index;
+
 + (NSArray <DBWWorkout *> *)allWorkouts;
 
 + (DBWWorkout *)workoutForDay:(NSDate *)date;
@@ -25,5 +27,7 @@
 + (DBWWorkout *)workoutForDay:(NSInteger)day month:(NSInteger)month year:(NSInteger)year;
 
 + (NSMutableArray <DBWWorkoutTemplate *> *)templates;
+
++ (void)removeTemplate:(DBWWorkoutTemplate *)workoutTemplate;
 
 @end

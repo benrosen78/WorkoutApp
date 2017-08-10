@@ -15,7 +15,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.contentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-        self.contentView.layer.borderWidth = 0.5;
+        self.contentView.layer.borderWidth = 0.6;
         
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = [UIFont systemFontOfSize:17.0 weight:UIFontWeightMedium];

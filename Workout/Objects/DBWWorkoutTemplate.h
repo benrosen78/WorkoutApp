@@ -12,8 +12,6 @@
 
 @interface DBWWorkoutTemplate : NSObject <NSCoding>
 
-@property (nonatomic) NSInteger day;
-
 @property (strong, nonatomic) NSString *shortDescription;
 
 @property (strong, nonatomic) NSMutableArray <DBWExercise *> *exercises;

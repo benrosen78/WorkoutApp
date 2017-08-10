@@ -62,6 +62,7 @@ static NSString *path = nil;
 }
 
 + (DBWWorkout *)workoutForDay:(NSDate *)date {
+    return nil;
     for (DBWWorkout *workout in [self allWorkouts]) {
         if ([[NSCalendar currentCalendar] isDate:date equalToDate:[NSDate dateWithTimeIntervalSince1970:workout.timestamp] toUnitGranularity:(NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitYear)]) {
             return workout;
@@ -71,6 +72,9 @@ static NSString *path = nil;
 }
 
 + (DBWWorkout *)workoutForDay:(NSInteger)day month:(NSInteger)month year:(NSInteger)year {
+    if (day == 10) {
+        return nil;
+    }
     for (DBWWorkout *workout in [self allWorkouts]) {
         NSDate *date = [NSDate dateWithTimeIntervalSince1970:workout.timestamp];
         NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitYear) fromDate:date];
@@ -82,7 +86,7 @@ static NSString *path = nil;
 }
 
 + (NSMutableArray <DBWWorkoutTemplate *> *)templates {
-    return configurationDictionary[@"templates"];
+    return [NSMutableArray arrayWithArray:configurationDictionary[@"templates"]];
 }
 
 + (void)saveTemplate:(DBWWorkoutTemplate *)template {
@@ -97,7 +101,25 @@ static NSString *path = nil;
         configurationDictionary[@"templates"] = dataContents;
         [NSKeyedArchiver archiveRootObject:configurationDictionary toFile:path];
     });
-    
+}
+
++ (void)moveTemplate:(DBWWorkoutTemplate *)workoutTemplate toIndex:(NSInteger)index {
+    NSMutableArray *dataContents = [NSMutableArray arrayWithArray:configurationDictionary[@"templates"]];
+    if ([dataContents containsObject:workoutTemplate]) {
+        [dataContents removeObject:workoutTemplate];
+        [dataContents insertObject:workoutTemplate atIndex:index];
+        configurationDictionary[@"templates"] = dataContents;
+        [NSKeyedArchiver archiveRootObject:configurationDictionary toFile:path];
+    }
+}
+
++ (void)removeTemplate:(DBWWorkoutTemplate *)workoutTemplate {
+    NSMutableArray *dataContents = [NSMutableArray arrayWithArray:configurationDictionary[@"templates"]];
+    if ([dataContents containsObject:workoutTemplate]) {
+        [dataContents removeObject:workoutTemplate];
+        configurationDictionary[@"templates"] = dataContents;
+        [NSKeyedArchiver archiveRootObject:configurationDictionary toFile:path];
+    }
 }
 
 @end
