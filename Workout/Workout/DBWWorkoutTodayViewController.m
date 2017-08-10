@@ -12,6 +12,7 @@
 #import "DBWExerciseTableViewController.h"
 #import "DBWWorkoutManager.h"
 #import <CompactConstraint/CompactConstraint.h>
+#import "DBWWorkoutTemplate.h"
 
 @interface DBWWorkoutTodayViewController ()
 
@@ -166,16 +167,17 @@
             [self.navigationController pushViewController:vc animated:YES];
         }
     } else {
-        NSArray <NSString *> *options = @[@"Pull day 1 (w/ abs)", @"Push day 1", @"Legs day 1 (w/ abs)", @"Pull day 2", @"Push day 2 (w/ abs)", @"Leg day 2 (w/ pullups)"];
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"Hey there!" message:@"You gotta go to the gym. Select which day you would like to use. This will be a template for you to log on." preferredStyle:UIAlertControllerStyleActionSheet];
-        for (int i = 0; i < [options count]; i++) {
-            NSString *option = options[i];
-            [controller addAction:[UIAlertAction actionWithTitle:option style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                _workout = [DBWWorkout workoutWithDate:[NSDate date] andTemplate:i];
+        NSArray <DBWWorkoutTemplate *> *templates = [DBWWorkoutManager templates];
+        for (int i = 0; i < [templates count]; i++) {
+            DBWWorkoutTemplate *option = templates[i];
+            [controller addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:@"%lu - %@", option.day, option.shortDescription] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                _workout = [DBWWorkout todaysWorkoutWithTemplate:option];
                 [self.tableView reloadData];
                 [DBWWorkoutManager saveWorkout:_workout];
             }]];
         }
+        [controller addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
         controller.popoverPresentationController.sourceView = [tableView cellForRowAtIndexPath:indexPath];
         controller.popoverPresentationController.sourceRect = controller.popoverPresentationController.sourceView.frame;
         [self presentViewController:controller animated:YES completion:nil];

@@ -16,6 +16,8 @@
 
 + (void)saveWorkout:(DBWWorkout *)workout;
 
++ (void)saveTemplate:(DBWWorkoutTemplate *)workout;
+
 + (NSArray <DBWWorkout *> *)allWorkouts;
 
 + (DBWWorkout *)workoutForDay:(NSDate *)date;

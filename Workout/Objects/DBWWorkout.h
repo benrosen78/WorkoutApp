@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class DBWExercise;
+@class DBWExercise, DBWWorkoutTemplate;
 
 typedef NS_ENUM(NSInteger, DBWWorkoutDay) {
     DBWWorkoutPull1,
@@ -27,6 +27,6 @@ typedef NS_ENUM(NSInteger, DBWWorkoutDay) {
 
 @property (nonatomic) DBWWorkoutDay template;
 
-+ (instancetype)workoutWithDate:(NSDate *)date andTemplate:(DBWWorkoutDay)workoutTemplate;
++ (instancetype)todaysWorkoutWithTemplate:(DBWWorkoutTemplate *)workoutTemplate;
 
 @end

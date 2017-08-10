@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class DBWExercise;
+@class DBWExercise, DBWWorkoutTemplate;
 
 @interface DBWWorkoutTemplate : NSObject <NSCoding>
 

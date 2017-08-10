@@ -16,7 +16,7 @@ static NSString *const kDayCellIdentifier = @"day-cell";
 static NSString *const kShortDescCellIdentifier = @"desc-cell";
 static NSString *const kExerciseCellIdentifier = @"exercise-cell";
 
-@interface DBWTemplateCustomizationTableViewController ()
+@interface DBWTemplateCustomizationTableViewController () <UITextViewDelegate>
 
 @property (strong, nonatomic) DBWWorkoutTemplate *template;
 
@@ -64,7 +64,7 @@ static NSString *const kExerciseCellIdentifier = @"exercise-cell";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return indexPath.section == 0 ? 110 : 50;
+    return indexPath.section == 0 ? 70 : 50;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -74,6 +74,7 @@ static NSString *const kExerciseCellIdentifier = @"exercise-cell";
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kShortDescCellIdentifier];
             
             UITextView *textView = [[UITextView alloc] init];
+            textView.delegate = self;
             textView.text = _template.shortDescription ?: @"";
             textView.font = [UIFont systemFontOfSize:17.0 weight:UIFontWeightRegular];
             textView.autocapitalizationType = UITextAutocapitalizationTypeSentences;
@@ -129,7 +130,8 @@ static NSString *const kExerciseCellIdentifier = @"exercise-cell";
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
         [_template.exercises removeObjectAtIndex:indexPath.row];
-        //[DBWWorkoutManager saveWorkout:_workout];
+        [DBWWorkoutManager saveTemplate:_template];
+        
         [self.tableView reloadData];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -142,8 +144,8 @@ static NSString *const kExerciseCellIdentifier = @"exercise-cell";
             //exercise.workout = _workout;
             [_template.exercises addObject:exercise];
             
-            //[DBWWorkoutManager saveWorkout:_workout];
-            [self setEditing:NO animated:YES];
+            [DBWWorkoutManager saveTemplate:_template];
+            [self setEditing:YES animated:YES];
         }]];
         [controller addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
             textField.placeholder = @"Partial squats";
@@ -174,6 +176,19 @@ static NSString *const kExerciseCellIdentifier = @"exercise-cell";
     if (tableView.isEditing && indexPath.row >= [_template.exercises count]) {
         [self tableView:tableView commitEditingStyle:UITableViewCellEditingStyleInsert forRowAtIndexPath:indexPath];
     }
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    _template.shortDescription = textView.text;
+    [DBWWorkoutManager saveTemplate:_template];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return indexPath.section == 1 && indexPath.row < [_template.exercises count];
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+    [_template.exercises exchangeObjectAtIndex:sourceIndexPath.row withObjectAtIndex:destinationIndexPath.row];
 }
 
 /*

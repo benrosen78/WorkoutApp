@@ -85,4 +85,19 @@ static NSString *path = nil;
     return configurationDictionary[@"templates"];
 }
 
++ (void)saveTemplate:(DBWWorkoutTemplate *)template {
+    dispatch_async(dispatch_queue_create("me.benrosen.workout-template.save", DISPATCH_QUEUE_SERIAL), ^{
+        NSMutableArray *dataContents = [NSMutableArray arrayWithArray:configurationDictionary[@"templates"]];
+        if ([dataContents containsObject:template]) {
+            NSInteger index = [dataContents indexOfObject:template];
+            [dataContents replaceObjectAtIndex:index withObject:template];
+        } else {
+            [dataContents addObject:template];
+        }
+        configurationDictionary[@"templates"] = dataContents;
+        [NSKeyedArchiver archiveRootObject:configurationDictionary toFile:path];
+    });
+    
+}
+
 @end
