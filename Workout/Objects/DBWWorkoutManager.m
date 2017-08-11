@@ -62,7 +62,6 @@ static NSString *path = nil;
 }
 
 + (DBWWorkout *)workoutForDay:(NSDate *)date {
-    return nil;
     for (DBWWorkout *workout in [self allWorkouts]) {
         if ([[NSCalendar currentCalendar] isDate:date equalToDate:[NSDate dateWithTimeIntervalSince1970:workout.timestamp] toUnitGranularity:(NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitYear)]) {
             return workout;
@@ -72,9 +71,6 @@ static NSString *path = nil;
 }
 
 + (DBWWorkout *)workoutForDay:(NSInteger)day month:(NSInteger)month year:(NSInteger)year {
-    if (day == 10) {
-        return nil;
-    }
     for (DBWWorkout *workout in [self allWorkouts]) {
         NSDate *date = [NSDate dateWithTimeIntervalSince1970:workout.timestamp];
         NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitYear) fromDate:date];
