@@ -14,6 +14,7 @@
 #import <Realm/Realm.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import "DBWAuthenticationManager.h"
+#import "AppDelegate.h"
 
 @interface DBWLoginViewController () <GIDSignInUIDelegate, FBSDKLoginButtonDelegate>
 
@@ -30,9 +31,7 @@
     }
 
     
-    [[NSNotificationCenter defaultCenter ] addObserverForName:FBSDKAccessTokenDidChangeNotification object:self queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
-        NSLog(@" notification test %@", [FBSDKAccessToken currentAccessToken]);
-    }];
+    [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(loggedIn:) name:DBWAuthenticationManagerLogInNotification object:nil];
     
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
@@ -154,12 +153,38 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error {
+- (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error {    
     [DBWAuthenticationManager facebookAuthenticationWithToken:[FBSDKAccessToken currentAccessToken].tokenString];
 }
 
-- (void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton {
-    
+- (void)loggedIn:(NSNotification *)notification {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        UIImageView __block *transitioningView = [[UIImageView alloc] initWithFrame:self.view.frame];
+        transitioningView.backgroundColor = [UIColor colorWithRed:0.201 green:0.220 blue:0.376 alpha:1.00];
+        transitioningView.alpha = 0.0;
+        [self.view.window addSubview:transitioningView];
+        
+        [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            transitioningView.alpha = 1.0;
+        } completion:^(BOOL finished) {
+            AppDelegate *delegate = (AppDelegate *)([UIApplication sharedApplication].delegate);
+            self.view.window.rootViewController = delegate.tabBarController;
+            
+            [UIView animateWithDuration:1.0 delay:0.5 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                transitioningView.alpha = 0.0;
+            } completion:^(BOOL finished) {
+                [transitioningView removeFromSuperview];
+                
+                for (int i = (int)[self.view.subviews count] - 1; i >= 0; i--) {
+                    UIView *subview = self.view.subviews[i];
+                    [subview removeFromSuperview];
+                }
+            }];
+        }];
+    });
+
 }
+
 
 @end

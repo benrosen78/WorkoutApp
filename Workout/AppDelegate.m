@@ -15,6 +15,7 @@
 #import <GoogleSignIn/GoogleSignIn.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "DBWAuthenticationManager.h"
+#import <Realm/Realm.h>
 
 @interface AppDelegate () <GIDSignInDelegate>
 
@@ -43,10 +44,6 @@
     
     [DBWWorkoutManager directoryInitialization];
     
-    DBWLoginViewController *loginVC = [[DBWLoginViewController alloc] init];
-    _window.rootViewController = loginVC;
-    return YES;
-    
     DBWWorkoutTodayViewController *todayVC = [[DBWWorkoutTodayViewController alloc] init];
     todayVC.title = @"Today's Gains";
     todayVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Today's Gains" image:[[UIImage imageNamed:@"today"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] tag:0];
@@ -54,16 +51,20 @@
     DBWWorkoutCalendarViewController *calendarVC = [[DBWWorkoutCalendarViewController alloc] init];
     calendarVC.title = @"Past Gains";
     calendarVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Today's Gains" image:[[UIImage imageNamed:@"calendar"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] tag:1];
-
+    
     DBWSettingsTableViewController *settingsVC = [[DBWSettingsTableViewController alloc] init];
     settingsVC.title = @"Settings";
     settingsVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Settings" image:[[UIImage imageNamed:@"settings"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] tag:2];
     
-    UITabBarController *tab = [[UITabBarController alloc] init];
-    tab.viewControllers = @[[[UINavigationController alloc] initWithRootViewController:calendarVC], [[UINavigationController alloc] initWithRootViewController:todayVC], [[UINavigationController alloc] initWithRootViewController:settingsVC]];
+    _tabBarController = [[UITabBarController alloc] init];
+    _tabBarController.viewControllers = @[[[UINavigationController alloc] initWithRootViewController:calendarVC], [[UINavigationController alloc] initWithRootViewController:todayVC], [[UINavigationController alloc] initWithRootViewController:settingsVC]];
     
-    _window.rootViewController = tab;
-    
+    if (![DBWAuthenticationManager loggedIn]) {
+        DBWLoginViewController *loginVC = [[DBWLoginViewController alloc] init];
+        _window.rootViewController = loginVC;
+    } else {
+        _window.rootViewController = _tabBarController;
+    }
     return YES;
 }
 
@@ -77,16 +78,7 @@
 }
 
 - (void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user withError:(NSError *)error {
-    // Perform any operations on signed in user here.
-    NSString *userId = user.userID;                  // For client-side use only!
-    NSString *idToken = user.authentication.idToken; // Safe to send to the server
-    NSString *fullName = user.profile.name;
-    NSString *givenName = user.profile.givenName;
-    NSString *familyName = user.profile.familyName;
-    NSString *email = user.profile.email;
-    NSLog(@"%@ %@ %@ %@ %@ %@", userId, idToken, fullName, givenName, familyName, email);
-    [DBWAuthenticationManager googleAuthenticationWithToken:idToken];
-    // ...
+    [DBWAuthenticationManager googleAuthenticationWithToken:user.authentication.idToken];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
