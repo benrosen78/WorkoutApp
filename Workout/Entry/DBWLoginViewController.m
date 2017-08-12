@@ -24,6 +24,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if ([FBSDKAccessToken currentAccessToken]) {
+        // User is logged in, do work such as go to next view controller.
+        NSLog(@"test");
+    }
+
     
     [[NSNotificationCenter defaultCenter ] addObserverForName:FBSDKAccessTokenDidChangeNotification object:self queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
         NSLog(@" notification test %@", [FBSDKAccessToken currentAccessToken]);
@@ -75,7 +80,9 @@
     [self.view addSubview:googleButton];
     
     FBSDKLoginButton *facebookButton = [[FBSDKLoginButton alloc] init];
-    
+    facebookButton.readPermissions = @[@"email"];
+    facebookButton.titleLabel.font = [UIFont systemFontOfSize:14.0 weight:UIFontWeightMedium];
+    [facebookButton removeConstraints:facebookButton.constraints];
     facebookButton.delegate = self;
     facebookButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:facebookButton];
@@ -91,7 +98,7 @@
     [emailButton setTitle:@"Sign in with email" forState:UIControlStateNormal];
     emailButton.backgroundColor = [UIColor colorWithRed:0.201 green:0.220 blue:0.376 alpha:1.00];
     [emailButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    emailButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightRegular];
+    emailButton.titleLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightMedium];
     emailButton.layer.masksToBounds = YES;
     emailButton.layer.cornerRadius = 3;
     emailButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -116,12 +123,15 @@
                                        @"google.width = view.width - 150",
                                        @"facebook.centerX = view.centerX",
                                        @"facebook.top = google.bottom + 30",
-                                       @"facebook.width = google.width",
+                                       @"facebook.width = google.width - 8",
+                                       @"facebook.height = 40",
+                                       
                                        @"or.centerX = view.centerX",
                                        @"or.top = facebook.bottom + 20",
                                        @"email.centerX = view.centerX",
                                        @"email.top = or.bottom + 20",
-                                       @"email.width = google.width"
+                                       @"email.width = facebook.width",
+                                       @"email.height = facebook.height"
                                        ]
                              metrics:nil
                                views:@{@"title": titleLabel,
@@ -136,11 +146,6 @@
                                        }];
 }
 
-- (void)googleTapped:(GIDSignInButton *)button {
-    //RLMSyncCredentials *googleCredentials = [RLMSyncCredentials credentialsWithGoogleToken:@""];
-
-}
-
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }
@@ -150,9 +155,7 @@
 }
 
 - (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error {
-    NSLog(@"error: %@", error);
-    NSLog(@"result = %@, %@, %@", result, [FBSDKAccessToken currentAccessToken], result.token.tokenString);
-    [DBWAuthenticationManager facebookAuthenticationWithToken:[FBSDKAccessToken currentAccessToken]];
+    [DBWAuthenticationManager facebookAuthenticationWithToken:[FBSDKAccessToken currentAccessToken].tokenString];
 }
 
 - (void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton {

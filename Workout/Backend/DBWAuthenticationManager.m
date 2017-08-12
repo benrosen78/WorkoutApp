@@ -42,12 +42,25 @@ static NSString *const serverStringURL = @"https://wa.benrosen.me/";
                              NSLog(@"error %@", error);
                              NSLog(@"user %@", user);
                              if (user) {
-                                 RLMRealm *realm = [RLMRealm defaultRealm];
+/*                                 RLMSyncConfiguration *syncConfig = [[RLMSyncConfiguration alloc] initWithUser:user realmURL:[NSURL URLWithString:@"realms://wa.benrosen.me/~/tests"]];
+                                                                     
+
+                                 RLMRealmConfiguration *config = [RLMRealmConfiguration defaultConfiguration];
+                                 config.syncConfiguration = syncConfig;
+                                 
+                                 NSError *test;
+                                 RLMRealm *realm = [RLMRealm realmWithConfiguration:config error:&test];
+                                 NSLog(@"test is %@", test);
                                  [realm beginWriteTransaction];
-                                 [realm addObject:[[Dog alloc] init]];
+                                 Dog *dog = [[Dog alloc] init];
+                                 dog.name = @"Bobby";
+                                 [realm addObject:dog];
                                  [realm commitWriteTransaction];
+                                 
+                                 
+                                 RLMResults *results = [Dog allObjectsInRealm:realm];
+                                 NSLog(@"%@", results);
                                  // can now open a synchronized RLMRealm with this user
-                                 RLMRealm *realm = [RLMRealm realmWithURL:[NSURL URLWithString:[serverStringURL stringByAppendingPathComponent:@"~/tests"]]];
                                  //[realm addObject:[[Dog alloc] initWithValue:@{@"name": @"Franklin"}]];
                              } else if (error) {
                                  // handle error
@@ -56,7 +69,7 @@ static NSString *const serverStringURL = @"https://wa.benrosen.me/";
                                  [realm beginWriteTransaction];
                                  [realm addObject:[[Dog alloc] init]];
                                  [realm commitWriteTransaction];
-                             }
+                             */}
                          }];
 }
 
