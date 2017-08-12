@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B50CBD891F3DD8A6007D3962 /* DBWLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B50CBD881F3DD8A6007D3962 /* DBWLoginViewController.m */; };
+		B50CBD921F3DFCE2007D3962 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B50CBD8F1F3DFC20007D3962 /* FBSDKLoginKit.framework */; };
+		B50CBD931F3DFCE4007D3962 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B50CBD8E1F3DFC20007D3962 /* FBSDKCoreKit.framework */; };
+		B50CBD951F3DFD88007D3962 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B50CBD941F3DFD72007D3962 /* Bolts.framework */; };
+		B50CBD991F3E1B4D007D3962 /* DBWAuthenticationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B50CBD981F3E1B4D007D3962 /* DBWAuthenticationManager.m */; };
 		B53CF2C91F3365FC00F30CB8 /* DBWWorkoutCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B53CF2BF1F3365DE00F30CB8 /* DBWWorkoutCalendarViewController.m */; };
 		B53CF2CA1F33660000F30CB8 /* DBWExerciseSetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B53CF2C21F3365DE00F30CB8 /* DBWExerciseSetTableViewCell.m */; };
 		B53CF2CB1F33660200F30CB8 /* DBWExerciseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B53CF2C41F3365DE00F30CB8 /* DBWExerciseTableViewController.m */; };
@@ -56,6 +61,14 @@
 		1CD0FD741FEFA38936817806 /* Pods-Workout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Workout.release.xcconfig"; path = "Pods/Target Support Files/Pods-Workout/Pods-Workout.release.xcconfig"; sourceTree = "<group>"; };
 		271DEE926CA2C7D9100D4A23 /* Pods-DannyBenWorkout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DannyBenWorkout.release.xcconfig"; path = "Pods/Target Support Files/Pods-DannyBenWorkout/Pods-DannyBenWorkout.release.xcconfig"; sourceTree = "<group>"; };
 		A0F3AB7DBBFF19EFB1619676 /* Pods-DannyBenWorkout.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DannyBenWorkout.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DannyBenWorkout/Pods-DannyBenWorkout.debug.xcconfig"; sourceTree = "<group>"; };
+		B50CBD871F3DD8A6007D3962 /* DBWLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWLoginViewController.h; sourceTree = "<group>"; };
+		B50CBD881F3DD8A6007D3962 /* DBWLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWLoginViewController.m; sourceTree = "<group>"; };
+		B50CBD8D1F3DF333007D3962 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B50CBD8E1F3DFC20007D3962 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		B50CBD8F1F3DFC20007D3962 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		B50CBD941F3DFD72007D3962 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		B50CBD971F3E1B4D007D3962 /* DBWAuthenticationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWAuthenticationManager.h; sourceTree = "<group>"; };
+		B50CBD981F3E1B4D007D3962 /* DBWAuthenticationManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWAuthenticationManager.m; sourceTree = "<group>"; };
 		B53CF2B51F3365DE00F30CB8 /* DBWExercise.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWExercise.h; sourceTree = "<group>"; };
 		B53CF2B61F3365DE00F30CB8 /* DBWExercise.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWExercise.m; sourceTree = "<group>"; };
 		B53CF2B71F3365DE00F30CB8 /* DBWSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWSet.h; sourceTree = "<group>"; };
@@ -109,6 +122,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B50CBD951F3DFD88007D3962 /* Bolts.framework in Frameworks */,
+				B50CBD931F3DFCE4007D3962 /* FBSDKCoreKit.framework in Frameworks */,
+				B50CBD921F3DFCE2007D3962 /* FBSDKLoginKit.framework in Frameworks */,
 				C73C33F2E8B40A6707C8CE31 /* Pods_Workout.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -144,11 +160,32 @@
 		2ACEDE84D254E951367CB3EE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B50CBD941F3DFD72007D3962 /* Bolts.framework */,
+				B50CBD8E1F3DFC20007D3962 /* FBSDKCoreKit.framework */,
+				B50CBD8F1F3DFC20007D3962 /* FBSDKLoginKit.framework */,
 				B53CF2E01F339F0300F30CB8 /* Acknowledgements.plist */,
 				0E4133C1B9B963E41773189B /* Pods_DannyBenWorkout.framework */,
 				C05FB80146D5BA29DE434BD3 /* Pods_Workout.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B50CBD861F3DD85D007D3962 /* Entry */ = {
+			isa = PBXGroup;
+			children = (
+				B50CBD871F3DD8A6007D3962 /* DBWLoginViewController.h */,
+				B50CBD881F3DD8A6007D3962 /* DBWLoginViewController.m */,
+			);
+			path = Entry;
+			sourceTree = "<group>";
+		};
+		B50CBD961F3E1B22007D3962 /* Backend */ = {
+			isa = PBXGroup;
+			children = (
+				B50CBD971F3E1B4D007D3962 /* DBWAuthenticationManager.h */,
+				B50CBD981F3E1B4D007D3962 /* DBWAuthenticationManager.m */,
+			);
+			path = Backend;
 			sourceTree = "<group>";
 		};
 		B53CF2B31F3365DE00F30CB8 /* Workout */ = {
@@ -259,15 +296,18 @@
 			children = (
 				B5D2E2DD1F2A93B800CB4540 /* AppDelegate.h */,
 				B5D2E2DE1F2A93B800CB4540 /* AppDelegate.m */,
+				B50CBD861F3DD85D007D3962 /* Entry */,
 				B53CF2BD1F3365DE00F30CB8 /* Calendar */,
 				B53CF2C01F3365DE00F30CB8 /* Exercise */,
 				B53CF2B41F3365DE00F30CB8 /* Objects */,
 				B53CF2B31F3365DE00F30CB8 /* Workout */,
 				B53CF2D21F33665900F30CB8 /* Settings */,
 				B53CF2D61F336C7E00F30CB8 /* Resources */,
+				B50CBD961F3E1B22007D3962 /* Backend */,
 				B596A3371F2F9BAE00524503 /* Launch Screen.storyboard */,
 				B5D2E2E61F2A93B800CB4540 /* Assets.xcassets */,
 				B5D2E2EB1F2A93B800CB4540 /* Info.plist */,
+				B50CBD8D1F3DF333007D3962 /* GoogleService-Info.plist */,
 				B5D2E2EC1F2A93B800CB4540 /* main.m */,
 			);
 			path = Workout;
@@ -494,6 +534,7 @@
 				B5BDC59A1F3B588000C77CFC /* DBWWorkoutTemplate.m in Sources */,
 				B5BDC5921F3B4A5800C77CFC /* DBWCustomizeWorkoutPlanViewController.m in Sources */,
 				B5D2E2ED1F2A93B800CB4540 /* main.m in Sources */,
+				B50CBD991F3E1B4D007D3962 /* DBWAuthenticationManager.m in Sources */,
 				B5D2E2DF1F2A93B800CB4540 /* AppDelegate.m in Sources */,
 				B53CF2C91F3365FC00F30CB8 /* DBWWorkoutCalendarViewController.m in Sources */,
 				B53CF2CA1F33660000F30CB8 /* DBWExerciseSetTableViewCell.m in Sources */,
@@ -504,6 +545,7 @@
 				B53CF2CE1F33661300F30CB8 /* DBWExercise.m in Sources */,
 				B53CF2CF1F33661300F30CB8 /* DBWSet.m in Sources */,
 				B53CF2D01F33661300F30CB8 /* DBWWorkout.m in Sources */,
+				B50CBD891F3DD8A6007D3962 /* DBWLoginViewController.m in Sources */,
 				B53CF2D11F33661300F30CB8 /* DBWWorkoutManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -652,6 +694,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Darryl Rosen (8V5J4G27BG)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 8V5J4G27BG;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Workout/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -671,6 +717,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Darryl Rosen (8V5J4G27BG)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 8V5J4G27BG;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Workout/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

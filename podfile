@@ -3,6 +3,8 @@ target 'Workout' do
   use_frameworks!
 
   pod 'CompactConstraint'
+  pod 'Google/SignIn'
+  pod 'Realm'
   pod 'VTAcknowledgementsViewController'
   
   post_install do | installer |
