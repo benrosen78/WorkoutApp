@@ -16,6 +16,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "DBWAuthenticationManager.h"
 #import <Realm/Realm.h>
+#import "DBWDatabaseManager.h"
 
 @interface AppDelegate () <GIDSignInDelegate>
 
@@ -43,6 +44,7 @@
     [_window makeKeyAndVisible];
     
     [DBWWorkoutManager directoryInitialization];
+    [DBWDatabaseManager sharedDatabaseManager];
     
     DBWWorkoutTodayViewController *todayVC = [[DBWWorkoutTodayViewController alloc] init];
     todayVC.title = @"Today's Gains";
