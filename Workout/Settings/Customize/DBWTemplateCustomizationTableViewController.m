@@ -36,7 +36,7 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.title = [NSString stringWithFormat:@"Day: %lu", [[DBWWorkoutManager templates] indexOfObject:_template] + 1];
+    self.title = [NSString stringWithFormat:@"Day: %lu", [[DBWDatabaseManager sharedDatabaseManager].templateList.list indexOfObject:_template] + 1];
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.tableView.allowsSelectionDuringEditing = YES;
 }
@@ -102,7 +102,9 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
         if (indexPath.row >= [_template.exercises count] && [self isEditing]) {
             cell.textLabel.text = @"Add Excercise";
         } else {
-           // cell.textLabel.text = _template.exercises[indexPath.row].name;
+            DBWExercise *exercise = _template.exercises[indexPath.row];
+            cell.textLabel.text = exercise.name
+            ;
         }
         return cell;
     } else if (indexPath.section == 2) {
@@ -140,8 +142,9 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
+        [[DBWDatabaseManager sharedDatabaseManager] startTemplateWriting];
         [_template.exercises removeObjectAtIndex:indexPath.row];
-        [DBWWorkoutManager saveTemplate:_template];
+        [[DBWDatabaseManager sharedDatabaseManager] endTemplateWriting];
         
         [self.tableView reloadData];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
@@ -152,10 +155,10 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
         [controller addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             NSString *text = controller.textFields[0].text;
             DBWExercise *exercise = [DBWExercise exerciseWithName:text baseNumberOfSets:3];
-            //exercise.workout = _workout;
-            [_template.exercises addObject:exercise];
             
-            [DBWWorkoutManager saveTemplate:_template];
+            [[DBWDatabaseManager sharedDatabaseManager] startTemplateWriting];
+            [_template.exercises addObject:exercise];
+            [[DBWDatabaseManager sharedDatabaseManager] endTemplateWriting];
             [self setEditing:YES animated:YES];
         }]];
         [controller addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
@@ -210,52 +213,9 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
-    [_template.exercises exchangeObjectAtIndex:sourceIndexPath.row withObjectAtIndex:destinationIndexPath.row];
-    
+    [[DBWDatabaseManager sharedDatabaseManager] startTemplateWriting];
+    [_template.exercises moveObjectAtIndex:sourceIndexPath.row toIndex:destinationIndexPath.row];
+    [[DBWDatabaseManager sharedDatabaseManager] endTemplateWriting];
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

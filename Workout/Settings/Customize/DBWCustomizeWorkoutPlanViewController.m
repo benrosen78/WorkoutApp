@@ -13,13 +13,14 @@
 #import "DBWTemplateCustomizationTableViewController.h"
 #import <CompactConstraint/CompactConstraint.h>
 #import "DBWDatabaseManager.h"
+#import "DBWWorkoutTemplateList.h"
 
 static NSString *const cellIdentifier = @"day-identifier";
 static NSString *const headerIdentifier = @"header-identifier";
 
 @interface DBWCustomizeWorkoutPlanViewController ()
 
-@property (strong, nonatomic) RLMArray<DBWWorkoutTemplate> *templates;
+@property (strong, nonatomic) DBWWorkoutTemplateList *templateList;
 
 @end
 
@@ -43,13 +44,12 @@ static NSString *const headerIdentifier = @"header-identifier";
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTapped:)];
     
-    _templates = [[DBWDatabaseManager sharedDatabaseManager] allTemplates];
+    _templateList = [[DBWDatabaseManager sharedDatabaseManager] templateList];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    _templates = [[DBWDatabaseManager sharedDatabaseManager] allTemplates];
     [self.collectionView reloadData];
 }
 
@@ -61,14 +61,13 @@ static NSString *const headerIdentifier = @"header-identifier";
 - (void)addTapped:(UIBarButtonItem *)sender {
     DBWWorkoutTemplate *newTemplate = [[DBWWorkoutTemplate alloc] init];
     [[DBWDatabaseManager sharedDatabaseManager] saveNewWorkoutTemplate:newTemplate];
-    _templates = [[DBWDatabaseManager sharedDatabaseManager] allTemplates];
     [self.collectionView reloadData];
 }
 
 #pragma mark - Collection view data source
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [_templates count];
+    return [_templateList.list count];
 }
 
 - (CGSize)collectionView:(UICollectionViewCell *)collectionView layout:(nonnull UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
@@ -76,7 +75,7 @@ static NSString *const headerIdentifier = @"header-identifier";
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    DBWWorkoutTemplate *template = _templates[indexPath.row];
+    DBWWorkoutTemplate *template = _templateList.list[indexPath.row];
     
     DBWWorkoutPlanDayCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.backgroundColor = [UIColor groupTableViewBackgroundColor];
@@ -89,15 +88,14 @@ static NSString *const headerIdentifier = @"header-identifier";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
     
-    DBWTemplateCustomizationTableViewController *customizationVC = [[DBWTemplateCustomizationTableViewController alloc] initWithTemplate:_templates[indexPath.row]];
+    DBWTemplateCustomizationTableViewController *customizationVC = [[DBWTemplateCustomizationTableViewController alloc] initWithTemplate:_templateList.list[indexPath.row]];
     [self.navigationController pushViewController:customizationVC animated:YES];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
     
-    DBWWorkoutTemplate *source = _templates[sourceIndexPath.row];
+    DBWWorkoutTemplate *source = _templateList.list[sourceIndexPath.row];
     [[DBWDatabaseManager sharedDatabaseManager] moveWorkoutTemplate:source toIndex:destinationIndexPath.row];
-    _templates = [[DBWDatabaseManager sharedDatabaseManager] allTemplates];
     [collectionView reloadItemsAtIndexPaths:collectionView.indexPathsForVisibleItems];
 }
 

@@ -14,7 +14,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-       // _sets = [NSMutableArray array];
+        //_sets = [RLMArray mutabl];
     }
     return self;
 }

@@ -64,9 +64,8 @@
     [_templates commitWriteTransaction];
 }
 
-- (RLMArray *)allTemplates {
-    DBWWorkoutTemplateList *list = [DBWWorkoutTemplateList allObjectsInRealm:_templates][0];
-    return list.list;
+- (DBWWorkoutTemplateList *)templateList {
+    return [DBWWorkoutTemplateList allObjectsInRealm:_templates][0];
 }
 
 - (void)deleteWorkoutTemplate:(DBWWorkoutTemplate *)workoutTemplate {
@@ -75,7 +74,7 @@
     [_templates commitWriteTransaction];
 }
 
-- (void)moveWorkoutTemplate:(DBWWorkoutTemplate *)workoutTemplate toIndex:(NSInteger)newIndex {
+- (void)moveWorkoutTemplate:(DBWWorkoutTemplate *)workoutTemplate toIndex:(NSInteger)newIndex {  
     DBWWorkoutTemplateList *list = [DBWWorkoutTemplateList allObjectsInRealm:_templates][0];
     RLMArray <DBWWorkoutTemplate> *templates = list.list;
     
