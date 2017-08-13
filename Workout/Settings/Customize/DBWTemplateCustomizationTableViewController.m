@@ -212,6 +212,17 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
     return indexPath.section == 1 && indexPath.row < [_template.exercises count];
 }
 
+- (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(nonnull NSIndexPath *)sourceIndexPath toProposedIndexPath:(nonnull NSIndexPath *)proposedDestinationIndexPath {
+    if (proposedDestinationIndexPath.row == [_template.exercises count]) {
+        return [NSIndexPath indexPathForRow:[_template.exercises count] - 1 inSection:1];
+    } else if (proposedDestinationIndexPath.section == 0) {
+        return [NSIndexPath indexPathForRow:0 inSection:1];
+    } else if (proposedDestinationIndexPath.section == 2) {
+        return [NSIndexPath indexPathForRow:[_template.exercises count] - 1 inSection:1];
+    }
+    return proposedDestinationIndexPath;
+}
+
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
     [[DBWDatabaseManager sharedDatabaseManager] startTemplateWriting];
     [_template.exercises moveObjectAtIndex:sourceIndexPath.row toIndex:destinationIndexPath.row];
