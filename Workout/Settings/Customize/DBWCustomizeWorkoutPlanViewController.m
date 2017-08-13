@@ -14,6 +14,7 @@
 #import <CompactConstraint/CompactConstraint.h>
 #import "DBWDatabaseManager.h"
 #import "DBWWorkoutTemplateList.h"
+#import "DBWCustomizeWorkoutPlanCollectionHeaderView.h"
 
 static NSString *const cellIdentifier = @"day-identifier";
 static NSString *const headerIdentifier = @"header-identifier";
@@ -40,7 +41,7 @@ static NSString *const headerIdentifier = @"header-identifier";
     
     self.collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     [self.collectionView registerClass:[DBWWorkoutPlanDayCell class] forCellWithReuseIdentifier:cellIdentifier];
-    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerIdentifier];
+    [self.collectionView registerClass:[DBWCustomizeWorkoutPlanCollectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerIdentifier];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTapped:)];
     
@@ -106,41 +107,9 @@ static NSString *const headerIdentifier = @"header-identifier";
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-        UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerIdentifier forIndexPath:indexPath];
-        view.backgroundColor = [UIColor whiteColor];
-        
-        UILabel *instructionsLabel = [[UILabel alloc] init];
-        instructionsLabel.text = @"Templates contain a list of exercises. You can choose a template when you workout and the exercises will autofill in.\n\n Tap '+' to create a new template.\nPress and hold on a day to reposition it.";
-        instructionsLabel.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightRegular];
-        instructionsLabel.textColor = [UIColor grayColor];
-        instructionsLabel.numberOfLines = 0;
-        instructionsLabel.textAlignment = NSTextAlignmentCenter;
-        instructionsLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        [view addSubview:instructionsLabel];
-        
-        UIView *separator = [[UIView alloc] init];
-        separator.backgroundColor = [UIColor darkGrayColor];
-        separator.translatesAutoresizingMaskIntoConstraints = NO;
-        [view addSubview:separator];
-        
-        [view addCompactConstraints:@[@"separator.top = view.bottom - 0.5",
-                                      @"separator.height = 0.5",
-                                      @"separator.left = view.left",
-                                      @"separator.right = view.right",
-                                      @"instructions.top = view.top + 5",
-                                      @"instructions.left = view.left + 5",
-                                      @"instructions.right = view.right - 5",
-                                      @"instructions.bottom = view.bottom - 5"]
-                            metrics:nil
-                              views:@{@"separator": separator,
-                                      @"instructions": instructionsLabel,
-                                      @"view": view
-                                      }];
-        
+        DBWCustomizeWorkoutPlanCollectionHeaderView *view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerIdentifier forIndexPath:indexPath];
         return view;
     }
-    
-    
     return nil;
 }
 

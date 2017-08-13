@@ -37,6 +37,7 @@
 		B5D2E2F71F2A93B800CB4540 /* DannyBenWorkoutTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D2E2F61F2A93B800CB4540 /* DannyBenWorkoutTests.m */; };
 		B5D2E3021F2A93B800CB4540 /* DannyBenWorkoutUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D2E3011F2A93B800CB4540 /* DannyBenWorkoutUITests.m */; };
 		B5DF74381F408DA5009FA3B4 /* DBWWorkoutTemplateList.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DF74371F408DA5009FA3B4 /* DBWWorkoutTemplateList.m */; };
+		B5DF743B1F40B3CD009FA3B4 /* DBWCustomizeWorkoutPlanCollectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DF743A1F40B3CD009FA3B4 /* DBWCustomizeWorkoutPlanCollectionHeaderView.m */; };
 		C73C33F2E8B40A6707C8CE31 /* Pods_Workout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C05FB80146D5BA29DE434BD3 /* Pods_Workout.framework */; };
 /* End PBXBuildFile section */
 
@@ -120,6 +121,8 @@
 		B5D2E3031F2A93B800CB4540 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5DF74361F408DA5009FA3B4 /* DBWWorkoutTemplateList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWWorkoutTemplateList.h; sourceTree = "<group>"; };
 		B5DF74371F408DA5009FA3B4 /* DBWWorkoutTemplateList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWWorkoutTemplateList.m; sourceTree = "<group>"; };
+		B5DF74391F40B3CD009FA3B4 /* DBWCustomizeWorkoutPlanCollectionHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWCustomizeWorkoutPlanCollectionHeaderView.h; sourceTree = "<group>"; };
+		B5DF743A1F40B3CD009FA3B4 /* DBWCustomizeWorkoutPlanCollectionHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWCustomizeWorkoutPlanCollectionHeaderView.m; sourceTree = "<group>"; };
 		C05FB80146D5BA29DE434BD3 /* Pods_Workout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Workout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -271,6 +274,8 @@
 			children = (
 				B5BDC5901F3B4A5800C77CFC /* DBWCustomizeWorkoutPlanViewController.h */,
 				B5BDC5911F3B4A5800C77CFC /* DBWCustomizeWorkoutPlanViewController.m */,
+				B5DF74391F40B3CD009FA3B4 /* DBWCustomizeWorkoutPlanCollectionHeaderView.h */,
+				B5DF743A1F40B3CD009FA3B4 /* DBWCustomizeWorkoutPlanCollectionHeaderView.m */,
 				B5BDC5951F3B4D4C00C77CFC /* DBWWorkoutPlanDayCell.h */,
 				B5BDC5961F3B4D4C00C77CFC /* DBWWorkoutPlanDayCell.m */,
 				B5BDC59E1F3B5FDE00C77CFC /* DBWTemplateCustomizationTableViewController.h */,
@@ -540,6 +545,7 @@
 			files = (
 				B5BDC5971F3B4D4C00C77CFC /* DBWWorkoutPlanDayCell.m in Sources */,
 				B53CF2D51F3366D000F30CB8 /* DBWSettingsTableViewController.m in Sources */,
+				B5DF743B1F40B3CD009FA3B4 /* DBWCustomizeWorkoutPlanCollectionHeaderView.m in Sources */,
 				B53CF2CB1F33660200F30CB8 /* DBWExerciseTableViewController.m in Sources */,
 				B5BDC59A1F3B588000C77CFC /* DBWWorkoutTemplate.m in Sources */,
 				B5BDC5921F3B4A5800C77CFC /* DBWCustomizeWorkoutPlanViewController.m in Sources */,
