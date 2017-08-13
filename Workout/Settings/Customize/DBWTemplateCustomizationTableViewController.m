@@ -211,6 +211,7 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
     [_template.exercises exchangeObjectAtIndex:sourceIndexPath.row withObjectAtIndex:destinationIndexPath.row];
+    
 }
 
 /*

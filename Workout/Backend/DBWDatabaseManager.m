@@ -9,6 +9,7 @@
 #import "DBWDatabaseManager.h"
 #import <Realm/Realm.h>
 #import "DBWWorkoutTemplate.h"
+#import "DBWWorkoutTemplateList.h"
 
 @interface DBWDatabaseManager ()
 
@@ -43,21 +44,29 @@
         
         _workouts = [RLMRealm realmWithConfiguration:workoutRealmConfig error:nil];
         _templates = [RLMRealm realmWithConfiguration:templateRealmConfig error:nil];
-        [templateRealmConfig setDeleteRealmIfMigrationNeeded:YES];
+        
+        if ([DBWWorkoutTemplateList allObjectsInRealm:_templates].count < 1) {
+            [_templates beginWriteTransaction];
+            [_templates addObject:[DBWWorkoutTemplateList new]];
+            [_templates commitWriteTransaction];
+        }
     }
     return self;
 }
 
 #pragma mark - Templates DB Management
 
-- (void)saveWorkoutTemplate:(DBWWorkoutTemplate *)workoutTemplate {
+- (void)saveNewWorkoutTemplate:(DBWWorkoutTemplate *)workoutTemplate {
     [_templates beginWriteTransaction];
-    [_templates addOrUpdateObject:workoutTemplate];
+    
+    DBWWorkoutTemplateList *list = [DBWWorkoutTemplateList allObjectsInRealm:_templates][0];
+    [list.list addObject:workoutTemplate];
     [_templates commitWriteTransaction];
 }
 
-- (RLMResults *)allTemplates {
-    return [DBWWorkoutTemplate allObjectsInRealm:_templates];
+- (RLMArray *)allTemplates {
+    DBWWorkoutTemplateList *list = [DBWWorkoutTemplateList allObjectsInRealm:_templates][0];
+    return list.list;
 }
 
 - (void)deleteWorkoutTemplate:(DBWWorkoutTemplate *)workoutTemplate {
@@ -66,12 +75,17 @@
     [_templates commitWriteTransaction];
 }
 
-- (void)moveWorkoutTemplate:(DBWWorkoutTemplate *)workoutTemplate toIndex:(NSInteger)index {
-    RLMResults *results = [self allTemplates];
-    [results ]
-    if ([_ containsObject:workoutTemplate]) {
-        [dataContents removeObject:workoutTemplate];
-        [dataContents insertObject:workoutTemplate atIndex:index];
+- (void)moveWorkoutTemplate:(DBWWorkoutTemplate *)workoutTemplate toIndex:(NSInteger)newIndex {
+    DBWWorkoutTemplateList *list = [DBWWorkoutTemplateList allObjectsInRealm:_templates][0];
+    RLMArray <DBWWorkoutTemplate> *templates = list.list;
+    
+    NSInteger index = [templates indexOfObject:workoutTemplate];
+    if (index != NSNotFound) {
+        [_templates beginWriteTransaction];
+        [templates removeObjectAtIndex:index];
+        [templates insertObject:workoutTemplate atIndex:newIndex];
+        [_templates commitWriteTransaction];
+    }
 }
 
 - (void)startTemplateWriting {

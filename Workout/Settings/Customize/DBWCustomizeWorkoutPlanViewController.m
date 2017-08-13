@@ -19,7 +19,7 @@ static NSString *const headerIdentifier = @"header-identifier";
 
 @interface DBWCustomizeWorkoutPlanViewController ()
 
-@property (strong, nonatomic) RLMResults *templates;
+@property (strong, nonatomic) RLMArray<DBWWorkoutTemplate> *templates;
 
 @end
 
@@ -60,7 +60,7 @@ static NSString *const headerIdentifier = @"header-identifier";
 
 - (void)addTapped:(UIBarButtonItem *)sender {
     DBWWorkoutTemplate *newTemplate = [[DBWWorkoutTemplate alloc] init];
-    [[DBWDatabaseManager sharedDatabaseManager] saveWorkoutTemplate:newTemplate];
+    [[DBWDatabaseManager sharedDatabaseManager] saveNewWorkoutTemplate:newTemplate];
     _templates = [[DBWDatabaseManager sharedDatabaseManager] allTemplates];
     [self.collectionView reloadData];
 }
@@ -96,7 +96,7 @@ static NSString *const headerIdentifier = @"header-identifier";
 - (void)collectionView:(UICollectionView *)collectionView moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
     
     DBWWorkoutTemplate *source = _templates[sourceIndexPath.row];
-    [DBWWorkoutManager moveTemplate:source toIndex:destinationIndexPath.row];
+    [[DBWDatabaseManager sharedDatabaseManager] moveWorkoutTemplate:source toIndex:destinationIndexPath.row];
     _templates = [[DBWDatabaseManager sharedDatabaseManager] allTemplates];
     [collectionView reloadItemsAtIndexPaths:collectionView.indexPathsForVisibleItems];
 }

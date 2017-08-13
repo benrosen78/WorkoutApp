@@ -36,6 +36,7 @@
 		B5D2E2ED1F2A93B800CB4540 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D2E2EC1F2A93B800CB4540 /* main.m */; };
 		B5D2E2F71F2A93B800CB4540 /* DannyBenWorkoutTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D2E2F61F2A93B800CB4540 /* DannyBenWorkoutTests.m */; };
 		B5D2E3021F2A93B800CB4540 /* DannyBenWorkoutUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D2E3011F2A93B800CB4540 /* DannyBenWorkoutUITests.m */; };
+		B5DF74381F408DA5009FA3B4 /* DBWWorkoutTemplateList.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DF74371F408DA5009FA3B4 /* DBWWorkoutTemplateList.m */; };
 		C73C33F2E8B40A6707C8CE31 /* Pods_Workout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C05FB80146D5BA29DE434BD3 /* Pods_Workout.framework */; };
 /* End PBXBuildFile section */
 
@@ -117,6 +118,8 @@
 		B5D2E2FD1F2A93B800CB4540 /* WorkoutUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorkoutUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5D2E3011F2A93B800CB4540 /* DannyBenWorkoutUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DannyBenWorkoutUITests.m; sourceTree = "<group>"; };
 		B5D2E3031F2A93B800CB4540 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B5DF74361F408DA5009FA3B4 /* DBWWorkoutTemplateList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWWorkoutTemplateList.h; sourceTree = "<group>"; };
+		B5DF74371F408DA5009FA3B4 /* DBWWorkoutTemplateList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWWorkoutTemplateList.m; sourceTree = "<group>"; };
 		C05FB80146D5BA29DE434BD3 /* Pods_Workout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Workout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -215,6 +218,8 @@
 				B53CF2BA1F3365DE00F30CB8 /* DBWWorkout.m */,
 				B5BDC5981F3B588000C77CFC /* DBWWorkoutTemplate.h */,
 				B5BDC5991F3B588000C77CFC /* DBWWorkoutTemplate.m */,
+				B5DF74361F408DA5009FA3B4 /* DBWWorkoutTemplateList.h */,
+				B5DF74371F408DA5009FA3B4 /* DBWWorkoutTemplateList.m */,
 				B53CF2BB1F3365DE00F30CB8 /* DBWWorkoutManager.h */,
 				B53CF2BC1F3365DE00F30CB8 /* DBWWorkoutManager.m */,
 			);
@@ -551,6 +556,7 @@
 				B53CF2CE1F33661300F30CB8 /* DBWExercise.m in Sources */,
 				B53CF2CF1F33661300F30CB8 /* DBWSet.m in Sources */,
 				B53CF2D01F33661300F30CB8 /* DBWWorkout.m in Sources */,
+				B5DF74381F408DA5009FA3B4 /* DBWWorkoutTemplateList.m in Sources */,
 				B50CBD891F3DD8A6007D3962 /* DBWLoginViewController.m in Sources */,
 				B53CF2D11F33661300F30CB8 /* DBWWorkoutManager.m in Sources */,
 			);

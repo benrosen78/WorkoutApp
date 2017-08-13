@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Realm/Realm.h>
+#import "DBWWorkoutTemplate.h"
 
 @class DBWWorkoutTemplate, RLMResults;
 
@@ -14,9 +16,11 @@
 
 + (instancetype)sharedDatabaseManager;
 
-- (RLMResults *)allTemplates;
+- (RLMArray<DBWWorkoutTemplate> *)allTemplates;
 
-- (void)saveWorkoutTemplate:(DBWWorkoutTemplate *)workoutTemplate;
+- (void)saveNewWorkoutTemplate:(DBWWorkoutTemplate *)workoutTemplate;
+
+- (void)moveWorkoutTemplate:(DBWWorkoutTemplate *)workoutTemplate toIndex:(NSInteger)index;
 
 - (void)startTemplateWriting;
 

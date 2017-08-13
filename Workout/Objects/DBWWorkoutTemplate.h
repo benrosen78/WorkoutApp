@@ -22,3 +22,7 @@ RLM_ARRAY_TYPE(DBWExercise)
 @property NSString *primaryKey;
 
 @end
+
+RLM_ARRAY_TYPE(DBWWorkoutTemplate)
+
+
