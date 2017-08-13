@@ -12,13 +12,14 @@
 #import "DBWWorkoutTemplate.h"
 #import "DBWTemplateCustomizationTableViewController.h"
 #import <CompactConstraint/CompactConstraint.h>
+#import "DBWDatabaseManager.h"
 
 static NSString *const cellIdentifier = @"day-identifier";
 static NSString *const headerIdentifier = @"header-identifier";
 
 @interface DBWCustomizeWorkoutPlanViewController ()
 
-@property (strong, nonatomic) NSMutableArray <DBWWorkoutTemplate *> *templates;
+@property (strong, nonatomic) RLMResults *templates;
 
 @end
 
@@ -42,13 +43,13 @@ static NSString *const headerIdentifier = @"header-identifier";
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTapped:)];
     
-    _templates = [DBWWorkoutManager templates];
+    _templates = [[DBWDatabaseManager sharedDatabaseManager] allTemplates];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    _templates = [DBWWorkoutManager templates];
+    _templates = [[DBWDatabaseManager sharedDatabaseManager] allTemplates];
     [self.collectionView reloadData];
 }
 
@@ -59,8 +60,8 @@ static NSString *const headerIdentifier = @"header-identifier";
 
 - (void)addTapped:(UIBarButtonItem *)sender {
     DBWWorkoutTemplate *newTemplate = [[DBWWorkoutTemplate alloc] init];
-    [_templates addObject:newTemplate];
-    [DBWWorkoutManager saveTemplate:newTemplate];
+    [[DBWDatabaseManager sharedDatabaseManager] saveWorkoutTemplate:newTemplate];
+    _templates = [[DBWDatabaseManager sharedDatabaseManager] allTemplates];
     [self.collectionView reloadData];
 }
 
@@ -96,7 +97,7 @@ static NSString *const headerIdentifier = @"header-identifier";
     
     DBWWorkoutTemplate *source = _templates[sourceIndexPath.row];
     [DBWWorkoutManager moveTemplate:source toIndex:destinationIndexPath.row];
-    _templates = [DBWWorkoutManager templates];
+    _templates = [[DBWDatabaseManager sharedDatabaseManager] allTemplates];
     [collectionView reloadItemsAtIndexPaths:collectionView.indexPathsForVisibleItems];
 }
 

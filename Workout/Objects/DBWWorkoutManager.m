@@ -20,7 +20,7 @@ static NSString *path = nil;
     path = [[self documentsPath] stringByAppendingPathComponent:@"workouts.plist"];
     
     if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
-        configurationDictionary = [NSMutableDictionary dictionaryWithDictionary:@{@"templates": [DBWWorkoutTemplate initialWorkoutTemplates], @"data": [NSMutableArray array]}];
+        //configurationDictionary = [NSMutableDictionary dictionaryWithDictionary:@{@"templates": [DBWWorkoutTemplate initialWorkoutTemplates], @"data": [NSMutableArray array]}];
     } else {
         configurationDictionary = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
     }

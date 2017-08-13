@@ -11,6 +11,7 @@
 #import "DBWExercise.h"
 #import <CompactConstraint/CompactConstraint.h>
 #import "DBWWorkoutManager.h"
+#import "DBWDatabaseManager.h"
 
 static NSString *const kShortDescCellIdentifier = @"desc-cell";
 static NSString *const kExerciseCellIdentifier = @"exercise-cell";
@@ -101,7 +102,7 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
         if (indexPath.row >= [_template.exercises count] && [self isEditing]) {
             cell.textLabel.text = @"Add Excercise";
         } else {
-            cell.textLabel.text = _template.exercises[indexPath.row].name;
+           // cell.textLabel.text = _template.exercises[indexPath.row].name;
         }
         return cell;
     } else if (indexPath.section == 2) {
@@ -187,7 +188,7 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
         UIAlertController *deleteController = [UIAlertController alertControllerWithTitle:@"Workout App" message:@"Are you sure you want to delete this workout template? You can't recover it." preferredStyle:UIAlertControllerStyleAlert];
         [deleteController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
         [deleteController addAction:[UIAlertAction actionWithTitle:@"I'm sure" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-            [DBWWorkoutManager removeTemplate:_template];
+            [[DBWDatabaseManager sharedDatabaseManager] deleteWorkoutTemplate:_template];
             [self dismissViewControllerAnimated:YES completion:nil];
             [self.navigationController popViewControllerAnimated:YES];
         }]];
@@ -199,8 +200,9 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
+    [[DBWDatabaseManager sharedDatabaseManager] startTemplateWriting];
     _template.shortDescription = textView.text;
-    [DBWWorkoutManager saveTemplate:_template];
+    [[DBWDatabaseManager sharedDatabaseManager] endTemplateWriting];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {

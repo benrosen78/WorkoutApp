@@ -28,7 +28,7 @@
         _template = [aDecoder decodeIntegerForKey:@"template"];
         
         for (DBWExercise *exercise in _exercises) {
-            exercise.workout = self;
+       //     exercise.workout = self;
         }
     }
     return self;
@@ -37,10 +37,10 @@
 + (instancetype)todaysWorkoutWithTemplate:(DBWWorkoutTemplate *)workoutTemplate {
     DBWWorkout *workout = [[DBWWorkout alloc] init];
     workout.timestamp = [[NSDate date] timeIntervalSince1970];
-    workout.exercises = [NSMutableArray arrayWithArray:workoutTemplate.exercises];
+   // workout.exercises = [NSMutableArray arrayWithArray:workoutTemplate.exercises];
     
     for (DBWExercise *exercise in workout.exercises) {
-        exercise.workout = workout;
+        //exercise.workout = workout;
     }
     
     return workout;

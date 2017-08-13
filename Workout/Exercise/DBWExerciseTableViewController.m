@@ -42,8 +42,8 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
 }
 
 - (void)add:(UIBarButtonItem *)item {
-    [_exercise.sets addObject:[DBWSet new]];
-    [DBWWorkoutManager saveWorkout:_exercise.workout];
+    //[_exercise.sets addObject:[DBWSet new]];
+    //[DBWWorkoutManager saveWorkout:_exercise.workout];
     
     [self.tableView reloadData];
 }
@@ -56,7 +56,7 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [_exercise.sets count];
+    return 1;// return [_exercise.sets count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -75,13 +75,13 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
     weightTF.tag = 1;
     repsTF.tag = 2;
     
-    DBWSet *set = _exercise.sets[indexPath.section];
+   // DBWSet *set = _exercise.sets[indexPath.section];
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     formatter.numberStyle = NSNumberFormatterDecimalStyle;
     formatter.maximumFractionDigits = 20;
         
-    weightTF.text = set.weight ? [NSString stringWithFormat:@"%@", [formatter stringFromNumber:@(set.weight)]] : @"";
-    repsTF.text = set.reps ? [NSString stringWithFormat:@"%lu", set.reps] : @"";
+  //  weightTF.text = set.weight ? [NSString stringWithFormat:@"%@", [formatter stringFromNumber:@(set.weight)]] : @"";
+  //  repsTF.text = set.reps ? [NSString stringWithFormat:@"%lu", set.reps] : @"";
     
     return cell;
 }
@@ -92,16 +92,16 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
 
 - (void)textFieldDidEndEditing:(UITextField *)textField reason:(UITextFieldDidEndEditingReason)reason {
     UITableViewCell *cell = (UITableViewCell *)textField.superview.superview.superview;
-    NSIndexPath *path = [self.tableView indexPathForCell:cell];
+   NSIndexPath *path = [self.tableView indexPathForCell:cell];
     
-    DBWSet *set = _exercise.sets[path.section];
+   // DBWSet *set = _exercise.sets[path.section];
     if (textField.tag == 1) {
-        set.weight = [textField.text floatValue];
+     //   set.weight = [textField.text floatValue];
     } else if (textField.tag == 2) {
-        set.reps = [textField.text integerValue];
+     //   set.reps = [textField.text integerValue];
     }
     
-    [DBWWorkoutManager saveWorkout:_exercise.workout];
+   // [DBWWorkoutManager saveWorkout:_exercise.workout];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -110,7 +110,7 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [_exercise.sets removeObjectAtIndex:indexPath.section];
+      //  [_exercise.sets removeObjectAtIndex:indexPath.section];
         [tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
 }

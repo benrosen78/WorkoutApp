@@ -8,6 +8,7 @@
 
 #import "DBWAuthenticationManager.h"
 #import <Realm/Realm.h>
+#import "DBWDatabaseManager.h"
 
 static NSString *const serverStringURL = @"https://wa.benrosen.me/";
 
@@ -26,7 +27,8 @@ static NSString *const serverStringURL = @"https://wa.benrosen.me/";
 + (void)loginWithAuthentication:(RLMSyncCredentials *)credentials {
     [RLMSyncUser logInWithCredentials:credentials authServerURL:[NSURL URLWithString:serverStringURL] onCompletion:^(RLMSyncUser *user, NSError *error) {
         if (user) {
-             [[NSNotificationCenter defaultCenter] postNotificationName:DBWAuthenticationManagerLogInNotification object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:DBWAuthenticationManagerLogInNotification object:nil];
+            [DBWDatabaseManager sharedDatabaseManager];
          }
     }];
 }

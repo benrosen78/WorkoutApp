@@ -43,8 +43,7 @@
     _window.backgroundColor = [UIColor clearColor];
     [_window makeKeyAndVisible];
     
-    [DBWWorkoutManager directoryInitialization];
-    [DBWDatabaseManager sharedDatabaseManager];
+    //[DBWWorkoutManager directoryInitialization];
     
     DBWWorkoutTodayViewController *todayVC = [[DBWWorkoutTodayViewController alloc] init];
     todayVC.title = @"Today's Gains";
@@ -65,6 +64,7 @@
         DBWLoginViewController *loginVC = [[DBWLoginViewController alloc] init];
         _window.rootViewController = loginVC;
     } else {
+        [DBWDatabaseManager sharedDatabaseManager];
         _window.rootViewController = _tabBarController;
     }
     return YES;

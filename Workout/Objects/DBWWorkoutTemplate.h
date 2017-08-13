@@ -7,15 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Realm/Realm.h>
 
 @class DBWExercise, DBWWorkoutTemplate;
 
-@interface DBWWorkoutTemplate : NSObject <NSCoding>
+RLM_ARRAY_TYPE(DBWExercise)
 
-@property (strong, nonatomic) NSString *shortDescription;
+@interface DBWWorkoutTemplate : RLMObject
 
-@property (strong, nonatomic) NSMutableArray <DBWExercise *> *exercises;
+@property NSString *shortDescription;
 
-+ (NSMutableArray <DBWWorkoutTemplate *> *)initialWorkoutTemplates;
+@property RLMArray <DBWExercise> *exercises;
+
+@property NSString *primaryKey;
 
 @end
