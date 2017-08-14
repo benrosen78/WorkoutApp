@@ -13,6 +13,7 @@
 #import "DBWWorkoutManager.h"
 #import <CompactConstraint/CompactConstraint.h>
 #import "DBWWorkoutTemplate.h"
+#import "DBWDatabaseManager.h"
 
 @interface DBWWorkoutTodayViewController ()
 
@@ -168,10 +169,10 @@
         }
     } else {
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"Hey there!" message:@"You gotta go to the gym. Select which day you would like to use. This will be a template for you to log on." preferredStyle:UIAlertControllerStyleActionSheet];
-        NSArray <DBWWorkoutTemplate *> *templates = [DBWWorkoutManager templates];
+        RLMArray <DBWWorkoutTemplate *> *templates = [[DBWDatabaseManager sharedDatabaseManager] templateList].list;
         for (int i = 0; i < [templates count]; i++) {
             DBWWorkoutTemplate *option = templates[i];
-            [controller addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:@"%d - %@", i + 1, option.shortDescription] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [controller addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:@"%d - %@", i + 1, option.shortDescription ?: @"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 _workout = [DBWWorkout todaysWorkoutWithTemplate:option];
                 [self.tableView reloadData];
                 [DBWWorkoutManager saveWorkout:_workout];

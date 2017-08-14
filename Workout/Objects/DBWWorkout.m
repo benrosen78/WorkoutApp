@@ -37,11 +37,6 @@
 + (instancetype)todaysWorkoutWithTemplate:(DBWWorkoutTemplate *)workoutTemplate {
     DBWWorkout *workout = [[DBWWorkout alloc] init];
     workout.timestamp = [[NSDate date] timeIntervalSince1970];
-   // workout.exercises = [NSMutableArray arrayWithArray:workoutTemplate.exercises];
-    
-    for (DBWExercise *exercise in workout.exercises) {
-        //exercise.workout = workout;
-    }
     
     return workout;
 }
