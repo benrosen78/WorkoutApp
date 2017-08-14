@@ -30,7 +30,7 @@
 
 - (void)saveNewWorkout:(DBWWorkout *)workout;
 
-- (DBWWorkout *)workoutForDateComponents:(NSDateComponents *)components;
+- (DBWWorkout *)workoutForDay:(NSInteger)day month:(NSInteger)month year:(NSInteger)year;
 
 - (DBWWorkout *)todaysWorkout;
 

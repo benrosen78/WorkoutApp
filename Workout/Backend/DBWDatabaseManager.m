@@ -102,14 +102,14 @@
     [_templates commitWriteTransaction];
 }
 
-- (DBWWorkout *)workoutForDateComponents:(NSDateComponents *)components {
-    return [DBWWorkout objectsInRealm:_templates withPredicate:[NSPredicate predicateWithFormat:@"day = %d AND month = %d AND year = %d", components.day, components.month, components.year]].firstObject;
+- (DBWWorkout *)workoutForDay:(NSInteger)day month:(NSInteger)month year:(NSInteger)year {
+    return [DBWWorkout objectsInRealm:_templates withPredicate:[NSPredicate predicateWithFormat:@"day = %d AND month = %d AND year = %d", day, month, year]].firstObject;
 }
 
 - (DBWWorkout *)todaysWorkout {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *todaysComponents = [calendar components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:[NSDate date]];
-    return [self workoutForDateComponents:todaysComponents];
+    return [self workoutForDay:todaysComponents.day month:todaysComponents.month year:todaysComponents.year];
 }
 
 @end

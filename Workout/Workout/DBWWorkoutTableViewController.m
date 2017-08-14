@@ -27,11 +27,18 @@
     [super viewDidLoad];
     self.navigationItem.rightBarButtonItem = nil;
     
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    components.day = self.workout.day;
+    components.month = self.workout.month;
+    components.year = self.workout.year;
+    
+    NSDate *dateFromComponents = [[NSCalendar currentCalendar] dateFromComponents:components];
+    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateStyle = NSDateFormatterShortStyle;
     dateFormatter.timeStyle = NSDateFormatterNoStyle;
     
-    //self.title = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:self.workout.timestamp]];
+    self.title = [dateFormatter stringFromDate:dateFromComponents];
 }
 
 - (void)didReceiveMemoryWarning {
