@@ -7,14 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Realm/Realm.h>
+
+RLM_ARRAY_TYPE(DBWExercise)
 
 @class DBWExercise, DBWWorkoutTemplate;
 
-@interface DBWWorkout : NSObject <NSCoding>
+@interface DBWWorkout : RLMObject
 
-@property (nonatomic) NSTimeInterval timestamp;
+@property NSInteger day, month, year;
 
-@property (strong, nonatomic) NSMutableArray <DBWExercise *> *exercises;
+@property RLMArray <DBWExercise> *exercises;
 
 + (instancetype)todaysWorkoutWithTemplate:(DBWWorkoutTemplate *)workoutTemplate;
 

@@ -11,15 +11,15 @@
 
 @class DBWSet, DBWWorkout;
 
+RLM_ARRAY_TYPE(DBWSet)
+
 @interface DBWExercise : RLMObject
 
 @property (strong, nonatomic) NSString *name;
 
-//@property (strong, nonatomic) NSMutableArray <DBWSet *> *sets;
+@property (strong, nonatomic) RLMArray <DBWSet> *sets;
 
 @property (nonatomic) NSInteger baseNumberOfSets;
-
-//@property (weak, nonatomic) DBWWorkout *workout;
 
 + (instancetype)exerciseWithName:(NSString *)name baseNumberOfSets:(NSInteger)numberOfSets;
 

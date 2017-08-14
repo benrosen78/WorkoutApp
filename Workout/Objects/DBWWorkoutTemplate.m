@@ -14,7 +14,6 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-       // _exercises = [[RLMArray alloc] init];
         _primaryKey = [NSUUID UUID].UUIDString;
     }
         

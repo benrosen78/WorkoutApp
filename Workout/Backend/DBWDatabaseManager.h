@@ -10,7 +10,7 @@
 #import <Realm/Realm.h>
 #import "DBWWorkoutTemplateList.h"
 
-@class RLMResults;
+@class RLMResults, DBWWorkout;
 
 @interface DBWDatabaseManager : NSObject
 
@@ -27,6 +27,12 @@
 - (void)endTemplateWriting;
 
 - (void)deleteWorkoutTemplate:(DBWWorkoutTemplate *)workoutTemplate;
+
+- (void)saveNewWorkout:(DBWWorkout *)workout;
+
+- (DBWWorkout *)workoutForDateComponents:(NSDateComponents *)components;
+
+- (DBWWorkout *)todaysWorkout;
 
 @end
 

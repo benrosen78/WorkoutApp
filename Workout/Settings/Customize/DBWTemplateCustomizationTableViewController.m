@@ -10,7 +10,6 @@
 #import "DBWWorkoutTemplate.h"
 #import "DBWExercise.h"
 #import <CompactConstraint/CompactConstraint.h>
-#import "DBWWorkoutManager.h"
 #import "DBWDatabaseManager.h"
 
 static NSString *const kShortDescCellIdentifier = @"desc-cell";

@@ -31,7 +31,7 @@
     dateFormatter.dateStyle = NSDateFormatterShortStyle;
     dateFormatter.timeStyle = NSDateFormatterNoStyle;
     
-    self.title = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:self.workout.timestamp]];
+    //self.title = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:self.workout.timestamp]];
 }
 
 - (void)didReceiveMemoryWarning {

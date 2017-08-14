@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 #import "DBWWorkoutTodayViewController.h"
 #import "DBWWorkoutCalendarViewController.h"
-#import "DBWWorkoutManager.h"
 #import "DBWSettingsTableViewController.h"
 #import "DBWLoginViewController.h"
 #import <GoogleSignIn/GoogleSignIn.h>

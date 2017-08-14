@@ -10,8 +10,8 @@
 #import "DBWExercise.h"
 #import <CompactConstraint/CompactConstraint.h>
 #import "DBWSet.h"
-#import "DBWWorkoutManager.h"
 #import "DBWExerciseSetTableViewCell.h"
+#import "DBWDatabaseManager.h"
 
 static NSString *const kCellIdentifier = @"set-cell-identifier";
 
@@ -42,7 +42,9 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
 }
 
 - (void)add:(UIBarButtonItem *)item {
-    //[_exercise.sets addObject:[DBWSet new]];
+    [[DBWDatabaseManager sharedDatabaseManager] startTemplateWriting];
+    [_exercise.sets addObject:[DBWSet new]];
+    [[DBWDatabaseManager sharedDatabaseManager] endTemplateWriting];
     //[DBWWorkoutManager saveWorkout:_exercise.workout];
     
     [self.tableView reloadData];
@@ -56,7 +58,7 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;// return [_exercise.sets count];
+    return [_exercise.sets count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -69,19 +71,20 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
     
     UITextField *weightTF = cell.textFields[0];
     UITextField *repsTF = cell.textFields[1];
+
     weightTF.delegate = self;
     repsTF.delegate = self;
     
     weightTF.tag = 1;
     repsTF.tag = 2;
     
-   // DBWSet *set = _exercise.sets[indexPath.section];
+    DBWSet *set = _exercise.sets[indexPath.section];
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     formatter.numberStyle = NSNumberFormatterDecimalStyle;
     formatter.maximumFractionDigits = 20;
         
-  //  weightTF.text = set.weight ? [NSString stringWithFormat:@"%@", [formatter stringFromNumber:@(set.weight)]] : @"";
-  //  repsTF.text = set.reps ? [NSString stringWithFormat:@"%lu", set.reps] : @"";
+    weightTF.text = set.weight ? [NSString stringWithFormat:@"%@", [formatter stringFromNumber:@(set.weight)]] : @"";
+    repsTF.text = set.reps ? [NSString stringWithFormat:@"%lu", set.reps] : @"";
     
     return cell;
 }
@@ -90,19 +93,25 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
     return 100;
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField reason:(UITextFieldDidEndEditingReason)reason {
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
     UITableViewCell *cell = (UITableViewCell *)textField.superview.superview.superview;
    NSIndexPath *path = [self.tableView indexPathForCell:cell];
     
-   // DBWSet *set = _exercise.sets[path.section];
+    NSString *newText = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    [[DBWDatabaseManager sharedDatabaseManager] startTemplateWriting];
+    DBWSet *set = _exercise.sets[path.section];
     if (textField.tag == 1) {
-     //   set.weight = [textField.text floatValue];
+        set.weight = [newText floatValue];
     } else if (textField.tag == 2) {
-     //   set.reps = [textField.text integerValue];
+        set.reps = [newText integerValue];
     }
+    [[DBWDatabaseManager sharedDatabaseManager] endTemplateWriting];
     
-   // [DBWWorkoutManager saveWorkout:_exercise.workout];
+    return YES;
 }
+
+
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
@@ -110,7 +119,9 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-      //  [_exercise.sets removeObjectAtIndex:indexPath.section];
+        [[DBWDatabaseManager sharedDatabaseManager] startTemplateWriting];
+        [_exercise.sets removeObjectAtIndex:indexPath.section];
+        [[DBWDatabaseManager sharedDatabaseManager] endTemplateWriting];
         [tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
 }

@@ -10,7 +10,6 @@
 #import <CompactConstraint/CompactConstraint.h>
 #import "DBWExerciseTableViewController.h"
 #import "DBWWorkoutTableViewController.h"
-#import "DBWWorkoutManager.h"
 
 @interface DBWWorkoutCalendarViewController ()
 
@@ -141,13 +140,13 @@ static NSString *const headerIdentifier = @"header-cell";
                                               @"view": cell.contentView
                                               }];
     NSInteger dayNumber = indexPath.row + 2 - _firstDayOfMonthWeekday;
-    if ([DBWWorkoutManager workoutForDay:dayNumber month:_selectedMonthIndex + 1 year:2017]) {
+    //if ([DBWWorkoutManager workoutForDay:dayNumber month:_selectedMonthIndex + 1 year:2017]) {
         colorView.alpha = 1;
         day.textColor = [UIColor whiteColor];
-    } else {
+    //} else {
         colorView.alpha = 0;
         day.textColor = [UIColor blackColor];
-    }
+    //}
     
     return cell;
 }
@@ -221,7 +220,7 @@ static NSString *const headerIdentifier = @"header-cell";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
     NSInteger day = indexPath.row + 2 - _firstDayOfMonthWeekday;
-    DBWWorkout *workout = [DBWWorkoutManager workoutForDay:day month:_selectedMonthIndex + 1 year:2017];
+    DBWWorkout *workout = nil;//[DBWWorkoutManager workoutForDay:day month:_selectedMonthIndex + 1 year:2017];
     if (!workout) {
         return;
     }

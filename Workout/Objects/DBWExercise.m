@@ -11,14 +11,6 @@
 
 @implementation DBWExercise
 
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        //_sets = [RLMArray mutabl];
-    }
-    return self;
-}
-
 + (instancetype)exerciseWithName:(NSString *)name baseNumberOfSets:(NSInteger)numberOfSets {
     DBWExercise *exercise = [[DBWExercise alloc] init];
     exercise.name = name;
