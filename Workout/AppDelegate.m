@@ -59,7 +59,8 @@
     _tabBarController = [[UITabBarController alloc] init];
     _tabBarController.viewControllers = @[[[UINavigationController alloc] initWithRootViewController:calendarVC], [[UINavigationController alloc] initWithRootViewController:todayVC], [[UINavigationController alloc] initWithRootViewController:settingsVC]];
     
-    if ([DBWAuthenticationManager loggedIn]) {
+    //[[RLMSyncUser currentUser] logOut];
+    if (![DBWAuthenticationManager loggedIn]) {
         DBWLoginViewController *loginVC = [[DBWLoginViewController alloc] init];
         _window.rootViewController = loginVC;
     } else {

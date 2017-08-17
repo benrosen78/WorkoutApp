@@ -16,6 +16,8 @@ static NSString *const DBWAuthenticationManagerLogInNotification = @"DBWAuthenti
 
 + (void)facebookAuthenticationWithToken:(NSString *)token;
 
++ (void)emailAuthenticationWithUsername:(NSString *)username password:(NSString *)password register:(BOOL)registerAccount;
+
 + (BOOL)loggedIn;
 
 @end

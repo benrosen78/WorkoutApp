@@ -36,20 +36,20 @@
     self = [super init];
     if (self) {
 
-        
-        RLMSyncConfiguration *templateSyncConfig = [[RLMSyncConfiguration alloc] initWithUser:[RLMSyncUser currentUser] realmURL:[NSURL URLWithString:@"realms://wa.benrosen.me/~/templates"]];
-        RLMRealmConfiguration *templateRealmConfig = [RLMRealmConfiguration defaultConfiguration];
-        templateRealmConfig.syncConfiguration = templateSyncConfig;
-        _templates = [RLMRealm realmWithConfiguration:templateRealmConfig error:nil];
-        
-       /* [_workouts beginWriteTransaction];
-        [_workouts deleteAllObjects];
-        [_workouts commitWriteTransaction];*/
-        if ([DBWWorkoutTemplateList allObjectsInRealm:_templates].count < 1) {
-            [_templates beginWriteTransaction];
-            [_templates addObject:[DBWWorkoutTemplateList new]];
-            [_templates commitWriteTransaction];
-        }
+            RLMSyncConfiguration *templateSyncConfig = [[RLMSyncConfiguration alloc] initWithUser:[RLMSyncUser currentUser] realmURL:[NSURL URLWithString:@"realms://wa.benrosen.me/~/templates"]];
+            RLMRealmConfiguration *templateRealmConfig = [RLMRealmConfiguration defaultConfiguration];
+            templateRealmConfig.syncConfiguration = templateSyncConfig;
+            _templates = [RLMRealm realmWithConfiguration:templateRealmConfig error:nil];
+            
+            /* [_workouts beginWriteTransaction];
+             [_workouts deleteAllObjects];
+             [_workouts commitWriteTransaction];*/
+            if ([DBWWorkoutTemplateList allObjectsInRealm:_templates].count < 1) {
+                [_templates beginWriteTransaction];
+                [_templates addObject:[DBWWorkoutTemplateList new]];
+                [_templates commitWriteTransaction];
+            }
+    
     }
     return self;
 }

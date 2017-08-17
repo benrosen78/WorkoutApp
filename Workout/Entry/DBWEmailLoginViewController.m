@@ -8,10 +8,19 @@
 
 #import "DBWEmailLoginViewController.h"
 #import <CompactConstraint/CompactConstraint.h>
+#import "DBWAuthenticationManager.h"
 
 @interface DBWEmailLoginViewController () <UITextFieldDelegate>
 
 @property (strong, nonatomic) NSLayoutConstraint *createAccountBottomConstraint;
+
+@property (strong, nonatomic) UILabel *titleLabel;
+
+@property (strong, nonatomic) UIButton *signIn, *createAccountButton;
+
+@property (strong, nonatomic) UITextField *usernameField, *passwordField;
+
+@property (nonatomic) BOOL login;
 
 @end
 
@@ -20,98 +29,102 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _login = YES;
+    
     self.view.backgroundColor =  [UIColor colorWithRed:0.201 green:0.220 blue:0.376 alpha:1];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShown:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHide:) name:UIKeyboardWillHideNotification object:nil];
 
-    UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.text = @"Email Login";
-    titleLabel.numberOfLines = 0;
-    titleLabel.adjustsFontSizeToFitWidth = YES;
-    titleLabel.font = [UIFont systemFontOfSize:40 weight:UIFontWeightMedium];
-    titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:titleLabel];
+    _titleLabel = [[UILabel alloc] init];
+    _titleLabel.text = @"Email Login";
+    _titleLabel.numberOfLines = 0;
+    _titleLabel.adjustsFontSizeToFitWidth = YES;
+    _titleLabel.font = [UIFont systemFontOfSize:40 weight:UIFontWeightMedium];
+    _titleLabel.textAlignment = NSTextAlignmentCenter;
+    _titleLabel.textColor = [UIColor whiteColor];
+    _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:_titleLabel];
     
     
 
-    UITextField *usernameField = [[UITextField alloc] init];
-    usernameField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Email" attributes:@{NSForegroundColorAttributeName: [[UIColor whiteColor] colorWithAlphaComponent:0.8]}];
-    usernameField.delegate = self;
-    usernameField.textColor = [UIColor whiteColor];
-    usernameField.font = [UIFont systemFontOfSize:20 weight:UIFontWeightRegular];
-    usernameField.layer.masksToBounds = YES;
-    usernameField.layer.cornerRadius = 26;
-    usernameField.layer.borderWidth = 1.5;
-    usernameField.layer.borderColor = [UIColor whiteColor].CGColor;
-    usernameField.leftViewMode = UITextFieldViewModeAlways;
+    _usernameField = [[UITextField alloc] init];
+    _usernameField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Email" attributes:@{NSForegroundColorAttributeName: [[UIColor whiteColor] colorWithAlphaComponent:0.8]}];
+    _usernameField.delegate = self;
+    _usernameField.textColor = [UIColor whiteColor];
+    _usernameField.font = [UIFont systemFontOfSize:20 weight:UIFontWeightRegular];
+    _usernameField.layer.masksToBounds = YES;
+    _usernameField.layer.cornerRadius = 26;
+    _usernameField.layer.borderWidth = 1.5;
+    _usernameField.layer.borderColor = [UIColor whiteColor].CGColor;
+    _usernameField.leftViewMode = UITextFieldViewModeAlways;
 
     UIImageView *username = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"email"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
     username.frame = CGRectMake(0.0, 0.0, username.image.size.width + 25.0, username.image.size.height);
     username.contentMode = UIViewContentModeCenter;
     username.tintColor = [UIColor whiteColor];
 
-    usernameField.leftView = username;
+    _usernameField.leftView = username;
     
     
     //usernameField.font = [UIFont systemFontOfSize]
-    usernameField.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:usernameField];
+    _usernameField.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:_usernameField];
     
 
 
    
     
-    UITextField *passwordField = [[UITextField alloc] init];
-    passwordField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Password" attributes:@{NSForegroundColorAttributeName: [[UIColor whiteColor] colorWithAlphaComponent:0.8]}];
+    _passwordField = [[UITextField alloc] init];
+    _passwordField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Password" attributes:@{NSForegroundColorAttributeName: [[UIColor whiteColor] colorWithAlphaComponent:0.8]}];
 
-    passwordField.delegate = self;
-    passwordField.font = [UIFont systemFontOfSize:20 weight:UIFontWeightRegular];
+    _passwordField.delegate = self;
+    _passwordField.font = [UIFont systemFontOfSize:20 weight:UIFontWeightRegular];
 
-    passwordField.layer.masksToBounds = YES;
-    passwordField.layer.cornerRadius = 26;
-    passwordField.layer.borderWidth = 1.5;
-    passwordField.layer.borderColor = [UIColor whiteColor].CGColor;
+    _passwordField.layer.masksToBounds = YES;
+    _passwordField.layer.cornerRadius = 26;
+    _passwordField.layer.borderWidth = 1.5;
+    _passwordField.layer.borderColor = [UIColor whiteColor].CGColor;
 
     UIImageView *password = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"password"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
     password.frame = CGRectMake(0.0, 0.0, password.image.size.width + 25.0, password.image.size.height);
     password.contentMode = UIViewContentModeCenter;
     password.tintColor = [UIColor whiteColor];
     
-    passwordField.leftView = password;
-    passwordField.leftViewMode = UITextFieldViewModeAlways;
-    passwordField.textColor = [UIColor whiteColor];
-    passwordField.secureTextEntry = YES;
+    _passwordField.leftView = password;
+    _passwordField.leftViewMode = UITextFieldViewModeAlways;
+    _passwordField.textColor = [UIColor whiteColor];
+    _passwordField.secureTextEntry = YES;
     //usernameField.font = [UIFont systemFontOfSize]
-    passwordField.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:passwordField];
+    _passwordField.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:_passwordField];
     
 
     
-    UIButton *signIn = [UIButton buttonWithType:UIButtonTypeCustom];
-    signIn.layer.masksToBounds = YES;
-    signIn.layer.cornerRadius = 26;
-    [signIn addTarget:self action:@selector(up:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDragExit];
-    [signIn addTarget:self action:@selector(down:) forControlEvents:UIControlEventTouchDown];
-    signIn.titleLabel.font = [UIFont systemFontOfSize:18 weight:UIFontWeightRegular];
-    [signIn setTitle:@"Sign In" forState:UIControlStateNormal];
-    [signIn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    signIn.backgroundColor = [UIColor whiteColor];
-    signIn.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:signIn];
+    _signIn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _signIn.layer.masksToBounds = YES;
+    _signIn.layer.cornerRadius = 26;
+    [_signIn addTarget:self action:@selector(up:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDragExit];
+    [_signIn addTarget:self action:@selector(signIn:) forControlEvents:UIControlEventTouchUpInside];
+    [_signIn addTarget:self action:@selector(down:) forControlEvents:UIControlEventTouchDown];
+    _signIn.titleLabel.font = [UIFont systemFontOfSize:18 weight:UIFontWeightRegular];
+    [_signIn setTitle:@"Sign In" forState:UIControlStateNormal];
+    [_signIn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    _signIn.backgroundColor = [UIColor whiteColor];
+    _signIn.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:_signIn];
     
-    UIButton *createAccountButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [createAccountButton setTitle:@"Don't have an account yet? Tap to create one." forState:UIControlStateNormal];
-    [createAccountButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    createAccountButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightRegular];
-    createAccountButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:createAccountButton];
+    _createAccountButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [_createAccountButton setTitle:@"Don't have an account yet? Tap to create one." forState:UIControlStateNormal];
+    [_createAccountButton addTarget:self action:@selector(createAccount:) forControlEvents:UIControlEventTouchUpInside];
+    [_createAccountButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _createAccountButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightRegular];
+    _createAccountButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:_createAccountButton];
     
     _createAccountBottomConstraint = [self.view addCompactConstraint:@"createAccount.bottom = view.bottom - 10"
                                                              metrics:nil
-                                                               views:@{@"createAccount": createAccountButton,
+                                                               views:@{@"createAccount": _createAccountButton,
                                                                        @"view": self.view}];
     
     [self.view addCompactConstraints:@[@"title.top = view.top + 30",
@@ -137,12 +150,12 @@
                                        
                                        ]
                              metrics:nil
-                               views:@{@"title": titleLabel,
+                               views:@{@"title": _titleLabel,
                                        @"view": self.view,
-                                       @"usernameField": usernameField,
-                                       @"passwordField": passwordField,
-                                       @"signIn": signIn,
-                                       @"createAccount": createAccountButton
+                                       @"usernameField": _usernameField,
+                                       @"passwordField": _passwordField,
+                                       @"signIn": _signIn,
+                                       @"createAccount": _createAccountButton
                                        }];
     
     
@@ -180,6 +193,11 @@
     }];
 }
 
+- (void)signIn:(UIButton *)sender {
+    // login or sign up
+    [DBWAuthenticationManager emailAuthenticationWithUsername:_usernameField.text password:_passwordField.text register:!_login];
+}
+
 #pragma mark - UITextFieldDelegate
 
 - (void)keyboardShown:(NSNotification *)notification {
@@ -196,6 +214,20 @@
     [UIView animateWithDuration:0.1 animations:^{
         [self.view layoutIfNeeded];
     }];
+}
+
+- (void)createAccount:(UIButton *)button {
+    _login = !_login;
+    
+    if (_login) {
+        _titleLabel.text = @"Email Login";
+        [_signIn setTitle:@"Sign In" forState:UIControlStateNormal];
+        [_createAccountButton setTitle:@"Don't have an account yet? Tap to create one." forState:UIControlStateNormal];
+    } else {
+        _titleLabel.text = @"Email Sign-up";
+        [_signIn setTitle:@"Sign Up" forState:UIControlStateNormal];
+        [_createAccountButton setTitle:@"Have an account? Click to login." forState:UIControlStateNormal];
+    }
 }
 
 @end

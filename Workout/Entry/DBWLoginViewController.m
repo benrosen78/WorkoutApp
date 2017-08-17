@@ -159,6 +159,9 @@
 }
 
 - (void)loggedIn:(NSNotification *)notification {
+    if (self.presentedViewController) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
     dispatch_async(dispatch_get_main_queue(), ^{
         
         UIImageView __block *transitioningView = [[UIImageView alloc] initWithFrame:self.view.frame];
