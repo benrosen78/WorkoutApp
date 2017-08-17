@@ -20,4 +20,6 @@ static NSString *const DBWAuthenticationManagerLogInNotification = @"DBWAuthenti
 
 + (BOOL)loggedIn;
 
++ (void)logOut;
+
 @end

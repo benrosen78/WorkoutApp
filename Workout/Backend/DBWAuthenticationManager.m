@@ -42,4 +42,8 @@ static NSString *const serverStringURL = @"https://wa.benrosen.me/";
     return [RLMSyncUser currentUser];
 }
 
++ (void)logOut {
+    [[RLMSyncUser currentUser] logOut];
+}
+
 @end
