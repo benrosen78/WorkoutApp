@@ -56,6 +56,7 @@
     } else if (indexPath.section == 2) {
         cell.textLabel.text = @"Log out";
     }
+    cell.textLabel.textColor = indexPath.section == 2 ? [UIColor redColor] : [UIColor blackColor];
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
