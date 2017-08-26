@@ -14,6 +14,7 @@
 
 + (instancetype)todaysWorkoutWithTemplate:(DBWWorkoutTemplate *)workoutTemplate {
     DBWWorkout *workout = [[DBWWorkout alloc] initWithValue:@{@"exercises": workoutTemplate.exercises}];
+    workout.workoutTemplate = workoutTemplate;
     
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *todaysComponents = [calendar components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:[NSDate date]];
