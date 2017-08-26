@@ -11,6 +11,9 @@
 #import "DBWExerciseTableViewController.h"
 #import "DBWWorkoutTableViewController.h"
 #import "DBWDatabaseManager.h"
+#import "DBWCalendarCollectionViewCell.h"
+#import "DBWWorkout.h"
+#import "DBWWorkoutTemplate.h"
 
 @interface DBWWorkoutCalendarViewController ()
 
@@ -33,8 +36,14 @@ static NSString *const headerIdentifier = @"header-cell";
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.minimumInteritemSpacing = 0;
-    layout.minimumLineSpacing = 0;
-
+    layout.sectionInset = UIEdgeInsetsZero;
+    layout.minimumLineSpacing = 1;
+    layout.itemSize = CGSizeMake(ceil([UIScreen mainScreen].bounds.size.width / 7), 120);
+    
+    CGFloat sideInset = ([UIScreen mainScreen].bounds.size.width -  (ceil([UIScreen mainScreen].bounds.size.width / 7) * 7)) / 2.0;
+    sideInset -=3;
+    layout.sectionInset = UIEdgeInsetsMake(0, sideInset, 0, sideInset);
+    
     self = [self initWithCollectionViewLayout:layout];
     if (self) {
         _months = @[@"January", @"February", @"March", @"April", @"May", @"June", @"July", @"August", @"September", @"October", @"November", @"December"];
@@ -45,15 +54,16 @@ static NSString *const headerIdentifier = @"header-cell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    //((UICollectionViewFlowLayout *)self.collectionViewLayout).estimatedItemSize = CGSizeMake(self.view.frame.size.width / 7, 100);
+    
     NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitMonth fromDate:[NSDate date]];
     [self switchMonthToIndex:components.month - 1];
     self.title = [NSString stringWithFormat:@"%@'s Gains", _months[_selectedMonthIndex]];
     
-    self.collectionView.backgroundColor = [UIColor whiteColor];
-
+    self.collectionView.backgroundColor = [UIColor colorWithRed:0.902 green:0.898 blue:0.902 alpha:1.00];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemOrganize target:self action:@selector(switchMonth:)];
 
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
+    [self.collectionView registerClass:[DBWCalendarCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerIdentifier];
 }
 
@@ -111,42 +121,35 @@ static NSString *const headerIdentifier = @"header-cell";
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+    DBWCalendarCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+    //cell.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    //cell.layer.borderWidth = 0.5;
+    
     cell.backgroundColor = [UIColor whiteColor];
 
-    UIView *colorView = [cell viewWithTag:124] ?: [[UIView alloc] init];
-    colorView.tag = 124;
-    colorView.layer.masksToBounds = YES;
-    colorView.layer.cornerRadius = 25;
-    colorView.backgroundColor = [UIColor colorWithRed:0.201 green:0.220 blue:0.376 alpha:1.00];
-    colorView.translatesAutoresizingMaskIntoConstraints = NO;
-    [cell.contentView addSubview:colorView];
+
     
-    UILabel *day = [cell viewWithTag:123] ?: [[UILabel alloc] init];
-    day.tag = 123;
-    day.text = indexPath.row < _firstDayOfMonthWeekday - 1 ? @"" : [NSString stringWithFormat:@"%lu", indexPath.row + 2 - _firstDayOfMonthWeekday];
-    day.font = [UIFont systemFontOfSize:24 weight:UIFontWeightMedium];
-    day.textAlignment = NSTextAlignmentCenter;
-    day.translatesAutoresizingMaskIntoConstraints = NO;
-    [cell.contentView addSubview:day];
-    [cell.contentView addCompactConstraints:@[@"day.centerX = view.centerX",
-                                              @"day.centerY = view.centerY",
-                                              @"color.centerX = view.centerX",
-                                              @"color.centerY = view.centerY",
-                                              @"color.width = 50",
-                                              @"color.height = 50"]
-                                    metrics:nil
-                                      views:@{@"day": day,
-                                              @"color": colorView,
-                                              @"view": cell.contentView
-                                              }];
     NSInteger dayNumber = indexPath.row + 2 - _firstDayOfMonthWeekday;
-    if ([[DBWDatabaseManager sharedDatabaseManager] workoutForDay:dayNumber month:_selectedMonthIndex + 1 year:2017]) {
-        colorView.alpha = 1;
-        day.textColor = [UIColor whiteColor];
+    cell.dayLabel.text = indexPath.row < _firstDayOfMonthWeekday - 1 ? @"" : [NSString stringWithFormat:@"%lu", dayNumber];
+
+    NSDateComponents *todaysComponents = [[NSCalendar currentCalendar] components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:[NSDate date]];
+    if (todaysComponents.day == dayNumber && todaysComponents.month == _selectedMonthIndex + 1 && todaysComponents.year == 2017) {
+        cell.colorView.alpha = 1;
+        cell.dayLabel.textColor = [UIColor whiteColor];
     } else {
-        colorView.alpha = 0;
-        day.textColor = [UIColor blackColor];
+        cell.colorView.alpha = 0;
+        cell.dayLabel.textColor = [UIColor blackColor];
+
+    }
+
+    
+    
+    DBWWorkout *workout = [[DBWDatabaseManager sharedDatabaseManager] workoutForDay:dayNumber month:_selectedMonthIndex + 1 year:2017];
+    if (workout) {
+        cell.workoutLabel.alpha = 1;
+        cell.workoutLabel.text = [NSString stringWithFormat:@"Day %lu", [[DBWDatabaseManager sharedDatabaseManager].templateList.list indexOfObject:workout.workoutTemplate] + 1];
+    } else {
+        cell.workoutLabel.alpha = 0;
     }
     
     return cell;
@@ -155,8 +158,9 @@ static NSString *const headerIdentifier = @"header-cell";
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
         UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerIdentifier forIndexPath:indexPath];
-
-        NSArray *days = @[@"S", @"M", @"T", @"W", @"TH", @"F", @"S"];
+        view.backgroundColor = [UIColor whiteColor];
+        
+        NSArray *days = @[@"Sun", @"Mon", @"Tue", @"Wed", @"Thu", @"Fri", @"Sat"];
         for (int i = 0; i < 7; i++) {
             UIView *containerView = [[UIView alloc] init];
             containerView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -176,13 +180,13 @@ static NSString *const headerIdentifier = @"header-cell";
                                           }];
             
             UILabel *day = [[UILabel alloc] init];
-            day.textAlignment = NSTextAlignmentCenter;
-            day.font = [UIFont systemFontOfSize:20 weight:UIFontWeightBold];
+            day.textAlignment = NSTextAlignmentRight;
+            day.font = [UIFont systemFontOfSize:16 weight:UIFontWeightMedium];
             day.text = days[i];
             day.translatesAutoresizingMaskIntoConstraints = NO;
             [containerView addSubview:day];
             
-            [containerView addCompactConstraints:@[@"day.centerX = view.centerX",
+            [containerView addCompactConstraints:@[@"day.right = view.right - 8",
                                                    @"day.centerY = view.centerY"]
                                          metrics:nil
                                            views:@{@"day": day,
@@ -190,12 +194,13 @@ static NSString *const headerIdentifier = @"header-cell";
                                                    }];
         }
         UIView *separator = [[UIView alloc] init];
-        separator.backgroundColor = [UIColor darkGrayColor];
+        separator.alpha = 1;
+        separator.backgroundColor = [UIColor colorWithRed:0.902 green:0.898 blue:0.902 alpha:1.00];
         separator.translatesAutoresizingMaskIntoConstraints = NO;
         [view addSubview:separator];
         
-        [view addCompactConstraints:@[@"separator.top = view.bottom - 0.5",
-                                      @"separator.height = 0.5",
+        [view addCompactConstraints:@[@"separator.bottom = view.bottom",
+                                      @"separator.height = 1",
                                       @"separator.left = view.left",
                                       @"separator.right = view.right"]
                             metrics:nil
@@ -210,12 +215,9 @@ static NSString *const headerIdentifier = @"header-cell";
 
 #pragma mark - UICollectionViewDelegate
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(nonnull UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    return CGSizeMake(floor(self.view.frame.size.width / 7), (self.collectionView.frame.size.height - 150) / 6);
-}
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(nonnull UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    return CGSizeMake(self.view.frame.size.width, 100);
+    return CGSizeMake(self.view.frame.size.width, 60);
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {

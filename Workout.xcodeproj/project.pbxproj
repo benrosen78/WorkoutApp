@@ -24,6 +24,9 @@
 		B53CF2D81F336C8900F30CB8 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B53CF2D71F336C8900F30CB8 /* Settings.bundle */; };
 		B53CF2E11F339F0300F30CB8 /* Acknowledgements.plist in Resources */ = {isa = PBXBuildFile; fileRef = B53CF2E01F339F0300F30CB8 /* Acknowledgements.plist */; };
 		B53CF2E41F33A8F300F30CB8 /* DBWAboutTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B53CF2E31F33A8F300F30CB8 /* DBWAboutTableViewController.m */; };
+		B57E6D1F1F51C6D900849CB6 /* DBWStopwatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B57E6D1E1F51C6D900849CB6 /* DBWStopwatchViewController.m */; };
+		B57E6D221F51EC6B00849CB6 /* DBWCalendarCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B57E6D211F51EC6B00849CB6 /* DBWCalendarCollectionViewCell.m */; };
+		B57E6D251F51F17600849CB6 /* DBWCalendarCellLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B57E6D241F51F17600849CB6 /* DBWCalendarCellLabel.m */; };
 		B596A3381F2F9BAE00524503 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B596A3371F2F9BAE00524503 /* Launch Screen.storyboard */; };
 		B5BDC5921F3B4A5800C77CFC /* DBWCustomizeWorkoutPlanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5BDC5911F3B4A5800C77CFC /* DBWCustomizeWorkoutPlanViewController.m */; };
 		B5BDC5971F3B4D4C00C77CFC /* DBWWorkoutPlanDayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B5BDC5961F3B4D4C00C77CFC /* DBWWorkoutPlanDayCell.m */; };
@@ -94,6 +97,12 @@
 		B53CF2E01F339F0300F30CB8 /* Acknowledgements.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Acknowledgements.plist; path = Workout/Resources/Settings.bundle/Acknowledgements.plist; sourceTree = "<group>"; };
 		B53CF2E21F33A8F300F30CB8 /* DBWAboutTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWAboutTableViewController.h; sourceTree = "<group>"; };
 		B53CF2E31F33A8F300F30CB8 /* DBWAboutTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWAboutTableViewController.m; sourceTree = "<group>"; };
+		B57E6D1D1F51C6D900849CB6 /* DBWStopwatchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWStopwatchViewController.h; sourceTree = "<group>"; };
+		B57E6D1E1F51C6D900849CB6 /* DBWStopwatchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWStopwatchViewController.m; sourceTree = "<group>"; };
+		B57E6D201F51EC6B00849CB6 /* DBWCalendarCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWCalendarCollectionViewCell.h; sourceTree = "<group>"; };
+		B57E6D211F51EC6B00849CB6 /* DBWCalendarCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWCalendarCollectionViewCell.m; sourceTree = "<group>"; };
+		B57E6D231F51F17600849CB6 /* DBWCalendarCellLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWCalendarCellLabel.h; sourceTree = "<group>"; };
+		B57E6D241F51F17600849CB6 /* DBWCalendarCellLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWCalendarCellLabel.m; sourceTree = "<group>"; };
 		B596A3371F2F9BAE00524503 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		B5BDC5901F3B4A5800C77CFC /* DBWCustomizeWorkoutPlanViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWCustomizeWorkoutPlanViewController.h; sourceTree = "<group>"; };
 		B5BDC5911F3B4A5800C77CFC /* DBWCustomizeWorkoutPlanViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWCustomizeWorkoutPlanViewController.m; sourceTree = "<group>"; };
@@ -234,6 +243,10 @@
 			children = (
 				B53CF2BE1F3365DE00F30CB8 /* DBWWorkoutCalendarViewController.h */,
 				B53CF2BF1F3365DE00F30CB8 /* DBWWorkoutCalendarViewController.m */,
+				B57E6D201F51EC6B00849CB6 /* DBWCalendarCollectionViewCell.h */,
+				B57E6D211F51EC6B00849CB6 /* DBWCalendarCollectionViewCell.m */,
+				B57E6D231F51F17600849CB6 /* DBWCalendarCellLabel.h */,
+				B57E6D241F51F17600849CB6 /* DBWCalendarCellLabel.m */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -267,6 +280,15 @@
 				B53CF2D71F336C8900F30CB8 /* Settings.bundle */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		B57E6D1C1F51C6C400849CB6 /* Stopwatch */ = {
+			isa = PBXGroup;
+			children = (
+				B57E6D1D1F51C6D900849CB6 /* DBWStopwatchViewController.h */,
+				B57E6D1E1F51C6D900849CB6 /* DBWStopwatchViewController.m */,
+			);
+			path = Stopwatch;
 			sourceTree = "<group>";
 		};
 		B5BDC5941F3B4D2200C77CFC /* Customize */ = {
@@ -312,6 +334,7 @@
 				B5D2E2DD1F2A93B800CB4540 /* AppDelegate.h */,
 				B5D2E2DE1F2A93B800CB4540 /* AppDelegate.m */,
 				B50CBD861F3DD85D007D3962 /* Entry */,
+				B57E6D1C1F51C6C400849CB6 /* Stopwatch */,
 				B53CF2BD1F3365DE00F30CB8 /* Calendar */,
 				B53CF2C01F3365DE00F30CB8 /* Exercise */,
 				B53CF2B41F3365DE00F30CB8 /* Objects */,
@@ -551,6 +574,8 @@
 				B5BDC5921F3B4A5800C77CFC /* DBWCustomizeWorkoutPlanViewController.m in Sources */,
 				B5D2E2ED1F2A93B800CB4540 /* main.m in Sources */,
 				B50CBD991F3E1B4D007D3962 /* DBWAuthenticationManager.m in Sources */,
+				B57E6D221F51EC6B00849CB6 /* DBWCalendarCollectionViewCell.m in Sources */,
+				B57E6D251F51F17600849CB6 /* DBWCalendarCellLabel.m in Sources */,
 				B5D2E2DF1F2A93B800CB4540 /* AppDelegate.m in Sources */,
 				B5F6353C1F4339B400B866DC /* DBWEmailLoginViewController.m in Sources */,
 				B53CF2C91F3365FC00F30CB8 /* DBWWorkoutCalendarViewController.m in Sources */,
@@ -564,6 +589,7 @@
 				B53CF2D01F33661300F30CB8 /* DBWWorkout.m in Sources */,
 				B5F635391F41DD6B00B866DC /* DBWDatabaseManager.m in Sources */,
 				B5DF74381F408DA5009FA3B4 /* DBWWorkoutTemplateList.m in Sources */,
+				B57E6D1F1F51C6D900849CB6 /* DBWStopwatchViewController.m in Sources */,
 				B50CBD891F3DD8A6007D3962 /* DBWLoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
