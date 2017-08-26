@@ -19,6 +19,8 @@ RLM_ARRAY_TYPE(DBWExercise)
 
 @property RLMArray <DBWExercise> *exercises;
 
+@property (strong, nonatomic) DBWWorkoutTemplate *workoutTemplate;
+
 + (instancetype)todaysWorkoutWithTemplate:(DBWWorkoutTemplate *)workoutTemplate;
 
 @end
