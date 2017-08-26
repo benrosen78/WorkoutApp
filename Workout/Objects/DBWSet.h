@@ -8,11 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import <Realm/Realm.h>
 
-@interface DBWSet : NSObject <NSCoding>
+@interface DBWSet : RLMObject
 
-@property (nonatomic) NSInteger reps;
+@property NSInteger reps;
 
-@property (nonatomic) CGFloat weight;
+@property CGFloat weight;
 
 @end
+
+RLM_ARRAY_TYPE(DBWSet)
+

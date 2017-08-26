@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 #import "DBWWorkoutTodayViewController.h"
 #import "DBWWorkoutCalendarViewController.h"
-#import "DBWWorkoutManager.h"
 #import "DBWSettingsTableViewController.h"
 #import "DBWLoginViewController.h"
 #import <GoogleSignIn/GoogleSignIn.h>
@@ -60,9 +59,11 @@
     _tabBarController = [[UITabBarController alloc] init];
     _tabBarController.viewControllers = @[[[UINavigationController alloc] initWithRootViewController:calendarVC], [[UINavigationController alloc] initWithRootViewController:todayVC], [[UINavigationController alloc] initWithRootViewController:settingsVC]];
     
+    _loginVC = [[DBWLoginViewController alloc] init];
+    
+    //[[RLMSyncUser currentUser] logOut];
     if (![DBWAuthenticationManager loggedIn]) {
-        DBWLoginViewController *loginVC = [[DBWLoginViewController alloc] init];
-        _window.rootViewController = loginVC;
+        _window.rootViewController = _loginVC;
     } else {
         [DBWDatabaseManager sharedDatabaseManager];
         _window.rootViewController = _tabBarController;

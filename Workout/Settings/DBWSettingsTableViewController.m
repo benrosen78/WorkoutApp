@@ -11,6 +11,8 @@
 #import <VTAcknowledgementsViewController/VTAcknowledgement.h>
 #import "DBWAboutTableViewController.h"
 #import "DBWCustomizeWorkoutPlanViewController.h"
+#import "DBWAuthenticationManager.h"
+#import "AppDelegate.h"
 
 @interface DBWSettingsTableViewController ()
 
@@ -34,7 +36,7 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -51,6 +53,8 @@
         cell.textLabel.text = indexPath.row == 0 ? @"About" : @"Acknowledgements";
     } else if (indexPath.section == 1) {
         cell.textLabel.text = @"Customize workout plan";
+    } else if (indexPath.section == 2) {
+        cell.textLabel.text = @"Log out";
     }
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -60,7 +64,14 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return section == 0 ? @"About" : @"Workout";
+    if (section == 0) {
+        return @"About";
+    } else if (section == 1) {
+        return @"Workout";
+    } else if (section == 2) {
+        return @"Account";
+    }
+    return @"";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -84,6 +95,35 @@
     } else if (indexPath.section == 1) {
         DBWCustomizeWorkoutPlanViewController *customizeVC = [[DBWCustomizeWorkoutPlanViewController alloc] init];
         [self.navigationController pushViewController:customizeVC animated:YES];
+    } else if (indexPath.section == 2) {
+        [DBWAuthenticationManager logOut];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            UIImageView __block *transitioningView = [[UIImageView alloc] initWithFrame:self.view.frame];
+            transitioningView.backgroundColor = [UIColor colorWithRed:0.201 green:0.220 blue:0.376 alpha:1.00];
+            transitioningView.alpha = 0.0;
+            [self.view.window addSubview:transitioningView];
+            
+            [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+                transitioningView.alpha = 1.0;
+            } completion:^(BOOL finished) {
+                AppDelegate *delegate = (AppDelegate *)([UIApplication sharedApplication].delegate);
+                self.view.window.rootViewController = delegate.loginVC;
+                
+                [UIView animateWithDuration:1.0 delay:0.5 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                    transitioningView.alpha = 0.0;
+                } completion:^(BOOL finished) {
+                    [transitioningView removeFromSuperview];
+                    
+                    for (int i = (int)[self.view.subviews count] - 1; i >= 0; i--) {
+                        UIView *subview = self.view.subviews[i];
+                        [subview removeFromSuperview];
+                    }
+                }];
+            }];
+        });
+        
     }
 }
 

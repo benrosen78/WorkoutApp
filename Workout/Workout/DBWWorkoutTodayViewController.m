@@ -10,9 +10,9 @@
 #import "DBWWorkout.h"
 #import "DBWExercise.h"
 #import "DBWExerciseTableViewController.h"
-#import "DBWWorkoutManager.h"
 #import <CompactConstraint/CompactConstraint.h>
 #import "DBWWorkoutTemplate.h"
+#import "DBWDatabaseManager.h"
 
 @interface DBWWorkoutTodayViewController ()
 
@@ -20,16 +20,10 @@
 
 @implementation DBWWorkoutTodayViewController
 
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        _workout = [DBWWorkoutManager workoutForDay:[NSDate date]];
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _workout = [[DBWDatabaseManager sharedDatabaseManager] todaysWorkout];
     
     self.title = @"Today's Gains";
     
@@ -90,7 +84,8 @@
     if (indexPath.row >= [_workout.exercises count] && [self isEditing]) {
         cell.textLabel.text = @"Add Excercise";
     } else {
-        cell.textLabel.text = _workout.exercises[indexPath.row].name;
+        DBWExercise *exercise = _workout.exercises[indexPath.row];
+        cell.textLabel.text = exercise.name;
 
     }
     
@@ -119,8 +114,9 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
+        [[DBWDatabaseManager sharedDatabaseManager] startTemplateWriting];
         [_workout.exercises removeObjectAtIndex:indexPath.row];
-        [DBWWorkoutManager saveWorkout:_workout];
+        [[DBWDatabaseManager sharedDatabaseManager] endTemplateWriting];
         [self.tableView reloadData];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -130,10 +126,11 @@
             [controller addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 NSString *text = controller.textFields[0].text;
                 DBWExercise *exercise = [DBWExercise exerciseWithName:text baseNumberOfSets:3];
-          //      exercise.workout = _workout;
+
+                [[DBWDatabaseManager sharedDatabaseManager] startTemplateWriting];
                 [_workout.exercises addObject:exercise];
+                [[DBWDatabaseManager sharedDatabaseManager] endTemplateWriting];
                 
-                [DBWWorkoutManager saveWorkout:_workout];
                 [self setEditing:NO animated:YES];
             }]];
             [controller addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
@@ -168,13 +165,14 @@
         }
     } else {
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"Hey there!" message:@"You gotta go to the gym. Select which day you would like to use. This will be a template for you to log on." preferredStyle:UIAlertControllerStyleActionSheet];
-        NSArray <DBWWorkoutTemplate *> *templates = [DBWWorkoutManager templates];
+        RLMArray <DBWWorkoutTemplate *> *templates = [[DBWDatabaseManager sharedDatabaseManager] templateList].list;
         for (int i = 0; i < [templates count]; i++) {
             DBWWorkoutTemplate *option = templates[i];
-            [controller addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:@"%d - %@", i + 1, option.shortDescription] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [controller addAction:[UIAlertAction actionWithTitle:[NSString stringWithFormat:@"%d - %@", i + 1, option.shortDescription ?: @""] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 _workout = [DBWWorkout todaysWorkoutWithTemplate:option];
+                [[DBWDatabaseManager sharedDatabaseManager] saveNewWorkout:_workout];
+                
                 [self.tableView reloadData];
-                [DBWWorkoutManager saveWorkout:_workout];
             }]];
         }
         [controller addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
@@ -192,8 +190,9 @@
 
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-    [_workout.exercises exchangeObjectAtIndex:fromIndexPath.row withObjectAtIndex:toIndexPath.row];
-    [DBWWorkoutManager saveWorkout:_workout];
+    [[DBWDatabaseManager sharedDatabaseManager] startTemplateWriting];
+    [_workout.exercises moveObjectAtIndex:fromIndexPath.row toIndex:toIndexPath.row];
+    [[DBWDatabaseManager sharedDatabaseManager] endTemplateWriting];
 }
 
 
@@ -204,6 +203,12 @@
     return indexPath.row < _workout.exercises.count;
 }
 
+- (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(nonnull NSIndexPath *)sourceIndexPath toProposedIndexPath:(nonnull NSIndexPath *)proposedDestinationIndexPath {
+    if (proposedDestinationIndexPath.row == [_workout.exercises count]) {
+        return [NSIndexPath indexPathForRow:[_workout.exercises count] - 1 inSection:0];
+    }
+    return proposedDestinationIndexPath;
+}
 
 /*
 #pragma mark - Navigation

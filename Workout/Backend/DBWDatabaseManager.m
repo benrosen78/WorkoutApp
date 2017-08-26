@@ -10,10 +10,12 @@
 #import <Realm/Realm.h>
 #import "DBWWorkoutTemplate.h"
 #import "DBWWorkoutTemplateList.h"
+#import "DBWWorkout.h"
+#import "DBWExercise.h"
 
 @interface DBWDatabaseManager ()
 
-@property (strong, nonatomic) RLMRealm *workouts, *templates;
+@property (strong, nonatomic) RLMRealm *templates;
 
 @end
 
@@ -33,23 +35,21 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        RLMSyncConfiguration *workoutSyncConfig = [[RLMSyncConfiguration alloc] initWithUser:[RLMSyncUser currentUser] realmURL:[NSURL URLWithString:@"realms://wa.benrosen.me/~/workouts"]];
-        RLMRealmConfiguration *workoutRealmConfig = [RLMRealmConfiguration defaultConfiguration];
-        workoutRealmConfig.syncConfiguration = workoutSyncConfig;
-        
-        
-        RLMSyncConfiguration *templateSyncConfig = [[RLMSyncConfiguration alloc] initWithUser:[RLMSyncUser currentUser] realmURL:[NSURL URLWithString:@"realms://wa.benrosen.me/~/templates"]];
-        RLMRealmConfiguration *templateRealmConfig = [RLMRealmConfiguration defaultConfiguration];
-        templateRealmConfig.syncConfiguration = templateSyncConfig;
-        
-        _workouts = [RLMRealm realmWithConfiguration:workoutRealmConfig error:nil];
-        _templates = [RLMRealm realmWithConfiguration:templateRealmConfig error:nil];
-        
-        if ([DBWWorkoutTemplateList allObjectsInRealm:_templates].count < 1) {
-            [_templates beginWriteTransaction];
-            [_templates addObject:[DBWWorkoutTemplateList new]];
-            [_templates commitWriteTransaction];
-        }
+
+            RLMSyncConfiguration *templateSyncConfig = [[RLMSyncConfiguration alloc] initWithUser:[RLMSyncUser currentUser] realmURL:[NSURL URLWithString:@"realms://wa.benrosen.me/~/templates"]];
+            RLMRealmConfiguration *templateRealmConfig = [RLMRealmConfiguration defaultConfiguration];
+            templateRealmConfig.syncConfiguration = templateSyncConfig;
+            _templates = [RLMRealm realmWithConfiguration:templateRealmConfig error:nil];
+            
+            /* [_workouts beginWriteTransaction];
+             [_workouts deleteAllObjects];
+             [_workouts commitWriteTransaction];*/
+            if ([DBWWorkoutTemplateList allObjectsInRealm:_templates].count < 1) {
+                [_templates beginWriteTransaction];
+                [_templates addObject:[DBWWorkoutTemplateList new]];
+                [_templates commitWriteTransaction];
+            }
+    
     }
     return self;
 }
@@ -81,8 +81,7 @@
     NSInteger index = [templates indexOfObject:workoutTemplate];
     if (index != NSNotFound) {
         [_templates beginWriteTransaction];
-        [templates removeObjectAtIndex:index];
-        [templates insertObject:workoutTemplate atIndex:newIndex];
+        [templates moveObjectAtIndex:index toIndex:newIndex];
         [_templates commitWriteTransaction];
     }
 }
@@ -93,6 +92,24 @@
 
 - (void)endTemplateWriting {
     [_templates commitWriteTransaction];
+}
+
+#pragma mark - Workouts DB Management
+
+- (void)saveNewWorkout:(DBWWorkout *)workout {
+    [_templates beginWriteTransaction];
+    [_templates addObject:workout];
+    [_templates commitWriteTransaction];
+}
+
+- (DBWWorkout *)workoutForDay:(NSInteger)day month:(NSInteger)month year:(NSInteger)year {
+    return [DBWWorkout objectsInRealm:_templates withPredicate:[NSPredicate predicateWithFormat:@"day = %d AND month = %d AND year = %d", day, month, year]].firstObject;
+}
+
+- (DBWWorkout *)todaysWorkout {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *todaysComponents = [calendar components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:[NSDate date]];
+    return [self workoutForDay:todaysComponents.day month:todaysComponents.month year:todaysComponents.year];
 }
 
 @end

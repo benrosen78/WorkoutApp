@@ -7,25 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Realm/Realm.h>
+
+RLM_ARRAY_TYPE(DBWExercise)
 
 @class DBWExercise, DBWWorkoutTemplate;
 
-typedef NS_ENUM(NSInteger, DBWWorkoutDay) {
-    DBWWorkoutPull1,
-    DBWWorkoutPush1,
-    DBWWorkoutLegs1,
-    DBWWorkoutPull2,
-    DBWWorkoutPush2,
-    DBWWorkoutLegs2Pull3,
-};
+@interface DBWWorkout : RLMObject
 
-@interface DBWWorkout : NSObject <NSCoding>
+@property NSInteger day, month, year;
 
-@property (nonatomic) NSTimeInterval timestamp;
-
-@property (strong, nonatomic) NSMutableArray <DBWExercise *> *exercises;
-
-@property (nonatomic) DBWWorkoutDay template;
+@property RLMArray <DBWExercise> *exercises;
 
 + (instancetype)todaysWorkoutWithTemplate:(DBWWorkoutTemplate *)workoutTemplate;
 

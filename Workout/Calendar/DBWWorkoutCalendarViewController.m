@@ -10,7 +10,7 @@
 #import <CompactConstraint/CompactConstraint.h>
 #import "DBWExerciseTableViewController.h"
 #import "DBWWorkoutTableViewController.h"
-#import "DBWWorkoutManager.h"
+#import "DBWDatabaseManager.h"
 
 @interface DBWWorkoutCalendarViewController ()
 
@@ -141,7 +141,7 @@ static NSString *const headerIdentifier = @"header-cell";
                                               @"view": cell.contentView
                                               }];
     NSInteger dayNumber = indexPath.row + 2 - _firstDayOfMonthWeekday;
-    if ([DBWWorkoutManager workoutForDay:dayNumber month:_selectedMonthIndex + 1 year:2017]) {
+    if ([[DBWDatabaseManager sharedDatabaseManager] workoutForDay:dayNumber month:_selectedMonthIndex + 1 year:2017]) {
         colorView.alpha = 1;
         day.textColor = [UIColor whiteColor];
     } else {
@@ -221,7 +221,7 @@ static NSString *const headerIdentifier = @"header-cell";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
     NSInteger day = indexPath.row + 2 - _firstDayOfMonthWeekday;
-    DBWWorkout *workout = [DBWWorkoutManager workoutForDay:day month:_selectedMonthIndex + 1 year:2017];
+    DBWWorkout *workout = [[DBWDatabaseManager sharedDatabaseManager] workoutForDay:day month:_selectedMonthIndex + 1 year:2017];
     if (!workout) {
         return;
     }
@@ -230,34 +230,5 @@ static NSString *const headerIdentifier = @"header-cell";
     [self.navigationController pushViewController:vc animated:YES];
     
 }
-
-/*
-// Uncomment this method to specify if the specified item should be highlighted during tracking
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-	return YES;
-}
-*/
-
-/*
-// Uncomment this method to specify if the specified item should be selected
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-*/
-
-/*
-// Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-	return NO;
-}
-
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	return NO;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	
-}
-*/
 
 @end

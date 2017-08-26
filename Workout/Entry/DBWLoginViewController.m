@@ -15,6 +15,7 @@
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import "DBWAuthenticationManager.h"
 #import "AppDelegate.h"
+#import "DBWEmailLoginViewController.h"
 
 @interface DBWLoginViewController () <GIDSignInUIDelegate, FBSDKLoginButtonDelegate>
 
@@ -30,7 +31,6 @@
         NSLog(@"test");
     }
 
-    
     [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(loggedIn:) name:DBWAuthenticationManagerLogInNotification object:nil];
     
     // Do any additional setup after loading the view.
@@ -94,6 +94,7 @@
     [self.view addSubview:orLabel];
     
     UIButton *emailButton = [[UIButton alloc] init];
+    [emailButton addTarget:self action:@selector(emailTapped:) forControlEvents:UIControlEventTouchUpInside];
     [emailButton setTitle:@"Sign in with email" forState:UIControlStateNormal];
     emailButton.backgroundColor = [UIColor colorWithRed:0.201 green:0.220 blue:0.376 alpha:1.00];
     [emailButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -158,6 +159,9 @@
 }
 
 - (void)loggedIn:(NSNotification *)notification {
+    if (self.presentedViewController) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
     dispatch_async(dispatch_get_main_queue(), ^{
         
         UIImageView __block *transitioningView = [[UIImageView alloc] initWithFrame:self.view.frame];
@@ -186,5 +190,10 @@
 
 }
 
+- (void)emailTapped:(UIButton *)tapped {
+    DBWEmailLoginViewController *loginViewController = [[DBWEmailLoginViewController alloc] init];
+    loginViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self presentViewController:loginViewController animated:YES completion:nil];
+}
 
 @end

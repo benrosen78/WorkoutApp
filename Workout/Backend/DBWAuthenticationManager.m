@@ -24,17 +24,26 @@ static NSString *const serverStringURL = @"https://wa.benrosen.me/";
     [self loginWithAuthentication:facebookCredentials];
 }
 
++ (void)emailAuthenticationWithUsername:(NSString *)username password:(NSString *)password register:(BOOL)registerAccount {
+    RLMSyncCredentials *emailCredentials = [RLMSyncCredentials credentialsWithUsername:username password:password register:registerAccount];
+    [self loginWithAuthentication:emailCredentials];
+}
+
 + (void)loginWithAuthentication:(RLMSyncCredentials *)credentials {
     [RLMSyncUser logInWithCredentials:credentials authServerURL:[NSURL URLWithString:serverStringURL] onCompletion:^(RLMSyncUser *user, NSError *error) {
         if (user) {
             [[NSNotificationCenter defaultCenter] postNotificationName:DBWAuthenticationManagerLogInNotification object:nil];
-            [DBWDatabaseManager sharedDatabaseManager];
+            [DBWDatabaseManager performSelectorOnMainThread:@selector(sharedDatabaseManager) withObject:nil waitUntilDone:nil];
          }
     }];
 }
 
 + (BOOL)loggedIn {
     return [RLMSyncUser currentUser];
+}
+
++ (void)logOut {
+    [[RLMSyncUser currentUser] logOut];
 }
 
 @end

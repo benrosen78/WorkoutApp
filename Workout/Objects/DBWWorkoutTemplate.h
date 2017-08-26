@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import <Realm/Realm.h>
-
-@class DBWExercise, DBWWorkoutTemplate;
+#import "DBWExercise.h"
 
 RLM_ARRAY_TYPE(DBWExercise)
+
+@class DBWExercise, DBWWorkoutTemplate;
 
 @interface DBWWorkoutTemplate : RLMObject
 

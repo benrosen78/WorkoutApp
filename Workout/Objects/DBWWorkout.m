@@ -12,44 +12,15 @@
 
 @implementation DBWWorkout
 
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        _exercises = [NSMutableArray array];
-    }
-    return self;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-    self = [super init];
-    if (self) {
-        _timestamp = [aDecoder decodeDoubleForKey:@"timestamp"];
-        _exercises = [aDecoder decodeObjectForKey:@"exercises"];
-        _template = [aDecoder decodeIntegerForKey:@"template"];
-        
-        for (DBWExercise *exercise in _exercises) {
-       //     exercise.workout = self;
-        }
-    }
-    return self;
-}
-
 + (instancetype)todaysWorkoutWithTemplate:(DBWWorkoutTemplate *)workoutTemplate {
-    DBWWorkout *workout = [[DBWWorkout alloc] init];
-    workout.timestamp = [[NSDate date] timeIntervalSince1970];
-   // workout.exercises = [NSMutableArray arrayWithArray:workoutTemplate.exercises];
+    DBWWorkout *workout = [[DBWWorkout alloc] initWithValue:@{@"exercises": workoutTemplate.exercises}];
     
-    for (DBWExercise *exercise in workout.exercises) {
-        //exercise.workout = workout;
-    }
-    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *todaysComponents = [calendar components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:[NSDate date]];
+    workout.day = todaysComponents.day;
+    workout.month = todaysComponents.month;
+    workout.year = todaysComponents.year;
     return workout;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-    [aCoder encodeDouble:_timestamp forKey:@"timestamp"];
-    [aCoder encodeObject:_exercises forKey:@"exercises"];
-    [aCoder encodeInteger:_template forKey:@"template"];
 }
 
 @end

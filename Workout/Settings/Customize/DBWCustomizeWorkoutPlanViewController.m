@@ -8,7 +8,6 @@
 
 #import "DBWCustomizeWorkoutPlanViewController.h"
 #import "DBWWorkoutPlanDayCell.h"
-#import "DBWWorkoutManager.h"
 #import "DBWWorkoutTemplate.h"
 #import "DBWTemplateCustomizationTableViewController.h"
 #import <CompactConstraint/CompactConstraint.h>
