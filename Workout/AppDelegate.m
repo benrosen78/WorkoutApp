@@ -16,6 +16,7 @@
 #import "DBWAuthenticationManager.h"
 #import <Realm/Realm.h>
 #import "DBWDatabaseManager.h"
+#import "DBWStopwatchViewController.h"
 
 @interface AppDelegate () <GIDSignInDelegate>
 
@@ -30,12 +31,14 @@
     [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
     [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
     
-    [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
-    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackTranslucent];
-    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.201 green:0.220 blue:0.376 alpha:1.00]];
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
-    [[UINavigationBar appearance] setTranslucent:NO];
+    //[[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
+   // [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
+ //   [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.201 green:0.220 blue:0.376 alpha:1.00]];
+    [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:0.201 green:0.220 blue:0.376 alpha:1.00]];
+    //[[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
+    //[[UINavigationBar appearance] setTranslucent:NO];
+    [[UINavigationBar appearance] setPrefersLargeTitles:YES];
+    
     [[UITabBar appearance] setTintColor:[UIColor colorWithRed:0.201 green:0.220 blue:0.376 alpha:1.00]];
     
     _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -52,13 +55,17 @@
     calendarVC.title = @"Past Gains";
     calendarVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Today's Gains" image:[[UIImage imageNamed:@"calendar"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] tag:1];
     
+    DBWStopwatchViewController *stopwatchVC = [[DBWStopwatchViewController alloc] init];
+    stopwatchVC.title = @"Stopwatch";
+    stopwatchVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Stopwatch" image:[[UIImage imageNamed:@"stopwatch"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] tag:2];
+    
     DBWSettingsTableViewController *settingsVC = [[DBWSettingsTableViewController alloc] init];
     settingsVC.title = @"Settings";
-    settingsVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Settings" image:[[UIImage imageNamed:@"settings"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] tag:2];
+    settingsVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Settings" image:[[UIImage imageNamed:@"settings"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] tag:3];
     
     _tabBarController = [[UITabBarController alloc] init];
-    _tabBarController.viewControllers = @[[[UINavigationController alloc] initWithRootViewController:calendarVC], [[UINavigationController alloc] initWithRootViewController:todayVC], [[UINavigationController alloc] initWithRootViewController:settingsVC]];
-    
+    _tabBarController.viewControllers = @[[[UINavigationController alloc] initWithRootViewController:calendarVC], [[UINavigationController alloc] initWithRootViewController:todayVC], [[UINavigationController alloc] initWithRootViewController:stopwatchVC], [[UINavigationController alloc] initWithRootViewController:settingsVC]];
+    _tabBarController.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAutomatic;
     _loginVC = [[DBWLoginViewController alloc] init];
     
     //[[RLMSyncUser currentUser] logOut];
