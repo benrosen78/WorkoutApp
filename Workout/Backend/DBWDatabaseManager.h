@@ -34,5 +34,7 @@
 
 - (DBWWorkout *)todaysWorkout;
 
+- (NSArray <NSNumber *> *)yearsInDatabase;
+
 @end
 

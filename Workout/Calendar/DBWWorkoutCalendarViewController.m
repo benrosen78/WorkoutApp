@@ -14,14 +14,15 @@
 #import "DBWCalendarCollectionViewCell.h"
 #import "DBWWorkout.h"
 #import "DBWWorkoutTemplate.h"
+#import "DBWCalendarDatePickerViewController.h"
 
-@interface DBWWorkoutCalendarViewController ()
+@interface DBWWorkoutCalendarViewController () <DBWDatePickerDelegate>
 
 @property (nonatomic, readwrite) NSInteger firstDayOfMonthWeekday, monthLength;
 
-@property (strong, nonatomic) NSArray <NSDate *> *selectedMonthDates;
-
 @property (strong, nonatomic) NSArray <NSString *> *months;
+
+@property (nonatomic) NSInteger year;
 
 @property (nonatomic) NSInteger selectedMonthIndex;
 
@@ -41,12 +42,12 @@ static NSString *const headerIdentifier = @"header-cell";
     layout.itemSize = CGSizeMake(ceil([UIScreen mainScreen].bounds.size.width / 7), 120);
     
     CGFloat sideInset = ([UIScreen mainScreen].bounds.size.width -  (ceil([UIScreen mainScreen].bounds.size.width / 7) * 7)) / 2.0;
-    sideInset -=3;
+    sideInset -= 3;
     layout.sectionInset = UIEdgeInsetsMake(0, sideInset, 0, sideInset);
     
     self = [self initWithCollectionViewLayout:layout];
     if (self) {
-        _months = @[@"January", @"February", @"March", @"April", @"May", @"June", @"July", @"August", @"September", @"October", @"November", @"December"];
+        _months = [[[NSDateFormatter alloc] init] monthSymbols];
     }
     return self;
 }
@@ -56,9 +57,8 @@ static NSString *const headerIdentifier = @"header-cell";
     
     //((UICollectionViewFlowLayout *)self.collectionViewLayout).estimatedItemSize = CGSizeMake(self.view.frame.size.width / 7, 100);
     
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitMonth fromDate:[NSDate date]];
-    [self switchMonthToIndex:components.month - 1];
-    self.title = [NSString stringWithFormat:@"%@'s Gains", _months[_selectedMonthIndex]];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:[NSDate date]];
+    [self monthSelected:components.month - 1 year:components.year];
     
     self.collectionView.backgroundColor = [UIColor colorWithRed:0.902 green:0.898 blue:0.902 alpha:1.00];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemOrganize target:self action:@selector(switchMonth:)];
@@ -78,6 +78,7 @@ static NSString *const headerIdentifier = @"header-cell";
 }
 
 - (void)switchMonth:(UIBarButtonItem *)item {
+    /*
     UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"You there!" message:@"Select the month you would like to view." preferredStyle:UIAlertControllerStyleActionSheet];
     controller.popoverPresentationController.barButtonItem = item;
     for (NSString *month in _months) {
@@ -87,16 +88,28 @@ static NSString *const headerIdentifier = @"header-cell";
             self.title = monthString;
         }]];
     }
-    [self presentViewController:controller animated:YES completion:nil];
+    [self presentViewController:controller animated:YES completion:nil];*/
+    DBWCalendarDatePickerViewController *picker = [[DBWCalendarDatePickerViewController alloc] initWithCurrentMonth:_selectedMonthIndex andYear:_year];
+    picker.delegate = self;
+    picker.modalPresentationStyle = UIModalPresentationPopover;
+    picker.preferredContentSize = CGSizeMake(350, 260);
+    picker.popoverPresentationController.barButtonItem = self.navigationItem.rightBarButtonItem;
+    [self presentViewController:picker animated:YES completion:nil];
 }
 
-- (void)switchMonthToIndex:(NSInteger)index {
+
+#pragma mark - DBWDatePickerDelegate
+
+- (void)monthSelected:(NSInteger)month year:(NSInteger)year {
+    _selectedMonthIndex = month;
+    _year = year;
+    
     NSCalendar *gregorian = [NSCalendar currentCalendar];
     
     NSDateComponents *components = [[NSDateComponents alloc] init];
     components.day = 1;
-    components.month = index + 1;
-    components.year = 2017;
+    components.month = month + 1;
+    components.year = year;
     
     // convert it into an NSDate and then break it back into components again for the weekday
     NSDate *firstOfMonthDate = [gregorian dateFromComponents:components];
@@ -106,11 +119,13 @@ static NSString *const headerIdentifier = @"header-cell";
     
     _monthLength = [gregorian rangeOfUnit:NSCalendarUnitDay inUnit:NSCalendarUnitMonth forDate:firstOfMonthDate].length;
     
-    _selectedMonthIndex = components.month - 1;
     [self.collectionView reloadData];
+    
+    self.title = [NSString stringWithFormat:@"%@ %lu", _months[_selectedMonthIndex], _year];
+    
 }
 
-#pragma mark <UICollectionViewDataSource>
+#pragma mark - UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
@@ -133,7 +148,7 @@ static NSString *const headerIdentifier = @"header-cell";
     cell.dayLabel.text = indexPath.row < _firstDayOfMonthWeekday - 1 ? @"" : [NSString stringWithFormat:@"%lu", dayNumber];
 
     NSDateComponents *todaysComponents = [[NSCalendar currentCalendar] components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:[NSDate date]];
-    if (todaysComponents.day == dayNumber && todaysComponents.month == _selectedMonthIndex + 1 && todaysComponents.year == 2017) {
+    if (todaysComponents.day == dayNumber && todaysComponents.month == _selectedMonthIndex + 1 && todaysComponents.year == _year) {
         cell.colorView.alpha = 1;
         cell.dayLabel.textColor = [UIColor whiteColor];
     } else {
@@ -144,7 +159,7 @@ static NSString *const headerIdentifier = @"header-cell";
 
     
     
-    DBWWorkout *workout = [[DBWDatabaseManager sharedDatabaseManager] workoutForDay:dayNumber month:_selectedMonthIndex + 1 year:2017];
+    DBWWorkout *workout = [[DBWDatabaseManager sharedDatabaseManager] workoutForDay:dayNumber month:_selectedMonthIndex + 1 year:_year];
     if (workout) {
         cell.workoutLabel.alpha = 1;
         cell.workoutLabel.text = [NSString stringWithFormat:@"Day %lu", [[DBWDatabaseManager sharedDatabaseManager].templateList.list indexOfObject:workout.workoutTemplate] + 1];
@@ -223,11 +238,12 @@ static NSString *const headerIdentifier = @"header-cell";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
     NSInteger day = indexPath.row + 2 - _firstDayOfMonthWeekday;
-    DBWWorkout *workout = [[DBWDatabaseManager sharedDatabaseManager] workoutForDay:day month:_selectedMonthIndex + 1 year:2017];
+    
+    DBWWorkout *workout = [[DBWDatabaseManager sharedDatabaseManager] workoutForDay:day month:_selectedMonthIndex + 1 year:_year];
     if (!workout) {
         return;
     }
-    
+
     DBWWorkoutTableViewController *vc = [[DBWWorkoutTableViewController alloc] initWithWorkout:workout];
     [self.navigationController pushViewController:vc animated:YES];
     

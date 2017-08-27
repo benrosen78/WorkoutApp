@@ -26,7 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.rightBarButtonItem = nil;
-    
+        
     NSDateComponents *components = [[NSDateComponents alloc] init];
     components.day = self.workout.day;
     components.month = self.workout.month;

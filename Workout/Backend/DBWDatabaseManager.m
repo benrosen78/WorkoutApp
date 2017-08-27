@@ -112,4 +112,16 @@
     return [self workoutForDay:todaysComponents.day month:todaysComponents.month year:todaysComponents.year];
 }
 
+- (NSArray <NSNumber *> *)yearsInDatabase {
+    NSMutableArray <NSNumber *> *years = [NSMutableArray array];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
+    [years addObject:@(2018)];
+    
+    NSInteger year = 2018;
+    while ([[DBWWorkout objectsInRealm:_templates withPredicate:[NSPredicate predicateWithFormat:@"year = %d", --year]] count] > 0) {
+        [years addObject:@(year)];
+    }
+    return [[[NSArray arrayWithArray:years] reverseObjectEnumerator] allObjects];
+}
+
 @end

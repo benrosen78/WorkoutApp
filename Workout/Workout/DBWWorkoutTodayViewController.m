@@ -20,10 +20,16 @@
 
 @implementation DBWWorkoutTodayViewController
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _workout = [[DBWDatabaseManager sharedDatabaseManager] todaysWorkout];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    _workout = [[DBWDatabaseManager sharedDatabaseManager] todaysWorkout];
     
     self.title = @"Today's Gains";
     

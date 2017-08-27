@@ -27,6 +27,7 @@
 		B57E6D1F1F51C6D900849CB6 /* DBWStopwatchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B57E6D1E1F51C6D900849CB6 /* DBWStopwatchViewController.m */; };
 		B57E6D221F51EC6B00849CB6 /* DBWCalendarCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B57E6D211F51EC6B00849CB6 /* DBWCalendarCollectionViewCell.m */; };
 		B57E6D251F51F17600849CB6 /* DBWCalendarCellLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B57E6D241F51F17600849CB6 /* DBWCalendarCellLabel.m */; };
+		B57E6D281F5329C800849CB6 /* DBWCalendarDatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B57E6D271F5329C800849CB6 /* DBWCalendarDatePickerViewController.m */; };
 		B596A3381F2F9BAE00524503 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B596A3371F2F9BAE00524503 /* Launch Screen.storyboard */; };
 		B5BDC5921F3B4A5800C77CFC /* DBWCustomizeWorkoutPlanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5BDC5911F3B4A5800C77CFC /* DBWCustomizeWorkoutPlanViewController.m */; };
 		B5BDC5971F3B4D4C00C77CFC /* DBWWorkoutPlanDayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B5BDC5961F3B4D4C00C77CFC /* DBWWorkoutPlanDayCell.m */; };
@@ -103,6 +104,8 @@
 		B57E6D211F51EC6B00849CB6 /* DBWCalendarCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWCalendarCollectionViewCell.m; sourceTree = "<group>"; };
 		B57E6D231F51F17600849CB6 /* DBWCalendarCellLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWCalendarCellLabel.h; sourceTree = "<group>"; };
 		B57E6D241F51F17600849CB6 /* DBWCalendarCellLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWCalendarCellLabel.m; sourceTree = "<group>"; };
+		B57E6D261F5329C800849CB6 /* DBWCalendarDatePickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWCalendarDatePickerViewController.h; sourceTree = "<group>"; };
+		B57E6D271F5329C800849CB6 /* DBWCalendarDatePickerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWCalendarDatePickerViewController.m; sourceTree = "<group>"; };
 		B596A3371F2F9BAE00524503 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		B5BDC5901F3B4A5800C77CFC /* DBWCustomizeWorkoutPlanViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWCustomizeWorkoutPlanViewController.h; sourceTree = "<group>"; };
 		B5BDC5911F3B4A5800C77CFC /* DBWCustomizeWorkoutPlanViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWCustomizeWorkoutPlanViewController.m; sourceTree = "<group>"; };
@@ -243,6 +246,8 @@
 			children = (
 				B53CF2BE1F3365DE00F30CB8 /* DBWWorkoutCalendarViewController.h */,
 				B53CF2BF1F3365DE00F30CB8 /* DBWWorkoutCalendarViewController.m */,
+				B57E6D261F5329C800849CB6 /* DBWCalendarDatePickerViewController.h */,
+				B57E6D271F5329C800849CB6 /* DBWCalendarDatePickerViewController.m */,
 				B57E6D201F51EC6B00849CB6 /* DBWCalendarCollectionViewCell.h */,
 				B57E6D211F51EC6B00849CB6 /* DBWCalendarCollectionViewCell.m */,
 				B57E6D231F51F17600849CB6 /* DBWCalendarCellLabel.h */,
@@ -568,6 +573,7 @@
 			files = (
 				B5BDC5971F3B4D4C00C77CFC /* DBWWorkoutPlanDayCell.m in Sources */,
 				B53CF2D51F3366D000F30CB8 /* DBWSettingsTableViewController.m in Sources */,
+				B57E6D281F5329C800849CB6 /* DBWCalendarDatePickerViewController.m in Sources */,
 				B5DF743B1F40B3CD009FA3B4 /* DBWCustomizeWorkoutPlanCollectionHeaderView.m in Sources */,
 				B53CF2CB1F33660200F30CB8 /* DBWExerciseTableViewController.m in Sources */,
 				B5BDC59A1F3B588000C77CFC /* DBWWorkoutTemplate.m in Sources */,
