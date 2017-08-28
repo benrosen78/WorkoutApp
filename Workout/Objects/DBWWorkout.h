@@ -19,7 +19,9 @@ RLM_ARRAY_TYPE(DBWExercise)
 
 @property RLMArray <DBWExercise> *exercises;
 
-@property (strong, nonatomic) DBWWorkoutTemplate *workoutTemplate;
+@property NSInteger selectedColorIndex, templateDay;
+
+@property NSString *comments;
 
 + (instancetype)todaysWorkoutWithTemplate:(DBWWorkoutTemplate *)workoutTemplate;
 

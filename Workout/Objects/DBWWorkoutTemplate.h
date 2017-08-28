@@ -22,6 +22,8 @@ RLM_ARRAY_TYPE(DBWExercise)
 
 @property NSString *primaryKey;
 
+@property NSInteger selectedColorIndex;
+
 @end
 
 RLM_ARRAY_TYPE(DBWWorkoutTemplate)

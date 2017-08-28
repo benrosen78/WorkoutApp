@@ -35,21 +35,32 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-
-            RLMSyncConfiguration *templateSyncConfig = [[RLMSyncConfiguration alloc] initWithUser:[RLMSyncUser currentUser] realmURL:[NSURL URLWithString:@"realms://wa.benrosen.me/~/templates"]];
-            RLMRealmConfiguration *templateRealmConfig = [RLMRealmConfiguration defaultConfiguration];
-            templateRealmConfig.syncConfiguration = templateSyncConfig;
-            _templates = [RLMRealm realmWithConfiguration:templateRealmConfig error:nil];
-            
-            /* [_workouts beginWriteTransaction];
-             [_workouts deleteAllObjects];
-             [_workouts commitWriteTransaction];*/
-            if ([DBWWorkoutTemplateList allObjectsInRealm:_templates].count < 1) {
-                [_templates beginWriteTransaction];
-                [_templates addObject:[DBWWorkoutTemplateList new]];
-                [_templates commitWriteTransaction];
-            }
-    
+        RLMSyncConfiguration *templateSyncConfig = [[RLMSyncConfiguration alloc] initWithUser:[RLMSyncUser currentUser] realmURL:[NSURL URLWithString:@"realms://wa.benrosen.me/~/templates"]];
+        RLMRealmConfiguration *templateRealmConfig = [RLMRealmConfiguration defaultConfiguration];
+        templateRealmConfig.syncConfiguration = templateSyncConfig;
+        _templates = [RLMRealm realmWithConfiguration:templateRealmConfig error:nil];
+        
+        if ([DBWWorkoutTemplateList allObjectsInRealm:_templates].count < 1) {
+            [_templates beginWriteTransaction];
+            [_templates addObject:[DBWWorkoutTemplateList new]];
+            [_templates commitWriteTransaction];
+        }
+        
+        /* for loading in arbitrary data:
+ 
+        int day = 20;
+        
+         for (DBWWorkoutTemplate *template in [self templateList].list) {
+            DBWWorkout *wo = [[DBWWorkout alloc] init];
+            wo.selectedColorIndex = template.selectedColorIndex;
+            wo.templateDay = [self.templateList.list indexOfObject:template] + 1;
+            wo.day = day;
+            wo.month = 8;
+            wo.year = 2017;
+            [self saveNewWorkout:wo];
+            day++;
+        }
+        */
     }
     return self;
 }
@@ -115,9 +126,9 @@
 - (NSArray <NSNumber *> *)yearsInDatabase {
     NSMutableArray <NSNumber *> *years = [NSMutableArray array];
     NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
-    [years addObject:@(2018)];
+    [years addObject:@(components.year)];
     
-    NSInteger year = 2018;
+    NSInteger year = components.year;
     while ([[DBWWorkout objectsInRealm:_templates withPredicate:[NSPredicate predicateWithFormat:@"year = %d", --year]] count] > 0) {
         [years addObject:@(year)];
     }

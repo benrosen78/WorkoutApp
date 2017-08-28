@@ -17,6 +17,7 @@
 #import <Realm/Realm.h>
 #import "DBWDatabaseManager.h"
 #import "DBWStopwatchViewController.h"
+#import "DBWSettingsSplitViewController.h"
 
 @interface AppDelegate () <GIDSignInDelegate>
 
@@ -59,13 +60,14 @@
     stopwatchVC.title = @"Stopwatch";
     stopwatchVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Stopwatch" image:[[UIImage imageNamed:@"stopwatch"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] tag:2];
     
-    DBWSettingsTableViewController *settingsVC = [[DBWSettingsTableViewController alloc] init];
+    DBWSettingsSplitViewController *settingsVC = [[DBWSettingsSplitViewController alloc] init];
     settingsVC.title = @"Settings";
     settingsVC.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Settings" image:[[UIImage imageNamed:@"settings"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] tag:3];
     
     _tabBarController = [[UITabBarController alloc] init];
-    _tabBarController.viewControllers = @[[[UINavigationController alloc] initWithRootViewController:calendarVC], [[UINavigationController alloc] initWithRootViewController:todayVC], [[UINavigationController alloc] initWithRootViewController:stopwatchVC], [[UINavigationController alloc] initWithRootViewController:settingsVC]];
+    _tabBarController.viewControllers = @[[[UINavigationController alloc] initWithRootViewController:calendarVC], [[UINavigationController alloc] initWithRootViewController:todayVC], [[UINavigationController alloc] initWithRootViewController:stopwatchVC], settingsVC];
     _tabBarController.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeAutomatic;
+    
     _loginVC = [[DBWLoginViewController alloc] init];
     
     //[[RLMSyncUser currentUser] logOut];

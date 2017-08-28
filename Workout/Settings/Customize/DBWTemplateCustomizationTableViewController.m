@@ -11,7 +11,10 @@
 #import "DBWExercise.h"
 #import <CompactConstraint/CompactConstraint.h>
 #import "DBWDatabaseManager.h"
+#import "DBWColorTableViewCell.h"
+#import "UIColor+ColorPalette.h"
 
+static NSString *const kColorCellIdentifier = @"color-cell";
 static NSString *const kShortDescCellIdentifier = @"desc-cell";
 static NSString *const kExerciseCellIdentifier = @"exercise-cell";
 static NSString *const kDeleteCellIdentifier = @"delete-cell";
@@ -19,6 +22,10 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
 @interface DBWTemplateCustomizationTableViewController () <UITextViewDelegate>
 
 @property (strong, nonatomic) DBWWorkoutTemplate *template;
+
+@property (strong, nonatomic) NSArray <NSString *> *colorNames;
+
+@property (strong, nonatomic) NSIndexPath *selectedColorIndexPath;
 
 @end
 
@@ -34,10 +41,17 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _colorNames = @[@"Red", @"Orange", @"Yellow", @"Green", @"Teal Blue", @"Blue", @"Purple", @"Pink"];
 
     self.title = [NSString stringWithFormat:@"Day: %lu", [[DBWDatabaseManager sharedDatabaseManager].templateList.list indexOfObject:_template] + 1];
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.tableView.allowsSelectionDuringEditing = YES;
+    
+    _selectedColorIndexPath = [NSIndexPath indexPathForRow:_template.selectedColorIndex inSection:0];
+
+    
+    [self.tableView registerClass:[DBWColorTableViewCell class] forCellReuseIdentifier:kColorCellIdentifier];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -48,11 +62,13 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0 || section == 2) {
+    if (section == 0) {
+        return 8;
+    } else if (section == 1 || section == 3) {
         return 1;
     } else {
         if (tableView.editing) {
@@ -64,11 +80,18 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return indexPath.section == 0 ? 70 : 50;
+    return indexPath.section == 1 ? 70 : 50;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
+        DBWColorTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kColorCellIdentifier forIndexPath:indexPath];
+        cell.color = [UIColor calendarColors][indexPath.row];
+        cell.textLabel.text = _colorNames[indexPath.row];
+        cell.accessoryType = [indexPath isEqual:_selectedColorIndexPath] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+        
+        return cell;
+    } else if (indexPath.section == 1) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kShortDescCellIdentifier];
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kShortDescCellIdentifier];
@@ -92,7 +115,7 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
         }
         cell.shouldIndentWhileEditing = NO;
         return cell;
-    } else if (indexPath.section == 1) {
+    } else if (indexPath.section == 2) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kExerciseCellIdentifier];
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kExerciseCellIdentifier];
@@ -106,7 +129,7 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
             ;
         }
         return cell;
-    } else if (indexPath.section == 2) {
+    } else if (indexPath.section == 3) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kDeleteCellIdentifier];
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kDeleteCellIdentifier];
@@ -120,10 +143,12 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        return @"Short Description";
+        return @"Color";
     } else if (section == 1) {
-        return @"Exercises";
+        return @"Short Description";
     } else if (section == 2) {
+        return @"Exercises";
+    } else if (section == 3) {
         return @"Delete";
     }
     return nil;
@@ -184,9 +209,18 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
     return indexPath.section == 1;
 }
 
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.section == 2) {
+    if (indexPath.section == 0) {
+        [tableView cellForRowAtIndexPath:_selectedColorIndexPath].accessoryType = UITableViewCellAccessoryNone;
+        _selectedColorIndexPath = indexPath;
+        [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
+        
+        [[DBWDatabaseManager sharedDatabaseManager] startTemplateWriting];
+        _template.selectedColorIndex = _selectedColorIndexPath.row;
+        [[DBWDatabaseManager sharedDatabaseManager] endTemplateWriting];
+    } else if (indexPath.section == 3) {
         UIAlertController *deleteController = [UIAlertController alertControllerWithTitle:@"Workout App" message:@"Are you sure you want to delete this workout template? You can't recover it." preferredStyle:UIAlertControllerStyleAlert];
         [deleteController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
         [deleteController addAction:[UIAlertAction actionWithTitle:@"I'm sure" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {

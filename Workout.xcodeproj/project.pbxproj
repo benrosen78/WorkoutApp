@@ -28,7 +28,10 @@
 		B57E6D221F51EC6B00849CB6 /* DBWCalendarCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B57E6D211F51EC6B00849CB6 /* DBWCalendarCollectionViewCell.m */; };
 		B57E6D251F51F17600849CB6 /* DBWCalendarCellLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B57E6D241F51F17600849CB6 /* DBWCalendarCellLabel.m */; };
 		B57E6D281F5329C800849CB6 /* DBWCalendarDatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B57E6D271F5329C800849CB6 /* DBWCalendarDatePickerViewController.m */; };
+		B57E6D2B1F53521C00849CB6 /* DBWColorTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B57E6D2A1F53521C00849CB6 /* DBWColorTableViewCell.m */; };
+		B57E6D2E1F536F7500849CB6 /* DBWSettingsSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B57E6D2D1F536F7500849CB6 /* DBWSettingsSplitViewController.m */; };
 		B596A3381F2F9BAE00524503 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B596A3371F2F9BAE00524503 /* Launch Screen.storyboard */; };
+		B5B192BF1F537C10005B3F8B /* UIColor+ColorPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B192BE1F537C10005B3F8B /* UIColor+ColorPalette.m */; };
 		B5BDC5921F3B4A5800C77CFC /* DBWCustomizeWorkoutPlanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5BDC5911F3B4A5800C77CFC /* DBWCustomizeWorkoutPlanViewController.m */; };
 		B5BDC5971F3B4D4C00C77CFC /* DBWWorkoutPlanDayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B5BDC5961F3B4D4C00C77CFC /* DBWWorkoutPlanDayCell.m */; };
 		B5BDC59A1F3B588000C77CFC /* DBWWorkoutTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5BDC5991F3B588000C77CFC /* DBWWorkoutTemplate.m */; };
@@ -106,7 +109,13 @@
 		B57E6D241F51F17600849CB6 /* DBWCalendarCellLabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWCalendarCellLabel.m; sourceTree = "<group>"; };
 		B57E6D261F5329C800849CB6 /* DBWCalendarDatePickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWCalendarDatePickerViewController.h; sourceTree = "<group>"; };
 		B57E6D271F5329C800849CB6 /* DBWCalendarDatePickerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWCalendarDatePickerViewController.m; sourceTree = "<group>"; };
+		B57E6D291F53521C00849CB6 /* DBWColorTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWColorTableViewCell.h; sourceTree = "<group>"; };
+		B57E6D2A1F53521C00849CB6 /* DBWColorTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWColorTableViewCell.m; sourceTree = "<group>"; };
+		B57E6D2C1F536F7500849CB6 /* DBWSettingsSplitViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWSettingsSplitViewController.h; sourceTree = "<group>"; };
+		B57E6D2D1F536F7500849CB6 /* DBWSettingsSplitViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWSettingsSplitViewController.m; sourceTree = "<group>"; };
 		B596A3371F2F9BAE00524503 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		B5B192BD1F537C10005B3F8B /* UIColor+ColorPalette.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+ColorPalette.h"; sourceTree = "<group>"; };
+		B5B192BE1F537C10005B3F8B /* UIColor+ColorPalette.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ColorPalette.m"; sourceTree = "<group>"; };
 		B5BDC5901F3B4A5800C77CFC /* DBWCustomizeWorkoutPlanViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWCustomizeWorkoutPlanViewController.h; sourceTree = "<group>"; };
 		B5BDC5911F3B4A5800C77CFC /* DBWCustomizeWorkoutPlanViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWCustomizeWorkoutPlanViewController.m; sourceTree = "<group>"; };
 		B5BDC5951F3B4D4C00C77CFC /* DBWWorkoutPlanDayCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWWorkoutPlanDayCell.h; sourceTree = "<group>"; };
@@ -270,6 +279,8 @@
 		B53CF2D21F33665900F30CB8 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				B57E6D2C1F536F7500849CB6 /* DBWSettingsSplitViewController.h */,
+				B57E6D2D1F536F7500849CB6 /* DBWSettingsSplitViewController.m */,
 				B53CF2D31F3366D000F30CB8 /* DBWSettingsTableViewController.h */,
 				B53CF2D41F3366D000F30CB8 /* DBWSettingsTableViewController.m */,
 				B53CF2E21F33A8F300F30CB8 /* DBWAboutTableViewController.h */,
@@ -296,6 +307,15 @@
 			path = Stopwatch;
 			sourceTree = "<group>";
 		};
+		B5B192BC1F537BF1005B3F8B /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				B5B192BD1F537C10005B3F8B /* UIColor+ColorPalette.h */,
+				B5B192BE1F537C10005B3F8B /* UIColor+ColorPalette.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
 		B5BDC5941F3B4D2200C77CFC /* Customize */ = {
 			isa = PBXGroup;
 			children = (
@@ -307,6 +327,8 @@
 				B5BDC5961F3B4D4C00C77CFC /* DBWWorkoutPlanDayCell.m */,
 				B5BDC59E1F3B5FDE00C77CFC /* DBWTemplateCustomizationTableViewController.h */,
 				B5BDC59F1F3B5FDE00C77CFC /* DBWTemplateCustomizationTableViewController.m */,
+				B57E6D291F53521C00849CB6 /* DBWColorTableViewCell.h */,
+				B57E6D2A1F53521C00849CB6 /* DBWColorTableViewCell.m */,
 			);
 			path = Customize;
 			sourceTree = "<group>";
@@ -338,6 +360,7 @@
 			children = (
 				B5D2E2DD1F2A93B800CB4540 /* AppDelegate.h */,
 				B5D2E2DE1F2A93B800CB4540 /* AppDelegate.m */,
+				B5B192BC1F537BF1005B3F8B /* Categories */,
 				B50CBD861F3DD85D007D3962 /* Entry */,
 				B57E6D1C1F51C6C400849CB6 /* Stopwatch */,
 				B53CF2BD1F3365DE00F30CB8 /* Calendar */,
@@ -582,6 +605,7 @@
 				B50CBD991F3E1B4D007D3962 /* DBWAuthenticationManager.m in Sources */,
 				B57E6D221F51EC6B00849CB6 /* DBWCalendarCollectionViewCell.m in Sources */,
 				B57E6D251F51F17600849CB6 /* DBWCalendarCellLabel.m in Sources */,
+				B57E6D2B1F53521C00849CB6 /* DBWColorTableViewCell.m in Sources */,
 				B5D2E2DF1F2A93B800CB4540 /* AppDelegate.m in Sources */,
 				B5F6353C1F4339B400B866DC /* DBWEmailLoginViewController.m in Sources */,
 				B53CF2C91F3365FC00F30CB8 /* DBWWorkoutCalendarViewController.m in Sources */,
@@ -590,11 +614,13 @@
 				B53CF2CD1F33660600F30CB8 /* DBWWorkoutTodayViewController.m in Sources */,
 				B5BDC5A01F3B5FDE00C77CFC /* DBWTemplateCustomizationTableViewController.m in Sources */,
 				B53CF2E41F33A8F300F30CB8 /* DBWAboutTableViewController.m in Sources */,
+				B57E6D2E1F536F7500849CB6 /* DBWSettingsSplitViewController.m in Sources */,
 				B53CF2CE1F33661300F30CB8 /* DBWExercise.m in Sources */,
 				B53CF2CF1F33661300F30CB8 /* DBWSet.m in Sources */,
 				B53CF2D01F33661300F30CB8 /* DBWWorkout.m in Sources */,
 				B5F635391F41DD6B00B866DC /* DBWDatabaseManager.m in Sources */,
 				B5DF74381F408DA5009FA3B4 /* DBWWorkoutTemplateList.m in Sources */,
+				B5B192BF1F537C10005B3F8B /* UIColor+ColorPalette.m in Sources */,
 				B57E6D1F1F51C6D900849CB6 /* DBWStopwatchViewController.m in Sources */,
 				B50CBD891F3DD8A6007D3962 /* DBWLoginViewController.m in Sources */,
 			);

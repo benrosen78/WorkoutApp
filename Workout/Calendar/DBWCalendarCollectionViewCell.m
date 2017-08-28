@@ -21,7 +21,6 @@
         _workoutLabel.font = [UIFont systemFontOfSize:12 weight:UIFontWeightRegular];
         _workoutLabel.layer.masksToBounds = YES;
         _workoutLabel.layer.cornerRadius = 2;
-        _workoutLabel.backgroundColor = [UIColor colorWithRed:0.201 green:0.220 blue:0.376 alpha:1.00];
         _workoutLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [self.contentView addSubview:_workoutLabel];
         

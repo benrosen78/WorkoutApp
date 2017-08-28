@@ -24,4 +24,8 @@
     return @"primaryKey";
 }
 
++ (NSDictionary *)defaultPropertyValues {
+    return @{@"selectedColorIndex": @0};
+}
+
 @end

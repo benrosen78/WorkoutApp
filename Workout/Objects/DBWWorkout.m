@@ -9,12 +9,16 @@
 #import "DBWWorkout.h"
 #import "DBWExercise.h"
 #import "DBWWorkoutTemplate.h"
+#import "DBWDatabaseManager.h"
 
 @implementation DBWWorkout
 
 + (instancetype)todaysWorkoutWithTemplate:(DBWWorkoutTemplate *)workoutTemplate {
     DBWWorkout *workout = [[DBWWorkout alloc] initWithValue:@{@"exercises": workoutTemplate.exercises}];
-    workout.workoutTemplate = workoutTemplate;
+    
+    workout.selectedColorIndex = workoutTemplate.selectedColorIndex;
+    workout.comments = workoutTemplate.shortDescription;
+    workout.templateDay = [[DBWDatabaseManager sharedDatabaseManager].templateList.list indexOfObject:workoutTemplate] + 1;
     
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *todaysComponents = [calendar components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:[NSDate date]];

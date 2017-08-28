@@ -15,6 +15,7 @@
 #import "DBWWorkout.h"
 #import "DBWWorkoutTemplate.h"
 #import "DBWCalendarDatePickerViewController.h"
+#import "UIColor+ColorPalette.h"
 
 @interface DBWWorkoutCalendarViewController () <DBWDatePickerDelegate>
 
@@ -39,9 +40,9 @@ static NSString *const headerIdentifier = @"header-cell";
     layout.minimumInteritemSpacing = 0;
     layout.sectionInset = UIEdgeInsetsZero;
     layout.minimumLineSpacing = 1;
-    layout.itemSize = CGSizeMake(ceil([UIScreen mainScreen].bounds.size.width / 7), 120);
+    layout.itemSize = CGSizeMake(ceil([UIScreen mainScreen].bounds.size.width / 7) - 1, 120);
     
-    CGFloat sideInset = ([UIScreen mainScreen].bounds.size.width -  (ceil([UIScreen mainScreen].bounds.size.width / 7) * 7)) / 2.0;
+    CGFloat sideInset = ([UIScreen mainScreen].bounds.size.width -  ((ceil([UIScreen mainScreen].bounds.size.width / 7) - 1) * 7)) / 2.0;
     sideInset -= 3;
     layout.sectionInset = UIEdgeInsetsMake(0, sideInset, 0, sideInset);
     
@@ -55,7 +56,7 @@ static NSString *const headerIdentifier = @"header-cell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //((UICollectionViewFlowLayout *)self.collectionViewLayout).estimatedItemSize = CGSizeMake(self.view.frame.size.width / 7, 100);
+    self.title = @"Calendar";
     
     NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:[NSDate date]];
     [self monthSelected:components.month - 1 year:components.year];
@@ -121,8 +122,7 @@ static NSString *const headerIdentifier = @"header-cell";
     
     [self.collectionView reloadData];
     
-    self.title = [NSString stringWithFormat:@"%@ %lu", _months[_selectedMonthIndex], _year];
-    
+    self.navigationItem.title = [NSString stringWithFormat:@"%@ %lu", _months[_selectedMonthIndex], _year];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -156,13 +156,12 @@ static NSString *const headerIdentifier = @"header-cell";
         cell.dayLabel.textColor = [UIColor blackColor];
 
     }
-
-    
     
     DBWWorkout *workout = [[DBWDatabaseManager sharedDatabaseManager] workoutForDay:dayNumber month:_selectedMonthIndex + 1 year:_year];
     if (workout) {
         cell.workoutLabel.alpha = 1;
-        cell.workoutLabel.text = [NSString stringWithFormat:@"Day %lu", [[DBWDatabaseManager sharedDatabaseManager].templateList.list indexOfObject:workout.workoutTemplate] + 1];
+        cell.workoutLabel.text = [NSString stringWithFormat:@"Day %lu", workout.templateDay];
+        cell.workoutLabel.backgroundColor = [UIColor calendarColors][workout.selectedColorIndex];
     } else {
         cell.workoutLabel.alpha = 0;
     }
