@@ -12,4 +12,6 @@
 
 @property (strong, nonatomic) UILabel *titleLabel, *detailLabel;
 
+@property (nonatomic, strong) UIColor *color;
+
 @end

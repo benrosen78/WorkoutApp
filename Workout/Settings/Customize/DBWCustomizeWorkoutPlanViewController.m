@@ -14,6 +14,7 @@
 #import "DBWDatabaseManager.h"
 #import "DBWWorkoutTemplateList.h"
 #import "DBWCustomizeWorkoutPlanCollectionHeaderView.h"
+#import "UIColor+ColorPalette.h"
 
 static NSString *const cellIdentifier = @"day-identifier";
 static NSString *const headerIdentifier = @"header-identifier";
@@ -28,7 +29,7 @@ static NSString *const headerIdentifier = @"header-identifier";
 
 - (instancetype)init {
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.minimumLineSpacing = 0;
+    layout.minimumLineSpacing = 20;
     layout.minimumInteritemSpacing = 0;
     return [super initWithCollectionViewLayout:layout];
 }
@@ -71,16 +72,19 @@ static NSString *const headerIdentifier = @"header-identifier";
 }
 
 - (CGSize)collectionView:(UICollectionViewCell *)collectionView layout:(nonnull UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    return CGSizeMake(self.view.frame.size.width / 2.0, 135);
+    return CGSizeMake(self.view.frame.size.width - 50, 110);
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     DBWWorkoutTemplate *template = _templateList.list[indexPath.row];
     
     DBWWorkoutPlanDayCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    cell.layer.cornerRadius = 5;
+    cell.layer.masksToBounds = YES;
+    cell.backgroundColor = [UIColor whiteColor];
     cell.titleLabel.text = [NSString stringWithFormat:@"Day %lu", indexPath.row + 1];
     cell.detailLabel.text = template.shortDescription ?: @"Tap to configure!";
+    cell.color = [UIColor calendarColors][template.selectedColorIndex];
     
     return cell;
 }
@@ -112,7 +116,7 @@ static NSString *const headerIdentifier = @"header-identifier";
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(nonnull UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    return CGSizeMake(self.view.frame.size.width, 140);
+    return CGSizeMake(self.view.frame.size.width, 165);
 }
 
 @end

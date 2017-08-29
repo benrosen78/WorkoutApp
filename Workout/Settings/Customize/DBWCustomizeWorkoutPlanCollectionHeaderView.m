@@ -14,19 +14,19 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor clearColor];
         
         UILabel *instructionsLabel = [[UILabel alloc] init];
-        instructionsLabel.text = @"Templates contain a list of exercises. You can choose a template when you workout and the exercises will autofill in.\n\n Tap '+' to create a new template.\nPress and hold on a day to reposition it.";
+        instructionsLabel.text = @"Templates represent a \"day\" in the gym. You fill a template with exercises. When you workout, you can select a template and the exercises will fill in.\n\n Tap '+' to create a new template.\nPress and hold on a day to reposition it.";
         instructionsLabel.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightRegular];
-        instructionsLabel.textColor = [UIColor grayColor];
+        instructionsLabel.textColor = [UIColor blackColor];
         instructionsLabel.numberOfLines = 0;
         instructionsLabel.textAlignment = NSTextAlignmentCenter;
         instructionsLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:instructionsLabel];
         
         UIView *separator = [[UIView alloc] init];
-        separator.backgroundColor = [UIColor darkGrayColor];
+        //separator.backgroundColor = [UIColor darkGrayColor];
         separator.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview:separator];
         

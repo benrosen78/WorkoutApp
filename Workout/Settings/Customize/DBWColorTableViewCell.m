@@ -61,4 +61,5 @@
     
     _colorView.backgroundColor = color;
 }
+
 @end
