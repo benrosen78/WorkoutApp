@@ -75,7 +75,12 @@
         _window.rootViewController = _loginVC;
     } else {
         [DBWDatabaseManager sharedDatabaseManager];
+        
         _window.rootViewController = _tabBarController;
+        
+        /*UIViewController *controller = [[UIStoryboard storyboardWithName:@"Launch Screen" bundle:[NSBundle mainBundle]] instantiateInitialViewController];
+         controller.view.backgroundColor = [UIColor clearColor];
+         [_window.rootViewController.view addSubview:controller.view];*/
     }
     return YES;
 }
