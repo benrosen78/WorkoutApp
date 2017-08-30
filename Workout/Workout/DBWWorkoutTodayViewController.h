@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DBWCustomizeWorkoutPlanViewController.h"
 
 @class DBWWorkout;
 
-@interface DBWWorkoutTodayViewController : UITableViewController
+@interface DBWWorkoutTodayViewController : DBWCustomizeWorkoutPlanViewController
 
 @property (strong, nonatomic) DBWWorkout *workout;
 

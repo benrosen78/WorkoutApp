@@ -9,6 +9,12 @@
 #import "DBWCustomizeWorkoutPlanCollectionHeaderView.h"
 #import <CompactConstraint/CompactConstraint.h>
 
+@interface DBWCustomizeWorkoutPlanCollectionHeaderView ()
+
+@property (strong, nonatomic) UILabel *instructionsLabel;
+
+@end
+
 @implementation DBWCustomizeWorkoutPlanCollectionHeaderView
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -16,14 +22,14 @@
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         
-        UILabel *instructionsLabel = [[UILabel alloc] init];
-        instructionsLabel.text = @"Templates represent a \"day\" in the gym. You fill a template with exercises. When you workout, you can select a template and the exercises will fill in.\n\n Tap '+' to create a new template.\nPress and hold on a day to reposition it.";
-        instructionsLabel.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightRegular];
-        instructionsLabel.textColor = [UIColor blackColor];
-        instructionsLabel.numberOfLines = 0;
-        instructionsLabel.textAlignment = NSTextAlignmentCenter;
-        instructionsLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        [self addSubview:instructionsLabel];
+        _instructionsLabel = [[UILabel alloc] init];
+        _instructionsLabel.text = self.instructionsText;
+        _instructionsLabel.font = [UIFont systemFontOfSize:16.0 weight:UIFontWeightRegular];
+        _instructionsLabel.textColor = [UIColor blackColor];
+        _instructionsLabel.numberOfLines = 0;
+        _instructionsLabel.textAlignment = NSTextAlignmentCenter;
+        _instructionsLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        [self addSubview:_instructionsLabel];
         
         UIView *separator = [[UIView alloc] init];
         //separator.backgroundColor = [UIColor darkGrayColor];
@@ -35,17 +41,22 @@
                                       @"separator.left = view.left",
                                       @"separator.right = view.right",
                                       @"instructions.top = view.top + 5",
-                                      @"instructions.left = view.left + 5",
-                                      @"instructions.right = view.right - 5",
+                                      @"instructions.left = view.left + spacing",
+                                      @"instructions.right = view.right - spacing",
                                       @"instructions.bottom = view.bottom - 5"]
-                            metrics:nil
+                            metrics:@{@"spacing": UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? @50 : @10}
                               views:@{@"separator": separator,
-                                      @"instructions": instructionsLabel,
+                                      @"instructions": _instructionsLabel,
                                       @"view": self
                                       }];
         
     }
     return self;
+}
+
+- (void)setInstructionsText:(NSString *)instructionsText {
+    _instructionsText = instructionsText;
+    _instructionsLabel.text = instructionsText;
 }
 
 @end

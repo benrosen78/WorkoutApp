@@ -10,4 +10,6 @@
 
 @interface DBWCustomizeWorkoutPlanCollectionHeaderView : UICollectionReusableView
 
+@property (strong, nonatomic) NSString *instructionsText;
+
 @end

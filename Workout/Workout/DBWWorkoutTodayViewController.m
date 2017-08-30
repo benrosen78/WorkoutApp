@@ -13,6 +13,7 @@
 #import <CompactConstraint/CompactConstraint.h>
 #import "DBWWorkoutTemplate.h"
 #import "DBWDatabaseManager.h"
+#import "DBWCustomizeWorkoutPlanCollectionHeaderView.h"
 
 @interface DBWWorkoutTodayViewController ()
 
@@ -37,8 +38,8 @@
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-     self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    self.tableView.allowsSelectionDuringEditing = YES;
+     //self.navigationItem.rightBarButtonItem = self.editButtonItem;
+  //  self.tableView.allowsSelectionDuringEditing = YES;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -46,9 +47,12 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+
+
+#pragma mark - Table view data source
+/*
+- (NSInteger)coll {
     if (!_workout) {
         return 1;
     } else {
@@ -97,7 +101,7 @@
     
     return cell;
 }
-
+*/
 
 /*
 // Override to support conditional editing of the table view.
@@ -105,7 +109,7 @@
     // Return NO if you do not want the specified item to be editable.
     return YES;
 }
-*/
+
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
@@ -215,7 +219,7 @@
     }
     return proposedDestinationIndexPath;
 }
-
+*/
 /*
 #pragma mark - Navigation
 
@@ -225,5 +229,12 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    DBWCustomizeWorkoutPlanCollectionHeaderView *headerView = (DBWCustomizeWorkoutPlanCollectionHeaderView *)[super collectionView:collectionView viewForSupplementaryElementOfKind:kind atIndexPath:indexPath];
+    headerView.instructionsText = @"You haven't worked out yet today!\n\nIf you're ready to work out, select a template from below. This will customize your log for the day by automatically filling it with the exercises you have assigned to the template you select.\n\nHave a good lift! 😀🏋️‍♀️";
+    return headerView;
+    
+}
 
 @end

@@ -111,6 +111,7 @@ static NSString *const headerIdentifier = @"header-identifier";
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
         DBWCustomizeWorkoutPlanCollectionHeaderView *view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerIdentifier forIndexPath:indexPath];
+        view.instructionsText = @"Templates represent a \"day\" in the gym. You fill a template with exercises. When you workout, you can select a template and the exercises will fill in.\n\n Tap '+' to create a new template.\nPress and hold on a day to reposition it.";
         return view;
     }
     return nil;
