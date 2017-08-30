@@ -45,13 +45,16 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
     _colorNames = @[@"Red", @"Orange", @"Yellow", @"Green", @"Teal Blue", @"Blue", @"Purple", @"Pink"];
 
     self.title = [NSString stringWithFormat:@"Day: %lu", [[DBWDatabaseManager sharedDatabaseManager].templateList.list indexOfObject:_template] + 1];
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    //self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.tableView.allowsSelectionDuringEditing = YES;
     
     _selectedColorIndexPath = [NSIndexPath indexPathForRow:_template.selectedColorIndex inSection:0];
 
     
     [self.tableView registerClass:[DBWColorTableViewCell class] forCellReuseIdentifier:kColorCellIdentifier];
+    
+    self.editing = YES;
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -81,6 +84,10 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return indexPath.section == 1 ? 70 : 50;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return indexPath.section == 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -121,7 +128,7 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kExerciseCellIdentifier];
         }
         
-        if (indexPath.row >= [_template.exercises count] && [self isEditing]) {
+        if ((indexPath.row >= [_template.exercises count] && [self isEditing]) || (_template.exercises.count == 0)) {
             cell.textLabel.text = @"Add Excercise";
         } else {
             DBWExercise *exercise = _template.exercises[indexPath.row];
@@ -157,10 +164,6 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
-    
-    [self.tableView beginUpdates];
-    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
-    [self.tableView endUpdates];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -183,6 +186,9 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
             [[DBWDatabaseManager sharedDatabaseManager] startTemplateWriting];
             [_template.exercises addObject:exercise];
             [[DBWDatabaseManager sharedDatabaseManager] endTemplateWriting];
+            
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
+            
             [self setEditing:YES animated:YES];
         }]];
         [controller addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
@@ -194,7 +200,7 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (!self.tableView.editing || indexPath.section != 1) {
+    if (!self.tableView.editing || indexPath.section != 2) {
         return UITableViewCellEditingStyleNone;
     } else if (indexPath.row < [_template.exercises count]) {
         return UITableViewCellEditingStyleDelete;
@@ -206,7 +212,7 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
-    return indexPath.section == 1;
+    return indexPath.section == 2;
 }
 
 
@@ -216,7 +222,7 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
         [tableView cellForRowAtIndexPath:_selectedColorIndexPath].accessoryType = UITableViewCellAccessoryNone;
         _selectedColorIndexPath = indexPath;
         [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
-        
+
         [[DBWDatabaseManager sharedDatabaseManager] startTemplateWriting];
         _template.selectedColorIndex = _selectedColorIndexPath.row;
         [[DBWDatabaseManager sharedDatabaseManager] endTemplateWriting];
@@ -229,8 +235,7 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
             [self.navigationController popViewControllerAnimated:YES];
         }]];
         [self presentViewController:deleteController animated:YES completion:nil];
-    }
-    if (tableView.isEditing && indexPath.row >= [_template.exercises count]) {
+    } else if (indexPath.row == [_template.exercises count] && indexPath.section == 2) {
         [self tableView:tableView commitEditingStyle:UITableViewCellEditingStyleInsert forRowAtIndexPath:indexPath];
     }
 }
@@ -242,16 +247,16 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
 }
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    return indexPath.section == 1 && indexPath.row < [_template.exercises count];
+    return indexPath.section == 2 && indexPath.row < [_template.exercises count];
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(nonnull NSIndexPath *)sourceIndexPath toProposedIndexPath:(nonnull NSIndexPath *)proposedDestinationIndexPath {
     if (proposedDestinationIndexPath.row == [_template.exercises count]) {
-        return [NSIndexPath indexPathForRow:[_template.exercises count] - 1 inSection:1];
-    } else if (proposedDestinationIndexPath.section == 0) {
-        return [NSIndexPath indexPathForRow:0 inSection:1];
+        return [NSIndexPath indexPathForRow:[_template.exercises count] - 1 inSection:2];
+    } else if (proposedDestinationIndexPath.section == 0 || proposedDestinationIndexPath.section) {
+        return [NSIndexPath indexPathForRow:0 inSection:2];
     } else if (proposedDestinationIndexPath.section == 2) {
-        return [NSIndexPath indexPathForRow:[_template.exercises count] - 1 inSection:1];
+        return [NSIndexPath indexPathForRow:[_template.exercises count] - 1 inSection:2];
     }
     return proposedDestinationIndexPath;
 }

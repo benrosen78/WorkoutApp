@@ -62,7 +62,7 @@
                                                   @"detailLabel.top = titleLabel.bottom + 10",
                                                   @"detailLabel.left = titleLabel.left",
                                                   @"detailLabel.right = titleLabel.right",
-                                                  @"chevronLabel.right = view.right - 5",
+                                                  @"chevronLabel.right = color.right",
                                                   @"chevronLabel.bottom = view.bottom - 5"]
                                         metrics:nil
                                           views:@{@"color": _colorView,

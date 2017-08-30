@@ -31,6 +31,7 @@ static NSString *const headerIdentifier = @"header-identifier";
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.minimumLineSpacing = 20;
     layout.minimumInteritemSpacing = 0;
+    layout.sectionInset = UIEdgeInsetsMake(0, 25, 25, 25);
     return [super initWithCollectionViewLayout:layout];
 }
 
