@@ -14,6 +14,7 @@
 #import "DBWWorkoutTemplate.h"
 #import "DBWDatabaseManager.h"
 #import "DBWCustomizeWorkoutPlanCollectionHeaderView.h"
+#import "DBWWorkoutPlanDayCell.h"
 
 @interface DBWWorkoutTodayViewController ()
 
@@ -34,6 +35,9 @@
     
     self.title = @"Today's Gains";
     
+    //CGFloat sidesInset = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 200 : 20;
+    //((UICollectionViewFlowLayout *)self.collectionViewLayout).sectionInset = UIEdgeInsetsMake(0, sidesInset, 20, sidesInset);
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -47,9 +51,42 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+    UICollectionViewCell *cell =  [collectionView cellForItemAtIndexPath:indexPath];
+    cell.alpha = 0;
+    
+    UIView *headerView = [cell snapshotViewAfterScreenUpdates:NO];
 
+    headerView.layer.shadowRadius = 10;
+    headerView.layer.shadowOffset = CGSizeMake(0, 0);
+    headerView.layer.shadowOpacity = 0.0;
+    
+    headerView.frame = [self.view convertRect:cell.frame fromView:self.collectionView];
+    [self.view addSubview:headerView];
 
-
+    [UIView animateWithDuration:0.3 animations:^{
+        headerView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.03, 1.03);
+        headerView.layer.shadowOpacity = 0.18;
+    }];
+    
+    [UIView animateWithDuration:0.55 delay:0.15 usingSpringWithDamping:0.95 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        headerView.frame = CGRectMake(headerView.frame.origin.x, 135, headerView.frame.size.width, headerView.frame.size.height);
+    } completion:nil];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.40 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:0.4 animations:^{
+            headerView.layer.shadowOpacity = 0;
+            headerView.transform = CGAffineTransformIdentity;
+        }];
+    });
+    
+    self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    [UIView animateWithDuration:0.5 delay:0.3 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.collectionView.frame = CGRectMake(0, self.collectionView.frame.size.height, self.collectionView.frame.size.width, self.collectionView.frame.size.height);
+        self.collectionView.alpha = 0;
+    } completion:nil];
+}
 #pragma mark - Table view data source
 /*
 - (NSInteger)coll {
