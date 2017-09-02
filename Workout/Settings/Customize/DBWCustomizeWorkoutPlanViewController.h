@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class DBWWorkoutTemplateList;
+
 @interface DBWCustomizeWorkoutPlanViewController : UICollectionViewController
+
+@property (strong, nonatomic) DBWWorkoutTemplateList *templateList;
 
 @end

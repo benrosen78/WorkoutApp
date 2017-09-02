@@ -12,6 +12,8 @@
 		B50CBD931F3DFCE4007D3962 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B50CBD8E1F3DFC20007D3962 /* FBSDKCoreKit.framework */; };
 		B50CBD951F3DFD88007D3962 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B50CBD941F3DFD72007D3962 /* Bolts.framework */; };
 		B50CBD991F3E1B4D007D3962 /* DBWAuthenticationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B50CBD981F3E1B4D007D3962 /* DBWAuthenticationManager.m */; };
+		B515D7661F5ADF8800828E99 /* DBWWorkoutTodayExercisesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B515D7651F5ADF8800828E99 /* DBWWorkoutTodayExercisesViewController.m */; };
+		B515D7691F5AE6BB00828E99 /* DBWExerciseCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B515D7681F5AE6BB00828E99 /* DBWExerciseCollectionViewCell.m */; };
 		B53CF2C91F3365FC00F30CB8 /* DBWWorkoutCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B53CF2BF1F3365DE00F30CB8 /* DBWWorkoutCalendarViewController.m */; };
 		B53CF2CA1F33660000F30CB8 /* DBWExerciseSetTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B53CF2C21F3365DE00F30CB8 /* DBWExerciseSetTableViewCell.m */; };
 		B53CF2CB1F33660200F30CB8 /* DBWExerciseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B53CF2C41F3365DE00F30CB8 /* DBWExerciseTableViewController.m */; };
@@ -79,6 +81,10 @@
 		B50CBD941F3DFD72007D3962 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		B50CBD971F3E1B4D007D3962 /* DBWAuthenticationManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWAuthenticationManager.h; sourceTree = "<group>"; };
 		B50CBD981F3E1B4D007D3962 /* DBWAuthenticationManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWAuthenticationManager.m; sourceTree = "<group>"; };
+		B515D7641F5ADF8800828E99 /* DBWWorkoutTodayExercisesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWWorkoutTodayExercisesViewController.h; sourceTree = "<group>"; };
+		B515D7651F5ADF8800828E99 /* DBWWorkoutTodayExercisesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWWorkoutTodayExercisesViewController.m; sourceTree = "<group>"; };
+		B515D7671F5AE6BB00828E99 /* DBWExerciseCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWExerciseCollectionViewCell.h; sourceTree = "<group>"; };
+		B515D7681F5AE6BB00828E99 /* DBWExerciseCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWExerciseCollectionViewCell.m; sourceTree = "<group>"; };
 		B53CF2B51F3365DE00F30CB8 /* DBWExercise.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWExercise.h; sourceTree = "<group>"; };
 		B53CF2B61F3365DE00F30CB8 /* DBWExercise.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWExercise.m; sourceTree = "<group>"; };
 		B53CF2B71F3365DE00F30CB8 /* DBWSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWSet.h; sourceTree = "<group>"; };
@@ -229,6 +235,10 @@
 				B53CF2C61F3365DE00F30CB8 /* DBWWorkoutTableViewController.m */,
 				B53CF2C71F3365DE00F30CB8 /* DBWWorkoutTodayViewController.h */,
 				B53CF2C81F3365DE00F30CB8 /* DBWWorkoutTodayViewController.m */,
+				B515D7641F5ADF8800828E99 /* DBWWorkoutTodayExercisesViewController.h */,
+				B515D7651F5ADF8800828E99 /* DBWWorkoutTodayExercisesViewController.m */,
+				B515D7671F5AE6BB00828E99 /* DBWExerciseCollectionViewCell.h */,
+				B515D7681F5AE6BB00828E99 /* DBWExerciseCollectionViewCell.m */,
 			);
 			path = Workout;
 			sourceTree = "<group>";
@@ -596,6 +606,7 @@
 			files = (
 				B5BDC5971F3B4D4C00C77CFC /* DBWWorkoutPlanDayCell.m in Sources */,
 				B53CF2D51F3366D000F30CB8 /* DBWSettingsTableViewController.m in Sources */,
+				B515D7661F5ADF8800828E99 /* DBWWorkoutTodayExercisesViewController.m in Sources */,
 				B57E6D281F5329C800849CB6 /* DBWCalendarDatePickerViewController.m in Sources */,
 				B5DF743B1F40B3CD009FA3B4 /* DBWCustomizeWorkoutPlanCollectionHeaderView.m in Sources */,
 				B53CF2CB1F33660200F30CB8 /* DBWExerciseTableViewController.m in Sources */,
@@ -616,6 +627,7 @@
 				B53CF2E41F33A8F300F30CB8 /* DBWAboutTableViewController.m in Sources */,
 				B57E6D2E1F536F7500849CB6 /* DBWSettingsSplitViewController.m in Sources */,
 				B53CF2CE1F33661300F30CB8 /* DBWExercise.m in Sources */,
+				B515D7691F5AE6BB00828E99 /* DBWExerciseCollectionViewCell.m in Sources */,
 				B53CF2CF1F33661300F30CB8 /* DBWSet.m in Sources */,
 				B53CF2D01F33661300F30CB8 /* DBWWorkout.m in Sources */,
 				B5F635391F41DD6B00B866DC /* DBWDatabaseManager.m in Sources */,

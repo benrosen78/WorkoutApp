@@ -15,6 +15,8 @@
 #import "DBWDatabaseManager.h"
 #import "DBWCustomizeWorkoutPlanCollectionHeaderView.h"
 #import "DBWWorkoutPlanDayCell.h"
+#import "DBWWorkoutTodayExercisesViewController.h"
+#import "DBWWorkoutTemplateList.h"
 
 @interface DBWWorkoutTodayViewController ()
 
@@ -35,15 +37,7 @@
     
     self.title = @"Today's Gains";
     
-    //CGFloat sidesInset = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 200 : 20;
-    //((UICollectionViewFlowLayout *)self.collectionViewLayout).sectionInset = UIEdgeInsetsMake(0, sidesInset, 20, sidesInset);
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-     //self.navigationItem.rightBarButtonItem = self.editButtonItem;
-  //  self.tableView.allowsSelectionDuringEditing = YES;
+    self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -81,11 +75,30 @@
         }];
     });
     
-    self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    DBWWorkout *workout = [DBWWorkout todaysWorkoutWithTemplate:self.templateList.list[indexPath.row]];
+    DBWWorkoutTodayExercisesViewController *exercisesViewController = [[DBWWorkoutTodayExercisesViewController alloc] initWithWorkout:workout];
+    exercisesViewController.view.frame = CGRectMake(0, -[[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
+    exercisesViewController.view.alpha = 0;
+    [self addChildViewController:exercisesViewController];
+    [self.view addSubview:exercisesViewController.view];
+    [exercisesViewController didMoveToParentViewController:self];
+    
     [UIView animateWithDuration:0.5 delay:0.3 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.collectionView.frame = CGRectMake(0, self.collectionView.frame.size.height, self.collectionView.frame.size.width, self.collectionView.frame.size.height);
         self.collectionView.alpha = 0;
     } completion:nil];
+    
+    [UIView animateWithDuration:0.4 delay:0.4 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        exercisesViewController.view.frame = CGRectMake(0, 265, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
+    } completion:nil];
+    
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:0.4 animations:^{
+            exercisesViewController.view.alpha = 1;
+
+        }];
+    });
 }
 #pragma mark - Table view data source
 /*

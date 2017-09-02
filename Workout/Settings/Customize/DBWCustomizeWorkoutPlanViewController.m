@@ -21,8 +21,6 @@ static NSString *const headerIdentifier = @"header-identifier";
 
 @interface DBWCustomizeWorkoutPlanViewController ()
 
-@property (strong, nonatomic) DBWWorkoutTemplateList *templateList;
-
 @end
 
 @implementation DBWCustomizeWorkoutPlanViewController
