@@ -10,11 +10,13 @@
 #import "DBWExercise.h"
 #import "DBWWorkoutTemplate.h"
 #import "DBWDatabaseManager.h"
+#import "DBWDatabaseManager.h"
 
 @implementation DBWWorkout
 
 + (instancetype)todaysWorkoutWithTemplate:(DBWWorkoutTemplate *)workoutTemplate {
-    DBWWorkout *workout = [[DBWWorkout alloc] initWithValue:@{@"exercises": workoutTemplate.exercises}];
+    DBWWorkout *workout = [[DBWWorkout alloc] init];
+    [[DBWDatabaseManager sharedDatabaseManager] addExercises:workoutTemplate.exercises toWorkout:workout];
     
     workout.selectedColorIndex = workoutTemplate.selectedColorIndex;
     workout.comments = workoutTemplate.shortDescription;

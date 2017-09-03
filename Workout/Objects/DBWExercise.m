@@ -8,6 +8,7 @@
 
 #import "DBWExercise.h"
 #import "DBWSet.h"
+#import "DBWDatabaseManager.h"
 
 @implementation DBWExercise
 
@@ -18,5 +19,16 @@
     return exercise;
 }
 
+- (BOOL)setsCompleted {
+    if ([self.sets count] == self.baseNumberOfSets) {
+        for (DBWSet *set in self.sets) {
+            if (!set.weight) {
+                return NO;
+            }
+        }
+        return YES;
+    }
+    return NO;
+}
 
 @end

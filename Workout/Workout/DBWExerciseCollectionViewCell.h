@@ -12,4 +12,6 @@
 
 @property (strong, nonatomic) UILabel *titleLabel, *detailLabel, *numberLabel;
 
+@property (nonatomic) BOOL completed;
+
 @end

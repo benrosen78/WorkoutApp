@@ -45,7 +45,7 @@
             [_templates addObject:[DBWWorkoutTemplateList new]];
             [_templates commitWriteTransaction];
         }
-        
+
         /* for loading in arbitrary data:
  
         int day = 20;
@@ -66,6 +66,14 @@
 }
 
 #pragma mark - Templates DB Management
+
+- (void)addExercises:(RLMArray<DBWExercise> *)exercises toWorkout:(DBWWorkout *)workout {
+    [_templates beginWriteTransaction];
+    for (DBWExercise *exercise in exercises) {
+        [workout.exercises addObject:[DBWExercise createInRealm:_templates withValue:exercise]];
+    }
+    [_templates commitWriteTransaction];
+}
 
 - (void)saveNewWorkoutTemplate:(DBWWorkoutTemplate *)workoutTemplate {
     [_templates beginWriteTransaction];

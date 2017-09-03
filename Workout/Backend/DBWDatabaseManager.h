@@ -9,8 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <Realm/Realm.h>
 #import "DBWWorkoutTemplateList.h"
+#import "DBWExercise.h"
 
 @class RLMResults, DBWWorkout;
+
+RLM_ARRAY_TYPE(DBWExercise)
 
 @interface DBWDatabaseManager : NSObject
 
@@ -35,6 +38,8 @@
 - (DBWWorkout *)todaysWorkout;
 
 - (NSArray <NSNumber *> *)yearsInDatabase;
+
+- (void)addExercises:(RLMArray<DBWExercise> *)exercises toWorkout:(DBWWorkout *)workout;
 
 @end
 

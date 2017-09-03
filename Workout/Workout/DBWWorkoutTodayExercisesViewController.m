@@ -10,6 +10,7 @@
 #import "DBWWorkout.h"
 #import "DBWExercise.h"
 #import "DBWExerciseCollectionViewCell.h"
+#import "DBWExerciseTableViewController.h"
 
 @interface DBWWorkoutTodayExercisesViewController ()
 
@@ -39,6 +40,12 @@ static NSString * const reuseIdentifier = @"Cell";
     [self.collectionView registerClass:[DBWExerciseCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self.collectionView reloadData];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -64,11 +71,14 @@ static NSString * const reuseIdentifier = @"Cell";
         CAShapeLayer *shape = [[CAShapeLayer alloc] init];
         [shape setPath:rounded.CGPath];
         cell.layer.mask = shape;
+    } else {
+        cell.layer.mask = nil;
     }
     
     cell.numberLabel.text = [NSString stringWithFormat:@"%lu", indexPath.row + 1];
     cell.titleLabel.text = exercise.name;
     cell.detailLabel.text = @"5 x 5";
+    cell.completed = [exercise setsCompleted];
     cell.backgroundColor = [UIColor whiteColor];
     
     return cell;
@@ -76,33 +86,11 @@ static NSString * const reuseIdentifier = @"Cell";
 
 #pragma mark <UICollectionViewDelegate>
 
-/*
-// Uncomment this method to specify if the specified item should be highlighted during tracking
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-	return YES;
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+    
+    DBWExerciseTableViewController *exerciseTableViewController = [[DBWExerciseTableViewController alloc] initWithExercise:_workout.exercises[indexPath.row]];
+    [self.navigationController pushViewController:exerciseTableViewController animated:YES];
 }
-*/
-
-/*
-// Uncomment this method to specify if the specified item should be selected
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-*/
-
-/*
-// Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-	return NO;
-}
-
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	return NO;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	
-}
-*/
 
 @end

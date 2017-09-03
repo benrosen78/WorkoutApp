@@ -38,8 +38,7 @@
         [self.contentView addSubview:_numberLabel];
         
         _completedLabel = [[UILabel alloc] init];
-        _completedLabel.text = @"UNCOMPLETED";
-        _completedLabel.font = [UIFont systemFontOfSize:15 weight:UIFontWeightLight];
+        [self setCompleted:_completed];
         _completedLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [self.contentView addSubview:_completedLabel];
         
@@ -60,6 +59,13 @@
                                                   }];
     }
     return self;
+}
+
+- (void)setCompleted:(BOOL)completed {
+    _completed = completed;
+    _completedLabel.text = completed ? @"COMPLETED" : @"UNCOMPLETED";
+    _completedLabel.font = [UIFont systemFontOfSize:15 weight:completed ? UIFontWeightRegular : UIFontWeightLight];
+    _completedLabel.textColor = completed ? [UIColor colorWithRed:0.298 green:0.851 blue:0.392 alpha:1.00] : [UIColor blackColor];
 }
 
 @end

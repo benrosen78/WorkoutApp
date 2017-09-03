@@ -8,6 +8,7 @@
 
 #import "DBWWorkoutTableViewController.h"
 #import "DBWWorkout.h"
+#import "DBWExercise.h"
 
 @interface DBWWorkoutTableViewController ()
 
@@ -25,6 +26,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.navigationItem.rightBarButtonItem = nil;
         
     NSDateComponents *components = [[NSDateComponents alloc] init];
