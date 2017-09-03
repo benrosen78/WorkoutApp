@@ -45,6 +45,7 @@ static NSString *const headerIdentifier = @"header-identifier";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTapped:)];
     
     _templateList = [[DBWDatabaseManager sharedDatabaseManager] templateList];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -78,7 +79,7 @@ static NSString *const headerIdentifier = @"header-identifier";
     DBWWorkoutTemplate *template = _templateList.list[indexPath.row];
     
     DBWWorkoutPlanDayCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    cell.layer.cornerRadius = 5;
+    cell.layer.cornerRadius = 8;
     cell.layer.masksToBounds = YES;
     cell.backgroundColor = [UIColor whiteColor];
     cell.titleLabel.text = [NSString stringWithFormat:@"Day %lu", indexPath.row + 1];

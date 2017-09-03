@@ -24,7 +24,7 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (instancetype)initWithWorkout:(DBWWorkout *)workout {
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width - 225, 68);
+    flowLayout.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width - 50, 68);
     flowLayout.minimumLineSpacing = 1;
     self = [super initWithCollectionViewLayout:flowLayout];
     if (self) {
@@ -67,7 +67,7 @@ static NSString * const reuseIdentifier = @"Cell";
     
     DBWExerciseCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     if (indexPath.row == 0 || indexPath.row == [_workout.exercises count] - 1) {
-        UIBezierPath *rounded = [UIBezierPath bezierPathWithRoundedRect:cell.bounds byRoundingCorners:indexPath.row == 0 ? (UIRectCornerTopLeft | UIRectCornerTopRight) : (UIRectCornerBottomLeft | UIRectCornerBottomRight) cornerRadii:CGSizeMake(4, 4)];
+        UIBezierPath *rounded = [UIBezierPath bezierPathWithRoundedRect:cell.bounds byRoundingCorners:indexPath.row == 0 ? (UIRectCornerTopLeft | UIRectCornerTopRight) : (UIRectCornerBottomLeft | UIRectCornerBottomRight) cornerRadii:CGSizeMake(8, 8)];
         CAShapeLayer *shape = [[CAShapeLayer alloc] init];
         [shape setPath:rounded.CGPath];
         cell.layer.mask = shape;

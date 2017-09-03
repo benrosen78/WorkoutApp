@@ -17,6 +17,7 @@
 #import "DBWWorkoutPlanDayCell.h"
 #import "DBWWorkoutTodayExercisesViewController.h"
 #import "DBWWorkoutTemplateList.h"
+#import "UIColor+ColorPalette.h"
 
 @interface DBWWorkoutTodayViewController ()
 
@@ -32,12 +33,39 @@
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    if (!_workout) {
+        return;
+    }
+    
+    self.collectionView.alpha = 0;
+    self.collectionView.frame = CGRectMake(0, 0, 0, 0);
+    
+    DBWWorkoutPlanDayCell *cell = [[DBWWorkoutPlanDayCell alloc] initWithFrame:CGRectMake(25, 135, self.view.frame.size.width - 50, 110)];
+    cell.layer.cornerRadius = 8;
+    cell.layer.masksToBounds = YES;
+    cell.backgroundColor = [UIColor whiteColor];
+    cell.titleLabel.text = [NSString stringWithFormat:@"Day %lu",_workout.templateDay];
+    cell.detailLabel.text = _workout.comments;
+    cell.color = [UIColor calendarColors][_workout.selectedColorIndex];
+    [self.view addSubview:cell];
+
+    DBWWorkoutTodayExercisesViewController *exercisesViewController = [[DBWWorkoutTodayExercisesViewController alloc] initWithWorkout:_workout];
+    exercisesViewController.view.frame = CGRectMake(0, 265, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
+    [self addChildViewController:exercisesViewController];
+    [self.view addSubview:exercisesViewController.view];
+    [exercisesViewController didMoveToParentViewController:self];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.title = @"Today's Gains";
     
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -76,6 +104,7 @@
     });
     
     DBWWorkout *workout = [DBWWorkout todaysWorkoutWithTemplate:self.templateList.list[indexPath.row]];
+    [[DBWDatabaseManager sharedDatabaseManager] saveNewWorkout:workout];
     DBWWorkoutTodayExercisesViewController *exercisesViewController = [[DBWWorkoutTodayExercisesViewController alloc] initWithWorkout:workout];
     exercisesViewController.view.frame = CGRectMake(0, -[[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
     exercisesViewController.view.alpha = 0;
