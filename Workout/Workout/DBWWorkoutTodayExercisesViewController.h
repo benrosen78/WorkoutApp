@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class DBWWorkout;
+@class DBWWorkout, DBWWorkoutPlanDayCell;
 
 @interface DBWWorkoutTodayExercisesViewController : UICollectionViewController
 
 - (instancetype)initWithWorkout:(DBWWorkout *)workout;
+
+@property (strong, nonatomic) DBWWorkoutPlanDayCell *headerCell;
 
 @end

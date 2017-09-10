@@ -35,6 +35,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
 
     if (!_workout) {
         return;
@@ -42,12 +43,14 @@
     
     self.collectionView.alpha = 0;
     self.collectionView.frame = CGRectMake(0, 0, 0, 0);
+    [self.collectionView removeFromSuperview];
+    self.collectionView = nil;
     
     DBWWorkoutPlanDayCell *cell = [[DBWWorkoutPlanDayCell alloc] initWithFrame:CGRectMake(25, 135, self.view.frame.size.width - 50, 110)];
     cell.layer.cornerRadius = 8;
     cell.layer.masksToBounds = YES;
     cell.backgroundColor = [UIColor whiteColor];
-    cell.titleLabel.text = [NSString stringWithFormat:@"Day %lu",_workout.templateDay];
+    cell.titleLabel.text = [NSString stringWithFormat:@"Day %lu", _workout.templateDay];
     cell.detailLabel.text = _workout.comments;
     cell.color = [UIColor calendarColors][_workout.selectedColorIndex];
     [self.view addSubview:cell];
@@ -75,57 +78,73 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
-    UICollectionViewCell *cell =  [collectionView cellForItemAtIndexPath:indexPath];
-    cell.alpha = 0;
     
+    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+    
+    // create a snapshot and set up a shadow
     UIView *headerView = [cell snapshotViewAfterScreenUpdates:NO];
-
     headerView.layer.shadowRadius = 10;
     headerView.layer.shadowOffset = CGSizeMake(0, 0);
     headerView.layer.shadowOpacity = 0.0;
-    
     headerView.frame = [self.view convertRect:cell.frame fromView:self.collectionView];
     [self.view addSubview:headerView];
 
+    // make it appear above all other things with a transform and shadow
     [UIView animateWithDuration:0.3 animations:^{
         headerView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.03, 1.03);
         headerView.layer.shadowOpacity = 0.18;
     }];
     
+    // move it to top position for the next view
     [UIView animateWithDuration:0.55 delay:0.15 usingSpringWithDamping:0.95 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         headerView.frame = CGRectMake(headerView.frame.origin.x, 135, headerView.frame.size.width, headerView.frame.size.height);
     } completion:nil];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.40 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [UIView animateWithDuration:0.4 animations:^{
-            headerView.layer.shadowOpacity = 0;
-            headerView.transform = CGAffineTransformIdentity;
-        }];
-    });
-    
-    DBWWorkout *workout = [DBWWorkout todaysWorkoutWithTemplate:self.templateList.list[indexPath.row]];
-    [[DBWDatabaseManager sharedDatabaseManager] saveNewWorkout:workout];
-    DBWWorkoutTodayExercisesViewController *exercisesViewController = [[DBWWorkoutTodayExercisesViewController alloc] initWithWorkout:workout];
-    exercisesViewController.view.frame = CGRectMake(0, -[[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
-    exercisesViewController.view.alpha = 0;
-    [self addChildViewController:exercisesViewController];
-    [self.view addSubview:exercisesViewController.view];
-    [exercisesViewController didMoveToParentViewController:self];
-    
+    // animate the collection view away
     [UIView animateWithDuration:0.5 delay:0.3 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.collectionView.frame = CGRectMake(0, self.collectionView.frame.size.height, self.collectionView.frame.size.width, self.collectionView.frame.size.height);
         self.collectionView.alpha = 0;
     } completion:nil];
     
-    [UIView animateWithDuration:0.4 delay:0.4 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        exercisesViewController.view.frame = CGRectMake(0, 265, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
-    } completion:nil];
+    // make the exercise view with no alpha and put it out of the view so we can animate these proporties
+    DBWWorkout *workout = [DBWWorkout todaysWorkoutWithTemplate:self.templateList.list[indexPath.row]];
+    [[DBWDatabaseManager sharedDatabaseManager] saveNewWorkout:workout];
+    DBWWorkoutTodayExercisesViewController *exercisesViewController = [[DBWWorkoutTodayExercisesViewController alloc] initWithWorkout:workout];
+    exercisesViewController.view.backgroundColor = [UIColor clearColor];
+    exercisesViewController.collectionView.backgroundColor = [UIColor clearColor];
+    exercisesViewController.collectionView.alpha = 0;
+    exercisesViewController.collectionView.frame = CGRectMake(0, -[[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
     
+    // get rid of the shadow and transform. make it looked like its placed. then replace it with the same exact header in the new view
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.40 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:0.4 animations:^{
+            headerView.layer.shadowOpacity = 0;
+            headerView.transform = CGAffineTransformIdentity;
+        } completion:^(BOOL finished) {
+            [headerView removeFromSuperview];
+            exercisesViewController.headerCell.alpha = 1;
+        }];
+    });
     
+    // then add the new view. add it as a child view controller so the old view is behind it. then later we actually push it. animate the collection view frame back into view
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self addChildViewController:exercisesViewController];
+        [self.view addSubview:exercisesViewController.view];
+        [exercisesViewController didMoveToParentViewController:self];
+
+        [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            exercisesViewController.collectionView.frame = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
+        } completion:nil];
+    });
+    
+    // animate the alpha of the new view to 1 and then actually push the view. change the bg color back to the color we want because the old one would not allow to have animations in both views at the same time.
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [UIView animateWithDuration:0.4 animations:^{
-            exercisesViewController.view.alpha = 1;
-
+            exercisesViewController.collectionView.alpha = 1;
+        } completion:^(BOOL finished) {
+            exercisesViewController.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+            [exercisesViewController willMoveToParentViewController:nil];
+            [self.navigationController pushViewController:exercisesViewController animated:nil];
         }];
     });
 }
