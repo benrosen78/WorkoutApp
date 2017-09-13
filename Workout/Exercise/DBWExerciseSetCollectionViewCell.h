@@ -1,5 +1,5 @@
 //
-//  DBWExerciseSetTableViewCell.h
+//  DBWExerciseSetCollectionViewCell.h
 //  Workout
 //
 //  Created by Ben Rosen on 8/2/17.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DBWExerciseSetTableViewCell : UITableViewCell
+@interface DBWExerciseSetCollectionViewCell : UICollectionViewCell
 
 @property (strong, nonatomic) NSArray <UITextField *> *textFields;
 

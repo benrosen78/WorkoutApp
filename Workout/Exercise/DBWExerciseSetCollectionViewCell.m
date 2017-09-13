@@ -1,19 +1,25 @@
 //
-//  DBWExerciseSetTableViewCell.m
+//  DBWExerciseSetCollectionViewCell.h
 //  Workout
 //
 //  Created by Ben Rosen on 8/2/17.
 //  Copyright © 2017 Ben Rosen. All rights reserved.
 //
 
-#import "DBWExerciseSetTableViewCell.h"
+#import "DBWExerciseSetCollectionViewCell.h"
 #import <CompactConstraint/CompactConstraint.h>
 
-@implementation DBWExerciseSetTableViewCell
+@implementation DBWExerciseSetCollectionViewCell
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
     if (self) {
+        
+        self.layer.cornerRadius = 8;
+        self.layer.masksToBounds = YES;
+        self.backgroundColor = [UIColor whiteColor];
+
+        
         UIView *separator = [[UIView alloc] init];
         separator.backgroundColor = [UIColor colorWithRed:0.784 green:0.780 blue:0.800 alpha:1.00];
         separator.translatesAutoresizingMaskIntoConstraints = NO;
@@ -55,13 +61,14 @@
             textField.autocorrectionType = UITextAutocorrectionTypeNo;
             textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
             textField.clearButtonMode = UITextFieldViewModeNever;
+            textField.font = [UIFont systemFontOfSize:17.0 weight:UIFontWeightRegular];
             [textField setEnabled: YES];
             textField.translatesAutoresizingMaskIntoConstraints = NO;
             [textFields addObject:textField];
             [containerView addSubview:textField];
             
             UILabel *label = [[UILabel alloc] init];
-            label.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+            label.font = [UIFont systemFontOfSize:17.0 weight:UIFontWeightMedium];
             label.text = i == 0 ? @"Weight" : @"Reps";
             label.textAlignment = NSTextAlignmentLeft;
             label.translatesAutoresizingMaskIntoConstraints = NO;
@@ -80,17 +87,6 @@
         _textFields = [NSArray arrayWithArray:textFields];
     }
     return self;
-}
-
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 @end

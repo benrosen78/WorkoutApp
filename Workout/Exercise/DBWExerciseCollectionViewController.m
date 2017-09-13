@@ -1,44 +1,62 @@
 //
-//  DBWExerciseTableViewController.m
+//  DBWExerciseCollectionViewController.m
 //  DannyBenWorkout
 //
 //  Created by Ben Rosen on 7/27/17.
 //  Copyright © 2017 Ben Rosen. All rights reserved.
 //
 
-#import "DBWExerciseTableViewController.h"
+#import "DBWExerciseCollectionViewController.h"
 #import "DBWExercise.h"
 #import <CompactConstraint/CompactConstraint.h>
 #import "DBWSet.h"
-#import "DBWExerciseSetTableViewCell.h"
 #import "DBWDatabaseManager.h"
+#import "DBWExerciseCollectionViewCell.h"
+#import "DBWExerciseSetCollectionViewCell.h"
 
 static NSString *const kCellIdentifier = @"set-cell-identifier";
 
-@interface DBWExerciseTableViewController () <UITextFieldDelegate>
+@interface DBWExerciseCollectionViewController () <UITextFieldDelegate>
 
 @property (strong, nonatomic) DBWExercise *exercise;
 
+@property (nonatomic) NSInteger exerciseNumber;
+
 @end
 
-@implementation DBWExerciseTableViewController
+@implementation DBWExerciseCollectionViewController
 
-- (instancetype)initWithExercise:(DBWExercise *)exercise {
-    self = [super initWithStyle:UITableViewStyleGrouped];
+- (instancetype)initWithExercise:(DBWExercise *)exercise exerciseNumber:(NSInteger)number {
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    flowLayout.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width - 50, 100);
+    flowLayout.minimumLineSpacing = 20;
+    flowLayout.minimumInteritemSpacing = 0;
+    flowLayout.sectionInset = UIEdgeInsetsMake(108, 0, 15, 0);
+    self = [super initWithCollectionViewLayout:flowLayout];
     if (self) {
         _exercise = exercise;
+        _exerciseNumber = number;
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.title = _exercise.name;
-    
+
+    _headerCell = [[DBWExerciseCollectionViewCell alloc] initWithFrame:CGRectMake(25, 20, self.view.frame.size.width - 50, 68)];
+    _headerCell.layer.cornerRadius = 8;
+    _headerCell.layer.masksToBounds = YES;
+    //_headerCell.alpha = 0;
+    _headerCell.backgroundColor = [UIColor whiteColor];
+    _headerCell.titleLabel.text = _exercise.name;
+    _headerCell.detailLabel.text = @"5 x 5";
+    _headerCell.numberLabel.text = [NSString stringWithFormat:@"%lu", _exerciseNumber];
+    [self.collectionView addSubview:_headerCell];
+ 
+    self.title = [NSString stringWithFormat:@"Exercise %lu", _exerciseNumber];
+
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(add:)];
-    
-    [self.tableView registerClass:[DBWExerciseSetTableViewCell class] forCellReuseIdentifier:kCellIdentifier];
+    [self.collectionView registerClass:[DBWExerciseSetCollectionViewCell class] forCellWithReuseIdentifier:kCellIdentifier];
 }
 
 - (void)add:(UIBarButtonItem *)item {
@@ -47,7 +65,7 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
     [[DBWDatabaseManager sharedDatabaseManager] endTemplateWriting];
     //[DBWWorkoutManager saveWorkout:_exercise.workout];
     
-    [self.tableView reloadData];
+    [self.collectionView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -57,17 +75,16 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [_exercise.sets count];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    DBWExerciseSetTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return [_exercise.sets count];
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    DBWExerciseSetCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCellIdentifier forIndexPath:indexPath];
     
     UITextField *weightTF = cell.textFields[0];
     UITextField *repsTF = cell.textFields[1];
@@ -78,7 +95,7 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
     weightTF.tag = 1;
     repsTF.tag = 2;
     
-    DBWSet *set = _exercise.sets[indexPath.section];
+    DBWSet *set = _exercise.sets[indexPath.row];
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
     formatter.numberStyle = NSNumberFormatterDecimalStyle;
     formatter.maximumFractionDigits = 20;
@@ -89,14 +106,10 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
     return cell;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 100;
-}
-
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
     UITableViewCell *cell = (UITableViewCell *)textField.superview.superview.superview;
-   NSIndexPath *path = [self.tableView indexPathForCell:cell];
+    NSIndexPath *path = [self.collectionView indexPathForCell:cell];
     
     NSString *newText = [textField.text stringByReplacingCharactersInRange:range withString:string];
     [[DBWDatabaseManager sharedDatabaseManager] startTemplateWriting];

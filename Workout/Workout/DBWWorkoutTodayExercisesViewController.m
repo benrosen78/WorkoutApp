@@ -9,12 +9,11 @@
 #import "DBWWorkoutTodayExercisesViewController.h"
 #import "DBWWorkout.h"
 #import "DBWExercise.h"
-#import "DBWExerciseCollectionViewCell.h"
-#import "DBWExerciseTableViewController.h"
-#import "JCPCAnimationStateManager.h"
-#import "JCPCAnimationTransitionController.h"
+#import "DBWExerciseSetCollectionViewCell.h"
+#import "DBWExerciseCollectionViewController.h"
 #import "DBWWorkoutPlanDayCell.h"
 #import "UIColor+ColorPalette.h"
+#import "DBWExerciseCollectionViewCell.h"
 
 @interface DBWWorkoutTodayExercisesViewController () <UINavigationControllerDelegate>
 
@@ -43,7 +42,6 @@ static NSString * const reuseIdentifier = @"Cell";
     _headerCell = [[DBWWorkoutPlanDayCell alloc] initWithFrame:CGRectMake(25, 135, self.view.frame.size.width - 50, 110)];
     _headerCell.layer.cornerRadius = 8;
     _headerCell.layer.masksToBounds = YES;
-    _headerCell.alpha = 0;
     _headerCell.backgroundColor = [UIColor whiteColor];
     _headerCell.titleLabel.text = [NSString stringWithFormat:@"Day %lu", _workout.templateDay];
     _headerCell.detailLabel.text = _workout.comments;
@@ -51,21 +49,11 @@ static NSString * const reuseIdentifier = @"Cell";
     [self.view addSubview:_headerCell];
     
     self.collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
     self.navigationItem.hidesBackButton = YES;
-    self.title = @"Today's Gains";
     [self.collectionView registerClass:[DBWExerciseCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
 }
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    [self.collectionView reloadData];
-    
-    NSLog(@"self.navigationcontroller = %@", self.navigationController);
-
-}
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -85,8 +73,6 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     DBWExercise *exercise = _workout.exercises[indexPath.row];
-    
-    
     
     DBWExerciseCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
 
@@ -115,9 +101,15 @@ static NSString * const reuseIdentifier = @"Cell";
     
     
     UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+
+    
+        cell.layer.mask = nil;
+        cell.layer.cornerRadius = 8;
+        cell.layer.masksToBounds = YES;
+
     
     // create a snapshot and set up a shadow
-    UIView *headerView = [cell snapshotViewAfterScreenUpdates:NO];
+    UIView *headerView = [cell snapshotViewAfterScreenUpdates:YES];
     headerView.layer.shadowRadius = 10;
     headerView.layer.shadowOffset = CGSizeMake(0, 0);
     headerView.layer.shadowOpacity = 0.0;
@@ -138,21 +130,30 @@ static NSString * const reuseIdentifier = @"Cell";
     // animate the collection view away
     [UIView animateWithDuration:0.5 delay:0.3 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.collectionView.frame = CGRectMake(0, self.collectionView.frame.size.height, self.collectionView.frame.size.width, self.collectionView.frame.size.height);
+        self.headerCell.frame = CGRectMake(0, self.collectionView.frame.size.height, self.headerCell.frame.size.width, self.headerCell.frame.size.height);
+        
         self.collectionView.alpha = 0;
+        self.headerCell.alpha = 0;
     } completion:nil];
-    
+   
     // make the exercise view with no alpha and put it out of the view so we can animate these proporties
     DBWExercise *exercise = _workout.exercises[indexPath.row];
-    DBWExerciseTableViewController *exercisesViewController = [[DBWExerciseTableViewController alloc] initWithExercise:exercise];
+    DBWExerciseCollectionViewController *exercisesViewController = [[DBWExerciseCollectionViewController alloc] initWithExercise:exercise exerciseNumber:indexPath.row + 1];
     exercisesViewController.view.backgroundColor = [UIColor clearColor];
-    exercisesViewController.tableView.backgroundColor = [UIColor clearColor];
-    exercisesViewController.tableView.alpha = 0;
-    exercisesViewController.tableView.frame = CGRectMake(0, -[[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
+    exercisesViewController.collectionView.backgroundColor = [UIColor clearColor];
+    exercisesViewController.collectionView.alpha = 0;
+    exercisesViewController.headerCell.alpha = 0;
+    exercisesViewController.collectionView.frame = CGRectMake(0, -[[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
     
     // get rid of the shadow and transform. make it looked like its placed. then replace it with the same exact header in the new view
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.40 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"shadowOpacity"];
+        anim.fromValue = @0.18;
+        anim.toValue = @0;
+        anim.duration = 0.4;
+        [headerView.layer addAnimation:anim forKey:@"shadowOpacity"];
+	headerView.layer.shadowOpacity = 0.0;
         [UIView animateWithDuration:0.4 animations:^{
-            headerView.layer.shadowOpacity = 0;
             headerView.transform = CGAffineTransformIdentity;
         } completion:^(BOOL finished) {
             [headerView removeFromSuperview];
@@ -167,14 +168,14 @@ static NSString * const reuseIdentifier = @"Cell";
         [exercisesViewController didMoveToParentViewController:self];
         
         [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            exercisesViewController.tableView.frame = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
+            exercisesViewController.collectionView.frame = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
         } completion:nil];
     });
     
     // animate the alpha of the new view to 1 and then actually push the view. change the bg color back to the color we want because the old one would not allow to have animations in both views at the same time.
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [UIView animateWithDuration:0.4 animations:^{
-            exercisesViewController.tableView.alpha = 1;
+            exercisesViewController.collectionView.alpha = 1;
         } completion:^(BOOL finished) {
             exercisesViewController.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
             [exercisesViewController willMoveToParentViewController:nil];
@@ -184,13 +185,4 @@ static NSString * const reuseIdentifier = @"Cell";
     
 }
 
-- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC {
-    
-        JCPCAnimationTransitionController *t =  [[JCPCAnimationTransitionController alloc] init];
-    t.animationKey = @"test";
-    return t;
-        
-    
-    
-}
 @end

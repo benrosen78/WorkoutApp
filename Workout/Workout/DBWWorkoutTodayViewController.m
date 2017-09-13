@@ -9,7 +9,7 @@
 #import "DBWWorkoutTodayViewController.h"
 #import "DBWWorkout.h"
 #import "DBWExercise.h"
-#import "DBWExerciseTableViewController.h"
+#import "DBWExerciseCollectionViewController.h"
 #import <CompactConstraint/CompactConstraint.h>
 #import "DBWWorkoutTemplate.h"
 #import "DBWDatabaseManager.h"
@@ -18,6 +18,7 @@
 #import "DBWWorkoutTodayExercisesViewController.h"
 #import "DBWWorkoutTemplateList.h"
 #import "UIColor+ColorPalette.h"
+#import "AppDelegate.h"
 
 @interface DBWWorkoutTodayViewController ()
 
@@ -40,26 +41,11 @@
     if (!_workout) {
         return;
     }
-    
-    self.collectionView.alpha = 0;
-    self.collectionView.frame = CGRectMake(0, 0, 0, 0);
-    [self.collectionView removeFromSuperview];
-    self.collectionView = nil;
-    
-    DBWWorkoutPlanDayCell *cell = [[DBWWorkoutPlanDayCell alloc] initWithFrame:CGRectMake(25, 135, self.view.frame.size.width - 50, 110)];
-    cell.layer.cornerRadius = 8;
-    cell.layer.masksToBounds = YES;
-    cell.backgroundColor = [UIColor whiteColor];
-    cell.titleLabel.text = [NSString stringWithFormat:@"Day %lu", _workout.templateDay];
-    cell.detailLabel.text = _workout.comments;
-    cell.color = [UIColor calendarColors][_workout.selectedColorIndex];
-    [self.view addSubview:cell];
 
     DBWWorkoutTodayExercisesViewController *exercisesViewController = [[DBWWorkoutTodayExercisesViewController alloc] initWithWorkout:_workout];
-    exercisesViewController.view.frame = CGRectMake(0, 265, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
-    [self addChildViewController:exercisesViewController];
-    [self.view addSubview:exercisesViewController.view];
-    [exercisesViewController didMoveToParentViewController:self];
+    exercisesViewController.headerCell.alpha = 1;
+    
+    self.navigationController.viewControllers = @[exercisesViewController];
 }
 
 - (void)viewDidLoad {
@@ -110,6 +96,7 @@
     DBWWorkout *workout = [DBWWorkout todaysWorkoutWithTemplate:self.templateList.list[indexPath.row]];
     [[DBWDatabaseManager sharedDatabaseManager] saveNewWorkout:workout];
     DBWWorkoutTodayExercisesViewController *exercisesViewController = [[DBWWorkoutTodayExercisesViewController alloc] initWithWorkout:workout];
+    exercisesViewController.headerCell.alpha = 0;
     exercisesViewController.view.backgroundColor = [UIColor clearColor];
     exercisesViewController.collectionView.backgroundColor = [UIColor clearColor];
     exercisesViewController.collectionView.alpha = 0;
@@ -144,7 +131,7 @@
         } completion:^(BOOL finished) {
             exercisesViewController.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
             [exercisesViewController willMoveToParentViewController:nil];
-            [self.navigationController pushViewController:exercisesViewController animated:nil];
+            self.navigationController.viewControllers = @[exercisesViewController];
         }];
     });
 }

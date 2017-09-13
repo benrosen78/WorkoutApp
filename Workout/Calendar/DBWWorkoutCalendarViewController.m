@@ -8,7 +8,7 @@
 
 #import "DBWWorkoutCalendarViewController.h"
 #import <CompactConstraint/CompactConstraint.h>
-#import "DBWExerciseTableViewController.h"
+#import "DBWExerciseCollectionViewController.h"
 #import "DBWWorkoutTableViewController.h"
 #import "DBWDatabaseManager.h"
 #import "DBWCalendarCollectionViewCell.h"
