@@ -146,18 +146,17 @@ static NSString * const reuseIdentifier = @"Cell";
     exercisesViewController.collectionView.frame = CGRectMake(0, -[[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
     
     // get rid of the shadow and transform. make it looked like its placed. then replace it with the same exact header in the new view
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.40 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.45 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"shadowOpacity"];
         anim.fromValue = @0.18;
         anim.toValue = @0;
         anim.duration = 0.4;
         [headerView.layer addAnimation:anim forKey:@"shadowOpacity"];
-	headerView.layer.shadowOpacity = 0.0;
+        headerView.layer.shadowOpacity = 0.0;
         [UIView animateWithDuration:0.4 animations:^{
             headerView.transform = CGAffineTransformIdentity;
         } completion:^(BOOL finished) {
-            [headerView removeFromSuperview];
-            exercisesViewController.headerCell.alpha = 1;
+
         }];
     });
     
@@ -174,12 +173,24 @@ static NSString * const reuseIdentifier = @"Cell";
     
     // animate the alpha of the new view to 1 and then actually push the view. change the bg color back to the color we want because the old one would not allow to have animations in both views at the same time.
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
         [UIView animateWithDuration:0.4 animations:^{
             exercisesViewController.collectionView.alpha = 1;
+
         } completion:^(BOOL finished) {
+            exercisesViewController.headerCell.alpha = 1;
+            headerView.alpha = 0;
+            [headerView removeFromSuperview];
+            
             exercisesViewController.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
             [exercisesViewController willMoveToParentViewController:nil];
-            [self.navigationController pushViewController:exercisesViewController animated:nil];
+            
+            CATransition *transition = [CATransition animation];
+            transition.duration = 0.5;
+            transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+            transition.type = kCATransitionFade;
+            [self.navigationController.view.layer addAnimation:transition forKey:nil];
+            [self.navigationController pushViewController:exercisesViewController animated:NO];
         }];
     });
     
