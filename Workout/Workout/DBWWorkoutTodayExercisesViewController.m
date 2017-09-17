@@ -33,7 +33,7 @@ static NSString * const reuseIdentifier = @"Cell";
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width - 50, 68);
     flowLayout.minimumLineSpacing = 1;
-    flowLayout.sectionInset = UIEdgeInsetsMake(150, 0, 0, 0);
+    flowLayout.sectionInset = UIEdgeInsetsMake(150, 0, 25, 0);
     self = [super initWithCollectionViewLayout:flowLayout];
     if (self) {
         _workout = workout;
@@ -45,14 +45,17 @@ static NSString * const reuseIdentifier = @"Cell";
     [super viewDidLoad];
     [self registerForPreviewingWithDelegate:self sourceView:self.collectionView];
     
-    _headerCell = [[DBWWorkoutPlanDayCell alloc] initWithFrame:CGRectMake(25, 135, self.view.frame.size.width - 50, 110)];
+    self.title = @"Today's Gains";
+    
+    _headerCell = [[DBWWorkoutPlanDayCell alloc] initWithFrame:CGRectMake(25, 20.5, self.view.frame.size.width - 50, 110)];
     _headerCell.layer.cornerRadius = 8;
+    _headerCell.alpha = _headerCellAlpha;
     _headerCell.layer.masksToBounds = YES;
     _headerCell.backgroundColor = [UIColor whiteColor];
     _headerCell.titleLabel.text = [NSString stringWithFormat:@"Day %lu", _workout.templateDay];
     _headerCell.detailLabel.text = _workout.comments;
     _headerCell.color = [UIColor calendarColors][_workout.selectedColorIndex];
-    [self.view addSubview:_headerCell];
+    [self.collectionView addSubview:_headerCell];
     
     self.collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
@@ -61,6 +64,11 @@ static NSString * const reuseIdentifier = @"Cell";
     [self.collectionView registerClass:[DBWExerciseCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
     
     _transitionController = [[DBWAnimationTransitionController alloc] init];
+}
+
+- (void)setHeaderCellAlpha:(CGFloat)headerCellAlpha {
+    _headerCellAlpha = headerCellAlpha;
+    _headerCell.alpha = _headerCellAlpha;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -72,8 +80,6 @@ static NSString * const reuseIdentifier = @"Cell";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    _headerCell.alpha = 1;
-    _headerCell.frame = CGRectMake(25, 135, self.view.frame.size.width - 50, 110);
     [self.collectionView reloadData];
 }
 

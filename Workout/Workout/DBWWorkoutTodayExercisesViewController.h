@@ -16,4 +16,6 @@
 
 @property (strong, nonatomic) DBWWorkoutPlanDayCell *headerCell;
 
+@property (nonatomic) CGFloat headerCellAlpha;
+
 @end

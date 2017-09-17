@@ -22,6 +22,7 @@
 
 @interface DBWWorkoutTodayViewController ()
 
+
 @end
 
 @implementation DBWWorkoutTodayViewController
@@ -36,9 +37,11 @@
     }
 
     DBWWorkoutTodayExercisesViewController *exercisesViewController = [[DBWWorkoutTodayExercisesViewController alloc] initWithWorkout:_workout];
-    exercisesViewController.headerCell.alpha = 1;
-    
+    exercisesViewController.headerCellAlpha = 1;
+    exercisesViewController.tabBarItem = self.tabBarItem;
     self.navigationController.viewControllers = @[exercisesViewController];
+
+    self.navigationItem.rightBarButtonItem = nil;
 }
 
 - (void)viewDidLoad {
@@ -89,7 +92,7 @@
     DBWWorkout *workout = [DBWWorkout todaysWorkoutWithTemplate:self.templateList.list[indexPath.row]];
     [[DBWDatabaseManager sharedDatabaseManager] saveNewWorkout:workout];
     DBWWorkoutTodayExercisesViewController *exercisesViewController = [[DBWWorkoutTodayExercisesViewController alloc] initWithWorkout:workout];
-    exercisesViewController.headerCell.alpha = 0;
+    exercisesViewController.headerCellAlpha = 0;
     exercisesViewController.view.backgroundColor = [UIColor clearColor];
     exercisesViewController.collectionView.backgroundColor = [UIColor clearColor];
     exercisesViewController.collectionView.alpha = 0;
@@ -101,8 +104,6 @@
             headerView.layer.shadowOpacity = 0;
             headerView.transform = CGAffineTransformIdentity;
         } completion:^(BOOL finished) {
-            [headerView removeFromSuperview];
-            exercisesViewController.headerCell.alpha = 1;
         }];
     });
     
@@ -122,6 +123,11 @@
         [UIView animateWithDuration:0.4 animations:^{
             exercisesViewController.collectionView.alpha = 1;
         } completion:^(BOOL finished) {
+            [headerView removeFromSuperview];
+            exercisesViewController.headerCell.alpha = 1;
+
+            exercisesViewController.tabBarItem = self.tabBarItem;
+            
             exercisesViewController.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
             [exercisesViewController willMoveToParentViewController:nil];
             self.navigationController.viewControllers = @[exercisesViewController];

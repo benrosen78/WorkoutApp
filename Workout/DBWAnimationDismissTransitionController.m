@@ -23,8 +23,8 @@
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
     
-    DBWWorkoutTodayExercisesViewController *fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-    DBWExerciseCollectionViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    DBWExerciseCollectionViewController *fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+    DBWWorkoutTodayExercisesViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     
     UIView *snapshotCellView = [DBWAnimationTransitionMemory sharedInstance].popSnapshotCellView;
     
@@ -82,8 +82,8 @@
         
         [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
             toViewController.collectionView.frame = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
-            toViewController.headerCell.frame = CGRectMake(25, 135, [[UIScreen mainScreen] bounds].size.width - 50, 110);
-            
+            toViewController.headerCell.frame = CGRectMake(25, 20.5, [[UIScreen mainScreen] bounds].size.width - 50, 110);
+
         } completion:nil];
     });
     
