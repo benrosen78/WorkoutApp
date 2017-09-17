@@ -74,7 +74,6 @@
     if (![DBWAuthenticationManager loggedIn]) {
         _window.rootViewController = _loginVC;
     } else {
-        [DBWDatabaseManager sharedDatabaseManager];
         
         _window.rootViewController = _tabBarController;
         

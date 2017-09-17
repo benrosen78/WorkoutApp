@@ -26,18 +26,11 @@
 
 @implementation DBWWorkoutTodayViewController
 
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        _workout = [[DBWDatabaseManager sharedDatabaseManager] todaysWorkout];
-    }
-    return self;
-}
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
 
+    _workout = [[DBWDatabaseManager sharedDatabaseManager] todaysWorkout];
     if (!_workout) {
         return;
     }

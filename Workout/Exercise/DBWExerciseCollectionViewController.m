@@ -47,9 +47,11 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    self.collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    
     _headerCell = [[DBWExerciseCollectionViewCell alloc] initWithFrame:CGRectMake(25, 20, self.view.frame.size.width - 50, 68)];
     _headerCell.layer.cornerRadius = 8;
-    _headerCell.alpha = 0;
     _headerCell.layer.shadowRadius = 10;
     _headerCell.layer.shadowOffset = CGSizeMake(0, 0);
     _headerCell.layer.shadowOpacity = 0.0;
@@ -70,13 +72,17 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
+    // weird issue with 3d touch. would appear under the nav bar if the frame is not updated after it loads.
+    [self.headerCell removeFromSuperview];
+    self.headerCell.frame = CGRectMake(25, 20, self.view.frame.size.width - 50, 68);
+    [self.collectionView addSubview:self.headerCell];
+    self.headerCell.alpha = 1;
+    
     self.navigationController.delegate = self;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
-
     
     CGRect frame = [self.view convertRect:self.headerCell.frame fromView:self.collectionView];
     

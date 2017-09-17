@@ -17,7 +17,7 @@
 #import "DBWAnimationTransitionController.h"
 #import "DBWAnimationTransitionMemory.h"
 
-@interface DBWWorkoutTodayExercisesViewController () <UINavigationControllerDelegate>
+@interface DBWWorkoutTodayExercisesViewController () <UINavigationControllerDelegate, UIViewControllerPreviewingDelegate>
 
 @property (strong, nonatomic) DBWWorkout *workout;
 
@@ -43,6 +43,8 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self registerForPreviewingWithDelegate:self sourceView:self.collectionView];
+    
     _headerCell = [[DBWWorkoutPlanDayCell alloc] initWithFrame:CGRectMake(25, 135, self.view.frame.size.width - 50, 110)];
     _headerCell.layer.cornerRadius = 8;
     _headerCell.layer.masksToBounds = YES;
@@ -146,6 +148,28 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC {
     return _transitionController;
+}
+
+#pragma mark - UIViewControllerPreviewingDelegate
+- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
+    NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:location];
+    if (!indexPath) {
+        return nil;
+    }
+    
+    UICollectionViewLayoutAttributes *layoutAttributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
+    previewingContext.sourceRect = layoutAttributes.frame;
+    
+    DBWExercise *exercise = _workout.exercises[indexPath.row];
+    DBWExerciseCollectionViewController *exercisesViewController = [[DBWExerciseCollectionViewController alloc] initWithExercise:exercise exerciseNumber:indexPath.row + 1];
+    
+    // even though they peek/pop to get into the view controller, they will be animated back so we must provide the frame
+    [DBWAnimationTransitionMemory sharedInstance].originalCellFrame = [self.view convertRect:layoutAttributes.frame fromView:self.collectionView];
+    return exercisesViewController;
+}
+
+- (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
+    [self.navigationController pushViewController:viewControllerToCommit animated:NO];
 }
 
 @end
