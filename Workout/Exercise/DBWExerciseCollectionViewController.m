@@ -13,14 +13,18 @@
 #import "DBWDatabaseManager.h"
 #import "DBWExerciseCollectionViewCell.h"
 #import "DBWExerciseSetCollectionViewCell.h"
+#import "DBWAnimationDismissTransitionController.h"
+#import "DBWAnimationTransitionMemory.h"
 
 static NSString *const kCellIdentifier = @"set-cell-identifier";
 
-@interface DBWExerciseCollectionViewController () <UITextFieldDelegate>
+@interface DBWExerciseCollectionViewController () <UITextFieldDelegate, UINavigationControllerDelegate>
 
 @property (strong, nonatomic) DBWExercise *exercise;
 
 @property (nonatomic) NSInteger exerciseNumber;
+
+@property (strong, nonatomic) DBWAnimationDismissTransitionController *transitionController;
 
 @end
 
@@ -45,8 +49,10 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
 
     _headerCell = [[DBWExerciseCollectionViewCell alloc] initWithFrame:CGRectMake(25, 20, self.view.frame.size.width - 50, 68)];
     _headerCell.layer.cornerRadius = 8;
-    _headerCell.layer.masksToBounds = YES;
     _headerCell.alpha = 0;
+    _headerCell.layer.shadowRadius = 10;
+    _headerCell.layer.shadowOffset = CGSizeMake(0, 0);
+    _headerCell.layer.shadowOpacity = 0.0;
     _headerCell.backgroundColor = [UIColor whiteColor];
     _headerCell.titleLabel.text = _exercise.name;
     _headerCell.detailLabel.text = @"5 x 5";
@@ -57,6 +63,27 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
 
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(add:)];
     [self.collectionView registerClass:[DBWExerciseSetCollectionViewCell class] forCellWithReuseIdentifier:kCellIdentifier];
+    
+    _transitionController = [[DBWAnimationDismissTransitionController alloc] init];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    self.navigationController.delegate = self;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+
+    
+    CGRect frame = [self.view convertRect:self.headerCell.frame fromView:self.collectionView];
+    
+    [self.headerCell removeFromSuperview];
+    self.headerCell.frame = frame;
+    [self.view addSubview:self.headerCell];
+    [DBWAnimationTransitionMemory sharedInstance].popSnapshotCellView = self.headerCell;
 }
 
 - (void)add:(UIBarButtonItem *)item {
@@ -137,6 +164,12 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
         [[DBWDatabaseManager sharedDatabaseManager] endTemplateWriting];
         [tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
+}
+
+#pragma mark - UINavigationControllerDelegate
+
+- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC {
+    return _transitionController;
 }
 
 @end
