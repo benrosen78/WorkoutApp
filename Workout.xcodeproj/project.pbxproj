@@ -17,6 +17,7 @@
 		B5369C601F6D7482000FFD9F /* DBWAnimationTransitionController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5369C5F1F6D7482000FFD9F /* DBWAnimationTransitionController.m */; };
 		B5369C631F6D8404000FFD9F /* DBWAnimationTransitionMemory.m in Sources */ = {isa = PBXBuildFile; fileRef = B5369C621F6D8404000FFD9F /* DBWAnimationTransitionMemory.m */; };
 		B5369C661F6DAF11000FFD9F /* DBWAnimationDismissTransitionController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5369C651F6DAF11000FFD9F /* DBWAnimationDismissTransitionController.m */; };
+		B5369C6D1F7406EA000FFD9F /* DBWExerciseDatabaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5369C6C1F7406EA000FFD9F /* DBWExerciseDatabaseTableViewController.m */; };
 		B53CF2C91F3365FC00F30CB8 /* DBWWorkoutCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B53CF2BF1F3365DE00F30CB8 /* DBWWorkoutCalendarViewController.m */; };
 		B53CF2CA1F33660000F30CB8 /* DBWExerciseSetCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B53CF2C21F3365DE00F30CB8 /* DBWExerciseSetCollectionViewCell.m */; };
 		B53CF2CB1F33660200F30CB8 /* DBWExerciseCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B53CF2C41F3365DE00F30CB8 /* DBWExerciseCollectionViewController.m */; };
@@ -94,6 +95,8 @@
 		B5369C621F6D8404000FFD9F /* DBWAnimationTransitionMemory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWAnimationTransitionMemory.m; sourceTree = "<group>"; };
 		B5369C641F6DAF11000FFD9F /* DBWAnimationDismissTransitionController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWAnimationDismissTransitionController.h; sourceTree = "<group>"; };
 		B5369C651F6DAF11000FFD9F /* DBWAnimationDismissTransitionController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWAnimationDismissTransitionController.m; sourceTree = "<group>"; };
+		B5369C6B1F7406EA000FFD9F /* DBWExerciseDatabaseTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWExerciseDatabaseTableViewController.h; sourceTree = "<group>"; };
+		B5369C6C1F7406EA000FFD9F /* DBWExerciseDatabaseTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWExerciseDatabaseTableViewController.m; sourceTree = "<group>"; };
 		B53CF2B51F3365DE00F30CB8 /* DBWExercise.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWExercise.h; sourceTree = "<group>"; };
 		B53CF2B61F3365DE00F30CB8 /* DBWExercise.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWExercise.m; sourceTree = "<group>"; };
 		B53CF2B71F3365DE00F30CB8 /* DBWSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWSet.h; sourceTree = "<group>"; };
@@ -235,6 +238,15 @@
 				B5F635371F41DD6B00B866DC /* DBWDatabaseManager.m */,
 			);
 			path = Backend;
+			sourceTree = "<group>";
+		};
+		B5369C671F740678000FFD9F /* Exercise Database */ = {
+			isa = PBXGroup;
+			children = (
+				B5369C6B1F7406EA000FFD9F /* DBWExerciseDatabaseTableViewController.h */,
+				B5369C6C1F7406EA000FFD9F /* DBWExerciseDatabaseTableViewController.m */,
+			);
+			path = "Exercise Database";
 			sourceTree = "<group>";
 		};
 		B53CF2B31F3365DE00F30CB8 /* Workout */ = {
@@ -389,6 +401,7 @@
 				B50CBD861F3DD85D007D3962 /* Entry */,
 				B57E6D1C1F51C6C400849CB6 /* Stopwatch */,
 				B53CF2BD1F3365DE00F30CB8 /* Calendar */,
+				B5369C671F740678000FFD9F /* Exercise Database */,
 				B53CF2C01F3365DE00F30CB8 /* Exercise */,
 				B53CF2B41F3365DE00F30CB8 /* Objects */,
 				B53CF2B31F3365DE00F30CB8 /* Workout */,
@@ -629,6 +642,7 @@
 				B5BDC5921F3B4A5800C77CFC /* DBWCustomizeWorkoutPlanViewController.m in Sources */,
 				B5D2E2ED1F2A93B800CB4540 /* main.m in Sources */,
 				B50CBD991F3E1B4D007D3962 /* DBWAuthenticationManager.m in Sources */,
+				B5369C6D1F7406EA000FFD9F /* DBWExerciseDatabaseTableViewController.m in Sources */,
 				B57E6D221F51EC6B00849CB6 /* DBWCalendarCollectionViewCell.m in Sources */,
 				B57E6D251F51F17600849CB6 /* DBWCalendarCellLabel.m in Sources */,
 				B57E6D2B1F53521C00849CB6 /* DBWColorTableViewCell.m in Sources */,

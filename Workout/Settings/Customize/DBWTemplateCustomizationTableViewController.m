@@ -13,6 +13,7 @@
 #import "DBWDatabaseManager.h"
 #import "DBWColorTableViewCell.h"
 #import "UIColor+ColorPalette.h"
+#import "DBWExerciseDatabaseTableViewController.h"
 
 static NSString *const kColorCellIdentifier = @"color-cell";
 static NSString *const kShortDescCellIdentifier = @"desc-cell";
@@ -177,6 +178,21 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         
+        UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
+        CGRect rect = [self.tableView convertRect:selectedCell.textLabel.bounds toView:self.view];
+        
+        DBWExerciseDatabaseTableViewController *exerciseDBViewController = [[DBWExerciseDatabaseTableViewController alloc] init];
+        UINavigationController *newNavigationController = [[UINavigationController alloc] initWithRootViewController:exerciseDBViewController];
+        
+        
+        newNavigationController.modalPresentationStyle = UIModalPresentationPopover;
+        newNavigationController.popoverPresentationController.sourceView = selectedCell;
+        newNavigationController.popoverPresentationController.sourceRect = rect;
+        newNavigationController.preferredContentSize = CGSizeMake(400, 500);
+        
+        [self presentViewController:newNavigationController animated:YES completion:nil];
+        
+        /*
         UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"Hello" message:@"What would you like to title the exercise?" preferredStyle:UIAlertControllerStyleAlert];
         [controller addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
         [controller addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -194,7 +210,7 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
         [controller addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
             textField.placeholder = @"Partial squats";
         }];
-        [self presentViewController:controller animated:YES completion:nil];
+        [self presentViewController:controller animated:YES completion:nil];*/
         
     }
 }
