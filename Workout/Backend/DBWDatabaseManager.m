@@ -12,6 +12,8 @@
 #import "DBWWorkoutTemplateList.h"
 #import "DBWWorkout.h"
 #import "DBWExercise.h"
+#import "DBWExercisePlaceholder.h"
+#import "DBWExerciseDatabase.h"
 
 @interface DBWDatabaseManager ()
 
@@ -43,6 +45,12 @@
         if ([DBWWorkoutTemplateList allObjectsInRealm:_templates].count < 1) {
             [_templates beginWriteTransaction];
             [_templates addObject:[DBWWorkoutTemplateList new]];
+            [_templates commitWriteTransaction];
+        }
+        
+        if ([DBWExerciseDatabase allObjectsInRealm:_templates].count < 1) {
+            [_templates beginWriteTransaction];
+            [_templates addObject:[DBWExerciseDatabase new]];
             [_templates commitWriteTransaction];
         }
 
@@ -141,6 +149,21 @@
         [years addObject:@(year)];
     }
     return [[[NSArray arrayWithArray:years] reverseObjectEnumerator] allObjects];
+}
+
+#pragma mark - Exercise Placeholders
+
+- (void)saveNewExercisePlaceholder:(DBWExercisePlaceholder *)placeholer {
+    [_templates beginWriteTransaction];
+    
+    DBWExerciseDatabase *list = [DBWExerciseDatabase allObjectsInRealm:_templates][0];
+    [list.list addObject:placeholer];
+    [_templates commitWriteTransaction];
+    
+}
+
+- (DBWExerciseDatabase *)allExercisePlaceholders {
+    return [DBWExerciseDatabase allObjectsInRealm:_templates][0];
 }
 
 @end

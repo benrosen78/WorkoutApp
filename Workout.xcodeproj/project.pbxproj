@@ -42,6 +42,9 @@
 		B5BDC5971F3B4D4C00C77CFC /* DBWWorkoutPlanDayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B5BDC5961F3B4D4C00C77CFC /* DBWWorkoutPlanDayCell.m */; };
 		B5BDC59A1F3B588000C77CFC /* DBWWorkoutTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5BDC5991F3B588000C77CFC /* DBWWorkoutTemplate.m */; };
 		B5BDC5A01F3B5FDE00C77CFC /* DBWTemplateCustomizationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5BDC59F1F3B5FDE00C77CFC /* DBWTemplateCustomizationTableViewController.m */; };
+		B5CEB76E1F742E33001F3FAD /* DBWExercisePlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = B5CEB76D1F742E33001F3FAD /* DBWExercisePlaceholder.m */; };
+		B5CEB7711F7430F1001F3FAD /* DBWExerciseDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = B5CEB7701F7430F1001F3FAD /* DBWExerciseDatabase.m */; };
+		B5CEB7741F746916001F3FAD /* DBWExerciseDatabaseConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5CEB7731F746916001F3FAD /* DBWExerciseDatabaseConfirmationViewController.m */; };
 		B5D2E2DF1F2A93B800CB4540 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D2E2DE1F2A93B800CB4540 /* AppDelegate.m */; };
 		B5D2E2E71F2A93B800CB4540 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5D2E2E61F2A93B800CB4540 /* Assets.xcassets */; };
 		B5D2E2ED1F2A93B800CB4540 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D2E2EC1F2A93B800CB4540 /* main.m */; };
@@ -142,6 +145,12 @@
 		B5BDC5991F3B588000C77CFC /* DBWWorkoutTemplate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWWorkoutTemplate.m; sourceTree = "<group>"; };
 		B5BDC59E1F3B5FDE00C77CFC /* DBWTemplateCustomizationTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWTemplateCustomizationTableViewController.h; sourceTree = "<group>"; };
 		B5BDC59F1F3B5FDE00C77CFC /* DBWTemplateCustomizationTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWTemplateCustomizationTableViewController.m; sourceTree = "<group>"; };
+		B5CEB76C1F742E33001F3FAD /* DBWExercisePlaceholder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWExercisePlaceholder.h; sourceTree = "<group>"; };
+		B5CEB76D1F742E33001F3FAD /* DBWExercisePlaceholder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWExercisePlaceholder.m; sourceTree = "<group>"; };
+		B5CEB76F1F7430F1001F3FAD /* DBWExerciseDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWExerciseDatabase.h; sourceTree = "<group>"; };
+		B5CEB7701F7430F1001F3FAD /* DBWExerciseDatabase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWExerciseDatabase.m; sourceTree = "<group>"; };
+		B5CEB7721F746916001F3FAD /* DBWExerciseDatabaseConfirmationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWExerciseDatabaseConfirmationViewController.h; sourceTree = "<group>"; };
+		B5CEB7731F746916001F3FAD /* DBWExerciseDatabaseConfirmationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWExerciseDatabaseConfirmationViewController.m; sourceTree = "<group>"; };
 		B5D2E2DA1F2A93B800CB4540 /* Workout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Workout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5D2E2DD1F2A93B800CB4540 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B5D2E2DE1F2A93B800CB4540 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -245,6 +254,8 @@
 			children = (
 				B5369C6B1F7406EA000FFD9F /* DBWExerciseDatabaseTableViewController.h */,
 				B5369C6C1F7406EA000FFD9F /* DBWExerciseDatabaseTableViewController.m */,
+				B5CEB7721F746916001F3FAD /* DBWExerciseDatabaseConfirmationViewController.h */,
+				B5CEB7731F746916001F3FAD /* DBWExerciseDatabaseConfirmationViewController.m */,
 			);
 			path = "Exercise Database";
 			sourceTree = "<group>";
@@ -269,6 +280,8 @@
 			children = (
 				B53CF2B51F3365DE00F30CB8 /* DBWExercise.h */,
 				B53CF2B61F3365DE00F30CB8 /* DBWExercise.m */,
+				B5CEB76C1F742E33001F3FAD /* DBWExercisePlaceholder.h */,
+				B5CEB76D1F742E33001F3FAD /* DBWExercisePlaceholder.m */,
 				B53CF2B71F3365DE00F30CB8 /* DBWSet.h */,
 				B53CF2B81F3365DE00F30CB8 /* DBWSet.m */,
 				B53CF2B91F3365DE00F30CB8 /* DBWWorkout.h */,
@@ -277,6 +290,8 @@
 				B5BDC5991F3B588000C77CFC /* DBWWorkoutTemplate.m */,
 				B5DF74361F408DA5009FA3B4 /* DBWWorkoutTemplateList.h */,
 				B5DF74371F408DA5009FA3B4 /* DBWWorkoutTemplateList.m */,
+				B5CEB76F1F7430F1001F3FAD /* DBWExerciseDatabase.h */,
+				B5CEB7701F7430F1001F3FAD /* DBWExerciseDatabase.m */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -659,13 +674,16 @@
 				B57E6D2E1F536F7500849CB6 /* DBWSettingsSplitViewController.m in Sources */,
 				B53CF2CE1F33661300F30CB8 /* DBWExercise.m in Sources */,
 				B5369C631F6D8404000FFD9F /* DBWAnimationTransitionMemory.m in Sources */,
+				B5CEB76E1F742E33001F3FAD /* DBWExercisePlaceholder.m in Sources */,
 				B515D7691F5AE6BB00828E99 /* DBWExerciseCollectionViewCell.m in Sources */,
+				B5CEB7711F7430F1001F3FAD /* DBWExerciseDatabase.m in Sources */,
 				B53CF2CF1F33661300F30CB8 /* DBWSet.m in Sources */,
 				B53CF2D01F33661300F30CB8 /* DBWWorkout.m in Sources */,
 				B5F635391F41DD6B00B866DC /* DBWDatabaseManager.m in Sources */,
 				B5DF74381F408DA5009FA3B4 /* DBWWorkoutTemplateList.m in Sources */,
 				B5B192BF1F537C10005B3F8B /* UIColor+ColorPalette.m in Sources */,
 				B57E6D1F1F51C6D900849CB6 /* DBWStopwatchViewController.m in Sources */,
+				B5CEB7741F746916001F3FAD /* DBWExerciseDatabaseConfirmationViewController.m in Sources */,
 				B50CBD891F3DD8A6007D3962 /* DBWLoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

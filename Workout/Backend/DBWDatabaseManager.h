@@ -11,7 +11,7 @@
 #import "DBWWorkoutTemplateList.h"
 #import "DBWExercise.h"
 
-@class RLMResults, DBWWorkout;
+@class RLMResults, DBWWorkout, DBWExerciseDatabase, DBWExercisePlaceholder;
 
 RLM_ARRAY_TYPE(DBWExercise)
 
@@ -40,6 +40,10 @@ RLM_ARRAY_TYPE(DBWExercise)
 - (NSArray <NSNumber *> *)yearsInDatabase;
 
 - (void)addExercises:(RLMArray<DBWExercise> *)exercises toWorkout:(DBWWorkout *)workout;
+
+- (void)saveNewExercisePlaceholder:(DBWExercisePlaceholder *)placeholer;
+
+- (DBWExerciseDatabase *)allExercisePlaceholders;
 
 @end
 
