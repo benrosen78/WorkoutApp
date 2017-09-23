@@ -139,7 +139,7 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
             }
             
             if ((indexPath.row >= [_template.exercises count] && [self isEditing]) || (_template.exercises.count == 0)) {
-                cell.textLabel.text = @"Add Excercise";
+                cell.textLabel.text = @"Add Exercise";
             } else {
                 DBWExercise *exercise = _template.exercises[indexPath.row];
                 cell.textLabel.text = exercise.placeholder.name;
