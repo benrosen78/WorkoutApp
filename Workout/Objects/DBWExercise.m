@@ -12,15 +12,8 @@
 
 @implementation DBWExercise
 
-+ (instancetype)exerciseWithName:(NSString *)name baseNumberOfSets:(NSInteger)numberOfSets {
-    DBWExercise *exercise = [[DBWExercise alloc] init];
-    exercise.name = name;
-    exercise.baseNumberOfSets = numberOfSets;
-    return exercise;
-}
-
 - (BOOL)setsCompleted {
-    if ([self.sets count] == self.baseNumberOfSets) {
+    if ([self.sets count] == self.expectedSets) {
         for (DBWSet *set in self.sets) {
             if (!set.weight) {
                 return NO;

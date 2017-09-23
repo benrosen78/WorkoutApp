@@ -15,6 +15,7 @@
 #import "DBWExerciseSetCollectionViewCell.h"
 #import "DBWAnimationDismissTransitionController.h"
 #import "DBWAnimationTransitionMemory.h"
+#import "DBWExercisePlaceholder.h"
 
 static NSString *const kCellIdentifier = @"set-cell-identifier";
 
@@ -56,8 +57,8 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
     _headerCell.layer.shadowOffset = CGSizeMake(0, 0);
     _headerCell.layer.shadowOpacity = 0.0;
     _headerCell.backgroundColor = [UIColor whiteColor];
-    _headerCell.titleLabel.text = _exercise.name;
-    _headerCell.detailLabel.text = @"5 x 5";
+    _headerCell.titleLabel.text = _exercise.placeholder.name;
+    _headerCell.detailLabel.text = [NSString stringWithFormat:@"%lu x %lu", _exercise.expectedSets, _exercise.expectedReps];
     _headerCell.numberLabel.text = [NSString stringWithFormat:@"%lu", _exerciseNumber];
     [self.collectionView addSubview:_headerCell];
  

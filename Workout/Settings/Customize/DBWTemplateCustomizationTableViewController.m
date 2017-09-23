@@ -130,7 +130,8 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kExerciseAddCellIdentifier];
             if (!cell) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kExerciseAddCellIdentifier];
-            }            cell.textLabel.text = @"Add Exercise";
+            }
+            cell.textLabel.text = @"Add Exercise";
             return cell;
         } else {
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kExerciseCellIdentifier];

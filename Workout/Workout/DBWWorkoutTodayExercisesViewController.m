@@ -16,6 +16,7 @@
 #import "DBWExerciseCollectionViewCell.h"
 #import "DBWAnimationTransitionController.h"
 #import "DBWAnimationTransitionMemory.h"
+#import "DBWExercisePlaceholder.h"
 
 @interface DBWWorkoutTodayExercisesViewController () <UINavigationControllerDelegate, UIViewControllerPreviewingDelegate>
 
@@ -116,8 +117,8 @@ static NSString * const reuseIdentifier = @"Cell";
     cell.layer.masksToBounds = NO;
 
     cell.numberLabel.text = [NSString stringWithFormat:@"%lu", indexPath.row + 1];
-    cell.titleLabel.text = exercise.name;
-    cell.detailLabel.text = @"5 x 5";
+    cell.titleLabel.text = exercise.placeholder.name;
+    cell.detailLabel.text = [NSString stringWithFormat:@"%lu x %lu", exercise.expectedSets, exercise.expectedReps];
     cell.completed = [exercise setsCompleted];
     cell.backgroundColor = [UIColor whiteColor];
     
