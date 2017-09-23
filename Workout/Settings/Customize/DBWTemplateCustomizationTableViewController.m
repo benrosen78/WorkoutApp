@@ -130,7 +130,7 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kExerciseAddCellIdentifier];
             if (!cell) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kExerciseAddCellIdentifier];
-            }            cell.textLabel.text = @"Add Excercise";
+            }            cell.textLabel.text = @"Add Exercise";
             return cell;
         } else {
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kExerciseCellIdentifier];
@@ -138,13 +138,12 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kExerciseCellIdentifier];
             }
             
-            if ((indexPath.row >= [_template.exercises count] && [self isEditing]) || (_template.exercises.count == 0)) {
-                cell.textLabel.text = @"Add Exercise";
-            } else {
-                DBWExercise *exercise = _template.exercises[indexPath.row];
-                cell.textLabel.text = exercise.placeholder.name;
-                cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu sets | %lu reps", exercise.expectedSets, exercise.expectedReps];
-            }
+            DBWExercise *exercise = _template.exercises[indexPath.row];
+            cell.textLabel.text = exercise.placeholder.name;
+            
+            NSString *setsString = exercise.expectedSets == 1 ? @"set" : @"sets";
+            NSString *repsString = exercise.expectedReps == 1 ? @"rep" : @"reps";
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu %@ | %lu %@", exercise.expectedSets, setsString, exercise.expectedReps, repsString];
             return cell;
         }
     } else if (indexPath.section == 3) {
