@@ -258,9 +258,9 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
 - (NSIndexPath *)tableView:(UITableView *)tableView targetIndexPathForMoveFromRowAtIndexPath:(nonnull NSIndexPath *)sourceIndexPath toProposedIndexPath:(nonnull NSIndexPath *)proposedDestinationIndexPath {
     if (proposedDestinationIndexPath.row == [_template.exercises count]) {
         return [NSIndexPath indexPathForRow:[_template.exercises count] - 1 inSection:2];
-    } else if (proposedDestinationIndexPath.section == 0 || proposedDestinationIndexPath.section) {
+    } else if (proposedDestinationIndexPath.section < 2) {
         return [NSIndexPath indexPathForRow:0 inSection:2];
-    } else if (proposedDestinationIndexPath.section == 2) {
+    } else if (proposedDestinationIndexPath.section > 2) {
         return [NSIndexPath indexPathForRow:[_template.exercises count] - 1 inSection:2];
     }
     return proposedDestinationIndexPath;
