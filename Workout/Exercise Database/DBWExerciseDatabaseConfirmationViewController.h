@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DBWExerciseDatabaseDelegate.h"
 
 @class DBWExercisePlaceholder;
 
 @interface DBWExerciseDatabaseConfirmationViewController : UIViewController
 
 @property (strong, nonatomic) DBWExercisePlaceholder *selectedPlaceholder;
+
+@property (weak, nonatomic) id<DBWExerciseDatabaseDelegate> delegate;
 
 @end

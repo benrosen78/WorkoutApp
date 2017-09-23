@@ -14,13 +14,14 @@
 #import "DBWColorTableViewCell.h"
 #import "UIColor+ColorPalette.h"
 #import "DBWExerciseDatabaseTableViewController.h"
+#import "DBWExercisePlaceholder.h"
 
 static NSString *const kColorCellIdentifier = @"color-cell";
 static NSString *const kShortDescCellIdentifier = @"desc-cell";
 static NSString *const kExerciseCellIdentifier = @"exercise-cell";
 static NSString *const kDeleteCellIdentifier = @"delete-cell";
 
-@interface DBWTemplateCustomizationTableViewController () <UITextViewDelegate>
+@interface DBWTemplateCustomizationTableViewController () <UITextViewDelegate, DBWExerciseDatabaseDelegate>
 
 @property (strong, nonatomic) DBWWorkoutTemplate *template;
 
@@ -133,8 +134,7 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
             cell.textLabel.text = @"Add Excercise";
         } else {
             DBWExercise *exercise = _template.exercises[indexPath.row];
-            cell.textLabel.text = exercise.name
-            ;
+            cell.textLabel.text = exercise.placeholder.name;
         }
         return cell;
     } else if (indexPath.section == 3) {
@@ -182,35 +182,15 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
         CGRect rect = [self.tableView convertRect:selectedCell.textLabel.bounds toView:self.view];
         
         DBWExerciseDatabaseTableViewController *exerciseDBViewController = [[DBWExerciseDatabaseTableViewController alloc] init];
+        exerciseDBViewController.delegate = self;
+        
         UINavigationController *newNavigationController = [[UINavigationController alloc] initWithRootViewController:exerciseDBViewController];
-        
-        
         newNavigationController.modalPresentationStyle = UIModalPresentationPopover;
         newNavigationController.popoverPresentationController.sourceView = selectedCell;
         newNavigationController.popoverPresentationController.sourceRect = rect;
         newNavigationController.preferredContentSize = CGSizeMake(400, 500);
         
         [self presentViewController:newNavigationController animated:YES completion:nil];
-        
-        /*
-        UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"Hello" message:@"What would you like to title the exercise?" preferredStyle:UIAlertControllerStyleAlert];
-        [controller addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
-        [controller addAction:[UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            NSString *text = controller.textFields[0].text;
-            DBWExercise *exercise = [DBWExercise exerciseWithName:text baseNumberOfSets:3];
-            
-            [[DBWDatabaseManager sharedDatabaseManager] startTemplateWriting];
-            [_template.exercises addObject:exercise];
-            [[DBWDatabaseManager sharedDatabaseManager] endTemplateWriting];
-            
-            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
-            
-            [self setEditing:YES animated:YES];
-        }]];
-        [controller addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-            textField.placeholder = @"Partial squats";
-        }];
-        [self presentViewController:controller animated:YES completion:nil];*/
         
     }
 }
@@ -283,4 +263,13 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
     [[DBWDatabaseManager sharedDatabaseManager] endTemplateWriting];
 }
 
+#pragma mark - DBWExerciseDatabaseDelegate
+
+- (void)finishedWithExercise:(DBWExercise *)exercise {
+    [[DBWDatabaseManager sharedDatabaseManager] startTemplateWriting];
+    [_template.exercises addObject:exercise];
+    [[DBWDatabaseManager sharedDatabaseManager] endTemplateWriting];
+    
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
 @end

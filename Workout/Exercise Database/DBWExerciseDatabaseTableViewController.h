@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DBWExerciseDatabaseDelegate.h"
+
+@class DBWWorkoutTemplate;
 
 @interface DBWExerciseDatabaseTableViewController : UITableViewController
+
+@property (weak, nonatomic) id<DBWExerciseDatabaseDelegate> delegate;
 
 @end

@@ -105,11 +105,17 @@
 - (void)doneTapped:(UIBarButtonItem *)sender {
     // we now have an exercise placeholder and sets/reps, so we should make an exercise object
     
+    if (!_selectedPlaceholder || !_delegate) {
+        return;
+    }
+    
     DBWExercise *exercise = [[DBWExercise alloc] init];
     exercise.placeholder = _selectedPlaceholder;
     exercise.selectedSets = _currentSets;
     exercise.selectedReps = _currentReps;
 
+    [_delegate finishedWithExercise:exercise];
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

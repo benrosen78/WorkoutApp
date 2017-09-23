@@ -163,6 +163,7 @@
 		B5D2E2FD1F2A93B800CB4540 /* WorkoutUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorkoutUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5D2E3011F2A93B800CB4540 /* DannyBenWorkoutUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DannyBenWorkoutUITests.m; sourceTree = "<group>"; };
 		B5D2E3031F2A93B800CB4540 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B5D71E791F7698C50012ABC1 /* DBWExerciseDatabaseDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWExerciseDatabaseDelegate.h; sourceTree = "<group>"; };
 		B5DF74361F408DA5009FA3B4 /* DBWWorkoutTemplateList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWWorkoutTemplateList.h; sourceTree = "<group>"; };
 		B5DF74371F408DA5009FA3B4 /* DBWWorkoutTemplateList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWWorkoutTemplateList.m; sourceTree = "<group>"; };
 		B5DF74391F40B3CD009FA3B4 /* DBWCustomizeWorkoutPlanCollectionHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWCustomizeWorkoutPlanCollectionHeaderView.h; sourceTree = "<group>"; };
@@ -252,6 +253,7 @@
 		B5369C671F740678000FFD9F /* Exercise Database */ = {
 			isa = PBXGroup;
 			children = (
+				B5D71E791F7698C50012ABC1 /* DBWExerciseDatabaseDelegate.h */,
 				B5369C6B1F7406EA000FFD9F /* DBWExerciseDatabaseTableViewController.h */,
 				B5369C6C1F7406EA000FFD9F /* DBWExerciseDatabaseTableViewController.m */,
 				B5CEB7721F746916001F3FAD /* DBWExerciseDatabaseConfirmationViewController.h */,
