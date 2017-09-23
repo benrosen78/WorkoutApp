@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class DBWExercisePlaceholder;
+
 @interface DBWExerciseDatabaseConfirmationViewController : UIViewController
+
+@property (strong, nonatomic) DBWExercisePlaceholder *selectedPlaceholder;
 
 @end

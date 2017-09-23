@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <Realm/Realm.h>
 
-@class DBWSet, DBWWorkout;
+@class DBWSet, DBWWorkout, DBWExercisePlaceholder;
 
 RLM_ARRAY_TYPE(DBWSet)
 
@@ -19,7 +19,12 @@ RLM_ARRAY_TYPE(DBWSet)
 
 @property RLMArray <DBWSet> *sets;
 
-@property NSInteger baseNumberOfSets;
+/**
+ * A "selected" set or rep is the quantity that is selected when an exercise is added to a workout or workout template
+ */
+@property NSInteger selectedSets, selectedReps, baseNumberOfSets;
+
+@property DBWExercisePlaceholder *placeholder;
 
 + (instancetype)exerciseWithName:(NSString *)name baseNumberOfSets:(NSInteger)numberOfSets;
 

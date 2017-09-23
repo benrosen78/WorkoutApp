@@ -93,6 +93,7 @@ static NSString *const kCellIdentifier = @"exercise-placeholder-cell";
     
     DBWExerciseDatabaseConfirmationViewController *confirmationViewController = [[DBWExerciseDatabaseConfirmationViewController alloc] init];
     confirmationViewController.title = placeholder.name;
+    confirmationViewController.selectedPlaceholder = placeholder;
     [self.navigationController pushViewController:confirmationViewController animated:YES];
 }
 
