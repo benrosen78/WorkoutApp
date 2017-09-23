@@ -111,8 +111,8 @@
     
     DBWExercise *exercise = [[DBWExercise alloc] init];
     exercise.placeholder = _selectedPlaceholder;
-    exercise.selectedSets = _currentSets;
-    exercise.selectedReps = _currentReps;
+    exercise.expectedSets = _currentSets;
+    exercise.expectedReps = _currentReps;
 
     [_delegate finishedWithExercise:exercise];
     

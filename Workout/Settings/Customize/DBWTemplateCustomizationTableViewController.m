@@ -19,6 +19,7 @@
 static NSString *const kColorCellIdentifier = @"color-cell";
 static NSString *const kShortDescCellIdentifier = @"desc-cell";
 static NSString *const kExerciseCellIdentifier = @"exercise-cell";
+static NSString *const kExerciseAddCellIdentifier = @"exercise-add-cell";
 static NSString *const kDeleteCellIdentifier = @"delete-cell";
 
 @interface DBWTemplateCustomizationTableViewController () <UITextViewDelegate, DBWExerciseDatabaseDelegate>
@@ -125,18 +126,27 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
         cell.shouldIndentWhileEditing = NO;
         return cell;
     } else if (indexPath.section == 2) {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kExerciseCellIdentifier];
-        if (!cell) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kExerciseCellIdentifier];
-        }
-        
-        if ((indexPath.row >= [_template.exercises count] && [self isEditing]) || (_template.exercises.count == 0)) {
-            cell.textLabel.text = @"Add Excercise";
+        if (indexPath.row == [_template.exercises count]) {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kExerciseAddCellIdentifier];
+            if (!cell) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kExerciseAddCellIdentifier];
+            }            cell.textLabel.text = @"Add Excercise";
+            return cell;
         } else {
-            DBWExercise *exercise = _template.exercises[indexPath.row];
-            cell.textLabel.text = exercise.placeholder.name;
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kExerciseCellIdentifier];
+            if (!cell) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kExerciseCellIdentifier];
+            }
+            
+            if ((indexPath.row >= [_template.exercises count] && [self isEditing]) || (_template.exercises.count == 0)) {
+                cell.textLabel.text = @"Add Excercise";
+            } else {
+                DBWExercise *exercise = _template.exercises[indexPath.row];
+                cell.textLabel.text = exercise.placeholder.name;
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu sets | %lu reps", exercise.expectedSets, exercise.expectedReps];
+            }
+            return cell;
         }
-        return cell;
     } else if (indexPath.section == 3) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kDeleteCellIdentifier];
         if (!cell) {

@@ -20,9 +20,9 @@ RLM_ARRAY_TYPE(DBWSet)
 @property RLMArray <DBWSet> *sets;
 
 /**
- * A "selected" set or rep is the quantity that is selected when an exercise is added to a workout or workout template
+ * An "expected" set or rep is the quantity that is selected when an exercise is added to a workout or workout template
  */
-@property NSInteger selectedSets, selectedReps, baseNumberOfSets;
+@property NSInteger expectedSets, expectedReps, baseNumberOfSets;
 
 @property DBWExercisePlaceholder *placeholder;
 
