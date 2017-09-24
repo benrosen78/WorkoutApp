@@ -19,6 +19,12 @@
         DBWSettingsTableViewController *settingsTableViewController = [[DBWSettingsTableViewController alloc] init];
         UINavigationController *rootNavigationController = [[UINavigationController alloc] initWithRootViewController:settingsTableViewController];
         
+        if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
+            self.viewControllers = @[rootNavigationController];
+            return self;
+        }
+        
+        
         UINavigationController *detailViewController = [[UINavigationController alloc] init];
         detailViewController.navigationBar.prefersLargeTitles = NO;
         

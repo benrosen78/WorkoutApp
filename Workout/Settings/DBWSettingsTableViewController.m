@@ -30,9 +30,12 @@
     [super viewDidLoad];
     
     self.title = @"Settings";
-    [self.splitViewController.viewControllers[1] setViewControllers:@[[[DBWAboutTableViewController alloc] init]]];
     
-    _selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        [self.splitViewController.viewControllers[1] setViewControllers:@[[[DBWAboutTableViewController alloc] init]]];
+        _selectedIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    }
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -89,11 +92,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     _selectedIndexPath = indexPath;
     
-    UINavigationController *detailViewController = self.splitViewController.viewControllers[1];
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             DBWAboutTableViewController *aboutVC = [[DBWAboutTableViewController alloc] init];
-            detailViewController.viewControllers = @[aboutVC];
+            [self setDetailViewController:aboutVC];
         } else  if (indexPath.row == 1) {
             // automatically the acknowledgements cell
             NSString *path = [[NSBundle mainBundle] pathForResource:@"Acknowledgements" ofType:@"plist"];
@@ -103,11 +105,11 @@
             
             VTAcknowledgement *customLicense = [[VTAcknowledgement alloc] initWithTitle:@"The Noun Project" text:@"Following icons taken from The Noun Project.\nLicensed under the Creative Commons license.\n\ngym equipment by Oliviu Stoian from the Noun Project\nBarbell by Baboon designs from the Noun Project\nCalendar by Ananth from the Noun Project\nSettings by unlimicon from the Noun Project" license:@"Creative Commons"];
             acknowledgementsVC.acknowledgements = [acknowledgementsVC.acknowledgements arrayByAddingObjectsFromArray:@[customLicense]];
-            detailViewController.viewControllers = @[acknowledgementsVC];
+            [self setDetailViewController:acknowledgementsVC];
         }
     } else if (indexPath.section == 1) {
         DBWCustomizeWorkoutPlanViewController *customizeVC = [[DBWCustomizeWorkoutPlanViewController alloc] init];
-        detailViewController.viewControllers = @[customizeVC];
+        [self setDetailViewController:customizeVC];
     } else if (indexPath.section == 2) {
         [DBWAuthenticationManager logOut];
         
@@ -140,48 +142,15 @@
     }
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+// ipad split vc impl vs iphone normal impl
+- (void)setDetailViewController:(UIViewController *)viewController {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        UINavigationController *detailViewController = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? self.splitViewController.viewControllers[1] : self.navigationController;
+        detailViewController.viewControllers = @[viewController];
+    } else {
+        viewController.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
+        [self.navigationController pushViewController:viewController animated:YES];
+    }
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
