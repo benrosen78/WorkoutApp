@@ -44,8 +44,8 @@
     
     // animate the collection view away
     [UIView animateWithDuration:0.4 delay:0.3 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        fromViewController.collectionView.frame = CGRectMake(0, -fromViewController.collectionView.frame.size.height, fromViewController.collectionView.frame.size.width, fromViewController.collectionView.frame.size.height);
-        fromViewController.collectionView.alpha = 0;
+        //fromViewController.collectionView.frame = CGRectMake(0, -fromViewController.collectionView.frame.size.height, fromViewController.collectionView.frame.size.width, fromViewController.collectionView.frame.size.height);
+        //fromViewController.collectionView.alpha = 0;
     } completion:nil];
     
     
@@ -53,7 +53,7 @@
     toViewController.view.backgroundColor = [UIColor clearColor];
     toViewController.collectionView.backgroundColor = [UIColor clearColor];
     toViewController.collectionView.alpha = 0;
-    toViewController.headerCell.alpha = 0;
+    //toViewController.headerCell.alpha = 0;
     toViewController.collectionView.frame = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
     
     // get rid of the shadow and transform. make it looked like its placed. then replace it with the same exact header in the new view

@@ -10,10 +10,12 @@
 
 @class DBWExercise, DBWExerciseCollectionViewCell;
 
-@interface DBWExerciseCollectionViewController : UICollectionViewController
+@interface DBWExerciseCollectionViewController : UIViewController
 
 - (instancetype)initWithExercise:(DBWExercise *)exercise exerciseNumber:(NSInteger)number;
 
 @property (strong, nonatomic) DBWExerciseCollectionViewCell *headerCell;
+
+@property (strong, nonatomic) UIScrollView *scrollView;
 
 @end

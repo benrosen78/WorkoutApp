@@ -1,81 +1,45 @@
 //
-//  DBWWorkoutTodayExercisesViewController.m
+//  DBWWorkoutCurrentSetsViewController.m
 //  Workout
 //
-//  Created by Ben Rosen on 9/2/17.
+//  Created by Ben Rosen on 9/23/17.
 //  Copyright © 2017 Ben Rosen. All rights reserved.
 //
 
-#import "DBWWorkoutTodayExercisesViewController.h"
-#import "DBWWorkout.h"
-#import "DBWExercise.h"
-#import "DBWExerciseSetCollectionViewCell.h"
-#import "DBWExerciseCollectionViewController.h"
-#import "DBWWorkoutPlanDayCell.h"
-#import "UIColor+ColorPalette.h"
+#import "DBWWorkoutCurrentSetsViewController.h"
 #import "DBWExerciseCollectionViewCell.h"
+#import "DBWExercise.h"
+#import "DBWExercisePlaceholder.h"
 #import "DBWAnimationTransitionController.h"
 #import "DBWAnimationTransitionMemory.h"
-#import "DBWExercisePlaceholder.h"
+#import "DBWWorkout.h"
+#import "DBWExerciseCollectionViewController.h"
 
-@interface DBWWorkoutTodayExercisesViewController () <UINavigationControllerDelegate, UIViewControllerPreviewingDelegate>
-
-@property (strong, nonatomic) DBWWorkout *workout;
+@interface DBWWorkoutCurrentSetsViewController () <UIViewControllerPreviewingDelegate>
 
 @property (strong, nonatomic) DBWAnimationTransitionController *transitionController;
 
 @end
 
-@implementation DBWWorkoutTodayExercisesViewController
+@implementation DBWWorkoutCurrentSetsViewController
 
 static NSString * const reuseIdentifier = @"Cell";
 
-- (instancetype)initWithWorkout:(DBWWorkout *)workout {
+- (instancetype)init {
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width - 50, 68);
     flowLayout.minimumLineSpacing = 1;
-    flowLayout.sectionInset = UIEdgeInsetsMake(150, 0, 25, 0);
-    self = [super initWithCollectionViewLayout:flowLayout];
-    if (self) {
-        _workout = workout;
-    }
-    return self;
+    flowLayout.sectionInset = UIEdgeInsetsMake(15, 0, 25, 0);
+    return [super initWithCollectionViewLayout:flowLayout];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self registerForPreviewingWithDelegate:self sourceView:self.collectionView];
-    
-    self.title = @"Today's Gains";
-    
-    _headerCell = [[DBWWorkoutPlanDayCell alloc] initWithFrame:CGRectMake(25, 20.5, self.view.frame.size.width - 50, 110)];
-    _headerCell.layer.cornerRadius = 8;
-    _headerCell.alpha = _headerCellAlpha;
-    _headerCell.layer.masksToBounds = YES;
-    _headerCell.backgroundColor = [UIColor whiteColor];
-    _headerCell.titleLabel.text = [NSString stringWithFormat:@"Day %lu", _workout.templateDay];
-    _headerCell.detailLabel.text = _workout.comments;
-    _headerCell.color = [UIColor calendarColors][_workout.selectedColorIndex];
-    [self.collectionView addSubview:_headerCell];
-    
-    self.collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    
-    self.navigationItem.hidesBackButton = YES;
-    [self.collectionView registerClass:[DBWExerciseCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
-    
     _transitionController = [[DBWAnimationTransitionController alloc] init];
-}
+    [self.collectionView registerClass:[DBWExerciseCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
+    self.collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
 
-- (void)setHeaderCellAlpha:(CGFloat)headerCellAlpha {
-    _headerCellAlpha = headerCellAlpha;
-    _headerCell.alpha = _headerCellAlpha;
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    self.navigationController.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -104,7 +68,7 @@ static NSString * const reuseIdentifier = @"Cell";
     DBWExercise *exercise = _workout.exercises[indexPath.row];
     
     DBWExerciseCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-
+    
     if (indexPath.row == 0 || indexPath.row == [_workout.exercises count] - 1) {
         UIBezierPath *rounded = [UIBezierPath bezierPathWithRoundedRect:cell.bounds byRoundingCorners:indexPath.row == 0 ? (UIRectCornerTopLeft | UIRectCornerTopRight) : (UIRectCornerBottomLeft | UIRectCornerBottomRight) cornerRadii:CGSizeMake(8, 8)];
         CAShapeLayer *shape = [[CAShapeLayer alloc] init];
@@ -115,7 +79,7 @@ static NSString * const reuseIdentifier = @"Cell";
     }
     cell.layer.cornerRadius = 0;
     cell.layer.masksToBounds = NO;
-
+    
     cell.numberLabel.text = [NSString stringWithFormat:@"%lu", indexPath.row + 1];
     cell.titleLabel.text = exercise.placeholder.name;
     cell.detailLabel.text = [NSString stringWithFormat:@"%lu x %lu", exercise.expectedSets, exercise.expectedReps];
@@ -135,7 +99,7 @@ static NSString * const reuseIdentifier = @"Cell";
     cell.layer.mask = nil;
     cell.layer.cornerRadius = 8;
     cell.layer.masksToBounds = YES;
-
+    
     // create a snapshot and set up a shadow
     UIView *headerView = [cell snapshotViewAfterScreenUpdates:YES];
     headerView.layer.shadowRadius = 10;
@@ -154,7 +118,7 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC {
-    return nil;//_transitionController;
+    return _transitionController;
 }
 
 #pragma mark - UIViewControllerPreviewingDelegate
@@ -178,5 +142,4 @@ static NSString * const reuseIdentifier = @"Cell";
 - (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
     [self.navigationController pushViewController:viewControllerToCommit animated:NO];
 }
-
 @end

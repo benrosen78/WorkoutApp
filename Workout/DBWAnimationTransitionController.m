@@ -57,10 +57,10 @@
 
     // make the exercise view with no alpha and put it out of the view so we can animate these proporties
     toViewController.view.backgroundColor = [UIColor clearColor];
-    toViewController.collectionView.backgroundColor = [UIColor clearColor];
-    toViewController.collectionView.alpha = 0;
-    toViewController.headerCell.alpha = 0;
-    toViewController.collectionView.frame = CGRectMake(0, push ? -[[UIScreen mainScreen] bounds].size.height : 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
+    //toViewController.collectionView.backgroundColor = [UIColor clearColor];
+    //toViewController.collectionView.alpha = 0;
+    //toViewController.headerCell.alpha = 0;
+    //toViewController.collectionView.frame = CGRectMake(0, push ? -[[UIScreen mainScreen] bounds].size.height : 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
     
     // get rid of the shadow and transform. make it looked like its placed. then replace it with the same exact header in the new view
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.45 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -78,7 +78,7 @@
     });
     
     if (!push) {
-        toViewController.collectionView.frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
+        //toViewController.collectionView.frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
         toViewController.headerCell.frame = CGRectMake(25, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width - 50, 110);
     }
 
@@ -89,7 +89,7 @@
         [container addSubview:toViewController.view];
 
         [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            toViewController.collectionView.frame = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
+           // toViewController.collectionView.frame = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
             if (!push) {
                 toViewController.headerCell.frame = CGRectMake(25, 135, [[UIScreen mainScreen] bounds].size.width - 50, 110);
             }
@@ -100,7 +100,7 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
         [UIView animateWithDuration:0.4 animations:^{
-            toViewController.collectionView.alpha = 1;
+          //  toViewController.collectionView.alpha = 1;
             if (!push) {
                 toViewController.headerCell.alpha = 1;
             }
