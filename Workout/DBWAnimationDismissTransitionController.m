@@ -44,8 +44,8 @@
     
     // animate the collection view away
     [UIView animateWithDuration:0.4 delay:0.3 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        //fromViewController.collectionView.frame = CGRectMake(0, -fromViewController.collectionView.frame.size.height, fromViewController.collectionView.frame.size.width, fromViewController.collectionView.frame.size.height);
-        //fromViewController.collectionView.alpha = 0;
+        fromViewController.scrollView.frame = CGRectMake(0, -fromViewController.scrollView.frame.size.height, fromViewController.scrollView.frame.size.width, fromViewController.scrollView.frame.size.height);
+        fromViewController.scrollView.alpha = 0;
     } completion:nil];
     
     

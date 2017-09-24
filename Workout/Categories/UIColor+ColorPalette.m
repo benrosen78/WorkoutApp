@@ -22,4 +22,8 @@
              ];
 }
 
++ (UIColor *)appTintColor {
+    return [UIColor colorWithRed:0.201 green:0.220 blue:0.376 alpha:1.00];
+}
+
 @end

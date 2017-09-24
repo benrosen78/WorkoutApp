@@ -12,4 +12,6 @@
 
 + (NSArray *)calendarColors;
 
++ (UIColor *)appTintColor;
+
 @end

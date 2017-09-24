@@ -154,7 +154,7 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC {
-    return nil;//_transitionController;
+    return _transitionController;
 }
 
 #pragma mark - UIViewControllerPreviewingDelegate

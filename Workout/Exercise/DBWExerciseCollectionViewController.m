@@ -17,16 +17,19 @@
 #import "DBWAnimationTransitionMemory.h"
 #import "DBWExercisePlaceholder.h"
 #import "DBWExerciseCurrentSetsViewController.h"
+#import "UIColor+ColorPalette.h"
 
 static NSString *const kCellIdentifier = @"set-cell-identifier";
 
-@interface DBWExerciseCollectionViewController () <UITextFieldDelegate, UINavigationControllerDelegate>
+@interface DBWExerciseCollectionViewController () <UITextFieldDelegate, UINavigationControllerDelegate, UIScrollViewDelegate>
 
 @property (strong, nonatomic) DBWExercise *exercise;
 
 @property (nonatomic) NSInteger exerciseNumber;
 
 @property (strong, nonatomic) DBWAnimationDismissTransitionController *transitionController;
+
+@property (strong, nonatomic) UIPageControl *pageControl;
 
 @end
 
@@ -49,11 +52,12 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    self.title = [NSString stringWithFormat:@"Exercise %lu", _exerciseNumber];
+
     //self.collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
-    _headerCell = [[DBWExerciseCollectionViewCell alloc] initWithFrame:CGRectMake(0, 135, self.view.frame.size.width - 50, 68)];
-    _headerCell.center = CGPointMake(self.view.frame.origin.x, 0);
+    _headerCell = [[DBWExerciseCollectionViewCell alloc] initWithFrame:CGRectMake(25, 135, self.view.frame.size.width - 50, 68)];
     _headerCell.layer.cornerRadius = 8;
     _headerCell.layer.shadowRadius = 10;
     _headerCell.layer.shadowOffset = CGSizeMake(0, 0);
@@ -63,36 +67,30 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
     _headerCell.detailLabel.text = [NSString stringWithFormat:@"%lu x %lu", _exercise.expectedSets, _exercise.expectedReps];
     _headerCell.numberLabel.text = [NSString stringWithFormat:@"%lu", _exerciseNumber];
     [self.view addSubview:_headerCell];
- 
     
     _scrollView = [[UIScrollView alloc] init];
-    _scrollView.frame = CGRectMake(0, 245, self.view.frame.size.width, self.view.frame.size.height - 245);
-    _scrollView.contentSize = CGSizeMake(self.view.frame.size.width * 2, self.view.frame.size.height);
-  //  [self.view addSubview:_scrollView];
+    _scrollView.showsHorizontalScrollIndicator = NO;
+    _scrollView.showsVerticalScrollIndicator = NO;
+    _scrollView.pagingEnabled = YES;
+    _scrollView.delegate = self;
+    _scrollView.frame = CGRectMake(0, 225, self.view.frame.size.width, self.view.frame.size.height - 225);
+    _scrollView.contentSize = CGSizeMake((self.view.frame.size.width * 2), _scrollView.frame.size.height);
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    [self.view insertSubview:_scrollView belowSubview:_headerCell];
     
-    self.title = [NSString stringWithFormat:@"Exercise %lu", _exerciseNumber];
-
+    DBWExerciseCurrentSetsViewController *currentSetsViewController = [[DBWExerciseCurrentSetsViewController alloc] init];
+    currentSetsViewController.view.frame = CGRectMake(25, 0, self.view.frame.size.width - 50, self.view.frame.size.height - 135);
+    currentSetsViewController.exercise = _exercise;
+    [self addChildViewController:currentSetsViewController];
+    [self.scrollView addSubview:currentSetsViewController.view];
+    [currentSetsViewController didMoveToParentViewController:self];
     
-    
-    
-    
-    
-    
-    
-    
-    /*    _scrollView = [[UIScrollView alloc] init];
-     _scrollView.frame = CGRectMake(0, 245, self.view.frame.size.width, self.view.frame.size.height - 135);
-     _scrollView.contentSize = CGSizeMake(self.view.frame.size.width * 2, self.view.frame.size.height)
-     */
-     DBWExerciseCurrentSetsViewController *currentSetsViewController = [[DBWExerciseCurrentSetsViewController alloc] init];
-     currentSetsViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 135);
-     currentSetsViewController.exercise = _exercise;
-     [self addChildViewController:currentSetsViewController];
-     [self.scrollView addSubview:currentSetsViewController.view];
-     [currentSetsViewController didMoveToParentViewController:self];
-     
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(add:)];
+    _pageControl = [[UIPageControl alloc] init];
+    _pageControl.pageIndicatorTintColor = [UIColor colorWithRed:0.678 green:0.729 blue:0.757 alpha:1.00];
+    _pageControl.currentPageIndicatorTintColor = [UIColor appTintColor];
+    _pageControl.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height - 80);
+    _pageControl.numberOfPages = 2;
+    [self.view addSubview:_pageControl];
     
     _transitionController = [[DBWAnimationDismissTransitionController alloc] init];
 }
@@ -180,6 +178,17 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
 
 - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC {
     return _transitionController;
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    CGFloat width = scrollView.contentSize.width / 2;
+    int page = floor((scrollView.contentOffset.x - width / 2) / width) + 1;
+    _pageControl.currentPage = page;
+    //[scrollView setContentOffset:CGPointMake(scrollView.contentSize.width / 2.0 * page, 0) animated:NO];
+    
 }
 
 @end
