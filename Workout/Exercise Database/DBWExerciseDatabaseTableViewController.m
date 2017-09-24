@@ -36,6 +36,7 @@ static NSString *const kCellIdentifier = @"exercise-placeholder-cell";
     self.navigationItem.hidesSearchBarWhenScrolling = NO;
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addExercise:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelTapped)];
     
     
     // Uncomment the following line to preserve selection between presentations.
@@ -43,6 +44,10 @@ static NSString *const kCellIdentifier = @"exercise-placeholder-cell";
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (void)cancelTapped {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)addExercise:(UIBarButtonItem *)sender {

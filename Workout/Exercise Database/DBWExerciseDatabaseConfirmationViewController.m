@@ -71,7 +71,7 @@
     [self setsStepperTapped:setsStepper];
     [self repsStepperTapped:repsStepper];
     
-    [self.view addCompactConstraints:@[@"prompt.top = view.top + 60",
+    [self.view addCompactConstraints:@[@"prompt.top = view.top + topConstant",
                                        @"prompt.left = view.left + 20",
                                        @"prompt.right = view.right - 20",
                                        @"sets.top = prompt.bottom + 30",
@@ -82,7 +82,7 @@
                                        @"reps.centerX = view.centerX",
                                        @"repsStepper.centerX = view.centerX",
                                        @"repsStepper.top = reps.bottom + 10"]
-                             metrics:nil
+                             metrics:@{@"topConstant": UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? @60 : @90}
                                views:@{@"prompt": promptLabel,
                                        @"setsStepper": setsStepper,
                                        @"view": self.view,
