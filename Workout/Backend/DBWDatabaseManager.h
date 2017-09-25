@@ -45,5 +45,7 @@ RLM_ARRAY_TYPE(DBWExercise)
 
 - (DBWExerciseDatabase *)allExercisePlaceholders;
 
+- (RLMResults *)exercisesForPlaceholder:(DBWExercisePlaceholder *)placeholder;
+
 @end
 

@@ -14,6 +14,7 @@
 		B50CBD991F3E1B4D007D3962 /* DBWAuthenticationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B50CBD981F3E1B4D007D3962 /* DBWAuthenticationManager.m */; };
 		B515D7661F5ADF8800828E99 /* DBWWorkoutTodayExercisesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B515D7651F5ADF8800828E99 /* DBWWorkoutTodayExercisesViewController.m */; };
 		B515D7691F5AE6BB00828E99 /* DBWExerciseCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B515D7681F5AE6BB00828E99 /* DBWExerciseCollectionViewCell.m */; };
+		B52B52631F7927FC00DD90CF /* DBWExercisePastSetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B52621F7927FC00DD90CF /* DBWExercisePastSetsViewController.m */; };
 		B5369C601F6D7482000FFD9F /* DBWAnimationTransitionController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5369C5F1F6D7482000FFD9F /* DBWAnimationTransitionController.m */; };
 		B5369C631F6D8404000FFD9F /* DBWAnimationTransitionMemory.m in Sources */ = {isa = PBXBuildFile; fileRef = B5369C621F6D8404000FFD9F /* DBWAnimationTransitionMemory.m */; };
 		B5369C661F6DAF11000FFD9F /* DBWAnimationDismissTransitionController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5369C651F6DAF11000FFD9F /* DBWAnimationDismissTransitionController.m */; };
@@ -93,6 +94,8 @@
 		B515D7651F5ADF8800828E99 /* DBWWorkoutTodayExercisesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWWorkoutTodayExercisesViewController.m; sourceTree = "<group>"; };
 		B515D7671F5AE6BB00828E99 /* DBWExerciseCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWExerciseCollectionViewCell.h; sourceTree = "<group>"; };
 		B515D7681F5AE6BB00828E99 /* DBWExerciseCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWExerciseCollectionViewCell.m; sourceTree = "<group>"; };
+		B52B52611F7927FC00DD90CF /* DBWExercisePastSetsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWExercisePastSetsViewController.h; sourceTree = "<group>"; };
+		B52B52621F7927FC00DD90CF /* DBWExercisePastSetsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWExercisePastSetsViewController.m; sourceTree = "<group>"; };
 		B5369C5E1F6D7482000FFD9F /* DBWAnimationTransitionController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWAnimationTransitionController.h; sourceTree = "<group>"; };
 		B5369C5F1F6D7482000FFD9F /* DBWAnimationTransitionController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWAnimationTransitionController.m; sourceTree = "<group>"; };
 		B5369C611F6D8404000FFD9F /* DBWAnimationTransitionMemory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWAnimationTransitionMemory.h; sourceTree = "<group>"; };
@@ -325,6 +328,8 @@
 				B53CF2C41F3365DE00F30CB8 /* DBWExerciseCollectionViewController.m */,
 				B5D71E7D1F76D3DF0012ABC1 /* DBWExerciseCurrentSetsViewController.h */,
 				B5D71E7E1F76D3DF0012ABC1 /* DBWExerciseCurrentSetsViewController.m */,
+				B52B52611F7927FC00DD90CF /* DBWExercisePastSetsViewController.h */,
+				B52B52621F7927FC00DD90CF /* DBWExercisePastSetsViewController.m */,
 			);
 			path = Exercise;
 			sourceTree = "<group>";
@@ -663,6 +668,7 @@
 				B5BDC59A1F3B588000C77CFC /* DBWWorkoutTemplate.m in Sources */,
 				B5BDC5921F3B4A5800C77CFC /* DBWCustomizeWorkoutPlanViewController.m in Sources */,
 				B5D2E2ED1F2A93B800CB4540 /* main.m in Sources */,
+				B52B52631F7927FC00DD90CF /* DBWExercisePastSetsViewController.m in Sources */,
 				B50CBD991F3E1B4D007D3962 /* DBWAuthenticationManager.m in Sources */,
 				B5369C6D1F7406EA000FFD9F /* DBWExerciseDatabaseTableViewController.m in Sources */,
 				B57E6D221F51EC6B00849CB6 /* DBWCalendarCollectionViewCell.m in Sources */,

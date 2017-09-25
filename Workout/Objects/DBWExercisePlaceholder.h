@@ -10,6 +10,6 @@
 
 @interface DBWExercisePlaceholder : RLMObject
 
-@property NSString *name;
+@property NSString *name, *primaryKey;
 
 @end

@@ -10,4 +10,17 @@
 
 @implementation DBWExercisePlaceholder
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _primaryKey = [NSUUID UUID].UUIDString;
+    }
+    
+    return self;
+}
+
++ (NSString *)primaryKey {
+    return @"primaryKey";
+}
+
 @end

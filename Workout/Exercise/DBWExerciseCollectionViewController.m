@@ -18,6 +18,7 @@
 #import "DBWExercisePlaceholder.h"
 #import "DBWExerciseCurrentSetsViewController.h"
 #import "UIColor+ColorPalette.h"
+#import "DBWExercisePastSetsViewController.h"
 
 static NSString *const kCellIdentifier = @"set-cell-identifier";
 
@@ -84,6 +85,12 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
     [self addChildViewController:currentSetsViewController];
     [self.scrollView addSubview:currentSetsViewController.view];
     [currentSetsViewController didMoveToParentViewController:self];
+    
+    DBWExercisePastSetsViewController *pastSetsViewController = [[DBWExercisePastSetsViewController alloc] initWithExercisePlaceholder:_exercise.placeholder];
+    pastSetsViewController.view.frame = CGRectMake(25 + self.view.frame.size.width, 0, self.view.frame.size.width - 50, self.view.frame.size.height - 135);
+    [self addChildViewController:pastSetsViewController];
+    [self.scrollView addSubview:pastSetsViewController.view];
+    [pastSetsViewController didMoveToParentViewController:self];
     
     _pageControl = [[UIPageControl alloc] init];
     _pageControl.pageIndicatorTintColor = [UIColor colorWithRed:0.678 green:0.729 blue:0.757 alpha:1.00];

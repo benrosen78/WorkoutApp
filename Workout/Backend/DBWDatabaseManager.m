@@ -166,4 +166,8 @@
     return [DBWExerciseDatabase allObjectsInRealm:_templates][0];
 }
 
+- (RLMResults *)exercisesForPlaceholder:(DBWExercisePlaceholder *)placeholder {
+    return [DBWExercise objectsInRealm:_templates withPredicate:[NSPredicate predicateWithFormat:@"placeholder.primaryKey == %@ AND isTemplateObject == NO", placeholder.primaryKey]];
+}
+
 @end

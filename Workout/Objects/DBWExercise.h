@@ -15,6 +15,8 @@ RLM_ARRAY_TYPE(DBWSet)
 
 @interface DBWExercise : RLMObject
 
+@property BOOL isTemplateObject;
+
 @property RLMArray <DBWSet> *sets;
 
 /**
