@@ -17,7 +17,7 @@
 #import "DBWCalendarDatePickerViewController.h"
 #import "UIColor+ColorPalette.h"
 
-@interface DBWWorkoutCalendarViewController () <DBWDatePickerDelegate>
+@interface DBWWorkoutCalendarViewController () <DBWDatePickerDelegate, UIPopoverPresentationControllerDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, readwrite) NSInteger firstDayOfMonthWeekday, monthLength;
 
@@ -37,12 +37,11 @@ static NSString *const headerIdentifier = @"header-cell";
 - (instancetype)init {
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-    layout.minimumInteritemSpacing = 0;
+    layout.minimumInteritemSpacing = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 1 : 0;
     layout.sectionInset = UIEdgeInsetsZero;
     layout.minimumLineSpacing = 1;
-    layout.itemSize = CGSizeMake(ceil([UIScreen mainScreen].bounds.size.width / 7) - 1, 120);
     
-    CGFloat sideInset = ([UIScreen mainScreen].bounds.size.width -  ((ceil([UIScreen mainScreen].bounds.size.width / 7) - 1) * 7)) / 2.0;
+    CGFloat sideInset = ([UIScreen mainScreen].bounds.size.width -  ((ceil([UIScreen mainScreen].bounds.size.width / 7)) * 7)) / 2.0;
     sideInset -= 3;
     layout.sectionInset = UIEdgeInsetsMake(0, sideInset, 0, sideInset);
     
@@ -93,6 +92,7 @@ static NSString *const headerIdentifier = @"header-cell";
     DBWCalendarDatePickerViewController *picker = [[DBWCalendarDatePickerViewController alloc] initWithCurrentMonth:_selectedMonthIndex andYear:_year];
     picker.delegate = self;
     picker.modalPresentationStyle = UIModalPresentationPopover;
+    picker.popoverPresentationController.delegate = self;
     picker.preferredContentSize = CGSizeMake(350, 260);
     picker.popoverPresentationController.barButtonItem = self.navigationItem.rightBarButtonItem;
     [self presentViewController:picker animated:YES completion:nil];
@@ -160,7 +160,7 @@ static NSString *const headerIdentifier = @"header-cell";
     DBWWorkout *workout = [[DBWDatabaseManager sharedDatabaseManager] workoutForDay:dayNumber month:_selectedMonthIndex + 1 year:_year];
     if (workout) {
         cell.workoutLabel.alpha = 1;
-        cell.workoutLabel.text = [NSString stringWithFormat:@"Day %lu", workout.templateDay];
+        cell.workoutLabel.text = [NSString stringWithFormat:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? @"Day %lu" : @"%lu", workout.templateDay];
         cell.workoutLabel.backgroundColor = [UIColor calendarColors][workout.selectedColorIndex];
     } else {
         cell.workoutLabel.alpha = 0;
@@ -174,7 +174,7 @@ static NSString *const headerIdentifier = @"header-cell";
         UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerIdentifier forIndexPath:indexPath];
         view.backgroundColor = [UIColor whiteColor];
         
-        NSArray *days = @[@"Sun", @"Mon", @"Tue", @"Wed", @"Thu", @"Fri", @"Sat"];
+        NSArray *days = @[@"S", @"M", @"T", @"W", @"T", @"F", @"S"];
         for (int i = 0; i < 7; i++) {
             UIView *containerView = [[UIView alloc] init];
             containerView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -195,12 +195,12 @@ static NSString *const headerIdentifier = @"header-cell";
             
             UILabel *day = [[UILabel alloc] init];
             day.textAlignment = NSTextAlignmentRight;
-            day.font = [UIFont systemFontOfSize:16 weight:UIFontWeightMedium];
+            day.font = [UIFont systemFontOfSize:16 weight:UIFontWeightSemibold];
             day.text = days[i];
             day.translatesAutoresizingMaskIntoConstraints = NO;
             [containerView addSubview:day];
             
-            [containerView addCompactConstraints:@[@"day.right = view.right - 8",
+            [containerView addCompactConstraints:@[@"day.centerX = view.centerX",
                                                    @"day.centerY = view.centerY"]
                                          metrics:nil
                                            views:@{@"day": day,
@@ -229,7 +229,6 @@ static NSString *const headerIdentifier = @"header-cell";
 
 #pragma mark - UICollectionViewDelegate
 
-
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(nonnull UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     return CGSizeMake(self.view.frame.size.width, 60);
 }
@@ -245,7 +244,16 @@ static NSString *const headerIdentifier = @"header-cell";
 
     DBWWorkoutTableViewController *vc = [[DBWWorkoutTableViewController alloc] initWithWorkout:workout];
     [self.navigationController pushViewController:vc animated:YES];
-    
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeMake(ceil([UIScreen mainScreen].bounds.size.width / 7), (self.collectionView.frame.size.height - 60 - self.navigationController.navigationBar.frame.size.height - self.tabBarController.tabBar.frame.size.height - 26) / 6);
+}
+
+#pragma mark - UIPopoverPresentationControllerDelegate
+
+- (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller {
+    return UIModalPresentationNone;
 }
 
 @end

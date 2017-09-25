@@ -18,6 +18,7 @@
     if (self) {
         _workoutLabel = [[DBWCalendarCellLabel alloc] init];
         _workoutLabel.textColor = [UIColor whiteColor];
+        _workoutLabel.textAlignment = NSTextAlignmentCenter;
         _workoutLabel.font = [UIFont systemFontOfSize:12 weight:UIFontWeightRegular];
         _workoutLabel.layer.masksToBounds = YES;
         _workoutLabel.layer.cornerRadius = 2;
@@ -38,9 +39,9 @@
         [self.contentView addSubview:_dayLabel];
         
         [self.contentView addCompactConstraints:@[@"day.top = view.top + 10",
-                                                  @"day.right = view.right - 14",
+                                                  UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? @"day.right = view.right - 14" : @"day.centerX = view.centerX",
                                                   @"workout.centerX = view.centerX",
-                                                  @"workout.centerY = view.centerY",
+                                                  @"workout.centerY = view.centerY + 10",
                                                   @"workout.left = view.left + 13",
                                                   @"workout.right = view.right - 13",
                                                   @"workout.height = 25",
