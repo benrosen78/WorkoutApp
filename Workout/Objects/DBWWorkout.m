@@ -18,7 +18,9 @@
     DBWWorkout *workout = [[DBWWorkout alloc] init];
     [[DBWDatabaseManager sharedDatabaseManager] addExercises:workoutTemplate.exercises toWorkout:workout];
     for (DBWExercise *exercise in workout.exercises) {
+        [[DBWDatabaseManager sharedDatabaseManager] startTemplateWriting];
         exercise.isTemplateObject = NO;
+        [[DBWDatabaseManager sharedDatabaseManager] endTemplateWriting];
     }
     
     workout.selectedColorIndex = workoutTemplate.selectedColorIndex;
