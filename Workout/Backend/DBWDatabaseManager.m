@@ -14,6 +14,7 @@
 #import "DBWExercise.h"
 #import "DBWExercisePlaceholder.h"
 #import "DBWExerciseDatabase.h"
+#import "DBWSet.h"
 
 @interface DBWDatabaseManager ()
 
@@ -56,17 +57,37 @@
 
         /* for loading in arbitrary data:
  
-        int day = 20;
+        int day = 10;
         
          for (DBWWorkoutTemplate *template in [self templateList].list) {
             DBWWorkout *wo = [[DBWWorkout alloc] init];
             wo.selectedColorIndex = template.selectedColorIndex;
             wo.templateDay = [self.templateList.list indexOfObject:template] + 1;
             wo.day = day;
-            wo.month = 8;
+            wo.month = 9;
             wo.year = 2017;
             [self saveNewWorkout:wo];
-            day++;
+             
+             [[DBWDatabaseManager sharedDatabaseManager] addExercises:template.exercises toWorkout:wo];
+             for (DBWExercise *exercise in wo.exercises) {
+                 DBWSet *set1 = [[DBWSet alloc] init];
+                 set1.weight = day * 5;
+                 set1.reps = 10;
+                 [exercise.sets addObject:set1];
+                 
+                 DBWSet *set2 = [[DBWSet alloc] init];
+                 set2.weight = day * 5;
+                 set2.reps = 10;
+                 [exercise.sets addObject:set1];
+                 DBWSet *set3 = [[DBWSet alloc] init];
+                 set3.weight = day * 5;
+                 set3.reps = 10;
+                 [exercise.sets addObject:set3];
+                 
+             }
+
+             
+            day+= 3;
         }
         */
     }
@@ -167,7 +188,15 @@
 }
 
 - (RLMResults *)exercisesForPlaceholder:(DBWExercisePlaceholder *)placeholder {
-    return [DBWExercise objectsInRealm:_templates withPredicate:[NSPredicate predicateWithFormat:@"placeholder.primaryKey == %@ AND isTemplateObject == NO", placeholder.primaryKey]];
+    // this will obtain all past exercises from all past workouts for a given placeholder.
+    // it does this by getting all the exercises with that placeholder, and then it makes sure that it is not
+    // a template exercise by checking if it is attached to a workout.
+    // lastly, since it is a past exercise, it can't be on the curent day
+    NSDateComponents *todaysComponents = [[NSCalendar currentCalendar] components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:[NSDate date]];
+    
+
+    
+    return [DBWExercise objectsInRealm:_templates withPredicate:[NSPredicate predicateWithFormat:@"placeholder.primaryKey == %@ AND workouts.@count > 0 AND SUBQUERY(workouts, $workouts, $workouts.day == %d AND $workouts.month == %d AND $workouts.year == %d).@count == 0", placeholder.primaryKey, todaysComponents.day, todaysComponents.month, todaysComponents.year]];
 }
 
 @end

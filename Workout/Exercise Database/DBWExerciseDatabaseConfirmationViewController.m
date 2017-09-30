@@ -110,7 +110,6 @@
     }
     
     DBWExercise *exercise = [[DBWExercise alloc] init];
-    exercise.isTemplateObject = YES;
     exercise.placeholder = _selectedPlaceholder;
     exercise.expectedSets = _currentSets;
     exercise.expectedReps = _currentReps;

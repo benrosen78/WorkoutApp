@@ -80,14 +80,14 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
     [self.view insertSubview:_scrollView belowSubview:_headerCell];
     
     DBWExerciseCurrentSetsViewController *currentSetsViewController = [[DBWExerciseCurrentSetsViewController alloc] init];
-    currentSetsViewController.view.frame = CGRectMake(25, 0, self.view.frame.size.width - 50, self.view.frame.size.height - 135);
+    currentSetsViewController.view.frame = CGRectMake(25, 0, self.view.frame.size.width - 50, self.view.frame.size.height - 225);
     currentSetsViewController.exercise = _exercise;
     [self addChildViewController:currentSetsViewController];
     [self.scrollView addSubview:currentSetsViewController.view];
     [currentSetsViewController didMoveToParentViewController:self];
     
     DBWExercisePastSetsViewController *pastSetsViewController = [[DBWExercisePastSetsViewController alloc] initWithExercisePlaceholder:_exercise.placeholder];
-    pastSetsViewController.view.frame = CGRectMake(25 + self.view.frame.size.width, 0, self.view.frame.size.width - 50, self.view.frame.size.height - 135);
+    pastSetsViewController.view.frame = CGRectMake(25 + self.view.frame.size.width, 0, self.view.frame.size.width - 50, self.view.frame.size.height - 225);
     [self addChildViewController:pastSetsViewController];
     [self.scrollView addSubview:pastSetsViewController.view];
     [pastSetsViewController didMoveToParentViewController:self];
@@ -99,6 +99,8 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
     _pageControl.numberOfPages = 2;
     [self.view addSubview:_pageControl];
     
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:currentSetsViewController action:@selector(add:)];
+
     _transitionController = [[DBWAnimationDismissTransitionController alloc] init];
 }
 

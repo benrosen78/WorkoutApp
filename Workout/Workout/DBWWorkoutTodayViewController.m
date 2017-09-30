@@ -91,13 +91,15 @@
     // make the exercise view with no alpha and put it out of the view so we can animate these proporties
     DBWWorkout *workout = [DBWWorkout todaysWorkoutWithTemplate:self.templateList.list[indexPath.row]];
     [[DBWDatabaseManager sharedDatabaseManager] saveNewWorkout:workout];
+
     DBWWorkoutTodayExercisesViewController *exercisesViewController = [[DBWWorkoutTodayExercisesViewController alloc] initWithWorkout:workout];
+
     exercisesViewController.headerCellAlpha = 0;
     exercisesViewController.view.backgroundColor = [UIColor clearColor];
     exercisesViewController.collectionView.backgroundColor = [UIColor clearColor];
     exercisesViewController.collectionView.alpha = 0;
     exercisesViewController.collectionView.frame = CGRectMake(0, -[[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
-    
+
     // get rid of the shadow and transform. make it looked like its placed. then replace it with the same exact header in the new view
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.40 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [UIView animateWithDuration:0.4 animations:^{

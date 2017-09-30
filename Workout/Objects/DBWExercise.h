@@ -15,9 +15,9 @@ RLM_ARRAY_TYPE(DBWSet)
 
 @interface DBWExercise : RLMObject
 
-@property BOOL isTemplateObject;
-
 @property RLMArray <DBWSet> *sets;
+
+@property (readonly) RLMLinkingObjects *workouts;
 
 /**
  * An "expected" set or rep is the quantity that is selected when an exercise is added to a workout or workout template

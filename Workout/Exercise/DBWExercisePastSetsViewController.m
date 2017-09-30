@@ -10,6 +10,10 @@
 #import "DBWExercisePastSetsViewController.h"
 #import "DBWExercisePlaceholder.h"
 #import "DBWDatabaseManager.h"
+#import "DBWWorkout.h"
+#import "DBWSet.h"
+#import "DBWExercisePastSetsCollectionViewCell.h"
+#import "DBWExerciseSetInformationCollectionViewCell.h"
 
 @interface DBWExercisePastSetsViewController ()
 
@@ -21,14 +25,14 @@
 
 @implementation DBWExercisePastSetsViewController
 
-static NSString * const kReuseIdentifier = @"Cell";
+static NSString * const kDateHeaderCell = @"date.header.cell";
+static NSString * const kSetCell = @"date.set.cell";
 
 - (instancetype)initWithExercisePlaceholder:(DBWExercisePlaceholder *)placeholder {
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width - 50, 100);
-    flowLayout.minimumLineSpacing = 20;
+    flowLayout.minimumLineSpacing = 1;
     flowLayout.minimumInteritemSpacing = 0;
-    flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 15, 0);
+    flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 30, 0);
     self = [super initWithCollectionViewLayout:flowLayout];
     if (self) {
         _placeholder = placeholder;
@@ -42,82 +46,75 @@ static NSString * const kReuseIdentifier = @"Cell";
     
     self.collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
     _exercises = [[DBWDatabaseManager sharedDatabaseManager] exercisesForPlaceholder:_placeholder];
     
-    // Register cell classes
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kReuseIdentifier];
-    
-    // Do any additional setup after loading the view.
+    [self.collectionView registerClass:[DBWExercisePastSetsCollectionViewCell class] forCellWithReuseIdentifier:kDateHeaderCell];
+    [self.collectionView registerClass:[DBWExerciseSetInformationCollectionViewCell class] forCellWithReuseIdentifier:kSetCell];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+    return _exercises.count;
 }
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of items
-    return 0;
+    DBWExercise *exercise = _exercises[section];
+    return 1 + [exercise.sets count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kReuseIdentifier forIndexPath:indexPath];
+    DBWExercise *exercise = _exercises[indexPath.section];
+    DBWWorkout *workout = exercise.workouts.firstObject;
     
-    // Configure the cell
+    if (indexPath.row == 0) {
+        DBWExercisePastSetsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDateHeaderCell forIndexPath:indexPath];
+        cell.dateLabel.text = [NSString stringWithFormat:@"%lu/%lu/%lu", workout.month, workout.day, workout.year];
+        cell.expectedDataLabel.text = [NSString stringWithFormat:@"Expected: %lu x %lu", exercise.expectedSets, exercise.expectedReps];
+        
+        UIBezierPath *rounded = [UIBezierPath bezierPathWithRoundedRect:cell.bounds byRoundingCorners:(UIRectCornerTopLeft | UIRectCornerTopRight) cornerRadii:CGSizeMake(8, 8)];
+        CAShapeLayer *shape = [[CAShapeLayer alloc] init];
+        [shape setPath:rounded.CGPath];
+        cell.layer.mask = shape;
+
+        return cell;
+    } else if (indexPath.row >= 1) {
+        DBWExerciseSetInformationCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kSetCell forIndexPath:indexPath];
+        
+        DBWSet *set = exercise.sets[indexPath.row - 1];
+        
+        NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+        formatter.numberStyle = NSNumberFormatterDecimalStyle;
+        formatter.maximumFractionDigits = 20;
     
-    return cell;
+        cell.textLabel.text = [NSString stringWithFormat:@"Weight: %@\nReps: %lu", [formatter stringFromNumber:@(set.weight)], set.reps];
+        cell.numberLabel.text = [NSString stringWithFormat:@"%lu", indexPath.row];
+        
+        if (indexPath.row == [exercise.sets count]) {
+            UIBezierPath *rounded = [UIBezierPath bezierPathWithRoundedRect:cell.bounds byRoundingCorners:(UIRectCornerBottomLeft | UIRectCornerBottomRight) cornerRadii:CGSizeMake(8, 8)];
+            CAShapeLayer *shape = [[CAShapeLayer alloc] init];
+            [shape setPath:rounded.CGPath];
+            cell.layer.mask = shape;
+        } else {
+            cell.layer.mask = nil;
+        }
+        
+        return cell;
+    }
+    
+    return nil;
 }
 
 #pragma mark <UICollectionViewDelegate>
 
-/*
-// Uncomment this method to specify if the specified item should be highlighted during tracking
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-	return YES;
-}
-*/
-
-/*
-// Uncomment this method to specify if the specified item should be selected
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-*/
-
-/*
-// Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-	return NO;
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeMake([[UIScreen mainScreen] bounds].size.width - 50, indexPath.row == 0 ? 80 : 64);
 }
 
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	return NO;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	
-}
-*/
 
 @end

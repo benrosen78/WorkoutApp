@@ -9,6 +9,7 @@
 #import "DBWExercise.h"
 #import "DBWSet.h"
 #import "DBWDatabaseManager.h"
+#import "DBWWorkout.h"
 
 @implementation DBWExercise
 
@@ -24,4 +25,7 @@
     return NO;
 }
 
++ (NSDictionary *)linkingObjectsProperties {
+    return @{@"workouts": [RLMPropertyDescriptor descriptorWithClass:[DBWWorkout class] propertyName:@"exercises"]};
+}
 @end
