@@ -18,9 +18,7 @@
 #import "DBWAnimationTransitionMemory.h"
 #import "DBWExercisePlaceholder.h"
 
-@interface DBWWorkoutTodayExercisesViewController () <UINavigationControllerDelegate, UIViewControllerPreviewingDelegate>
-
-@property (strong, nonatomic) DBWWorkout *workout;
+@interface DBWWorkoutTodayExercisesViewController () <UIViewControllerPreviewingDelegate>
 
 @property (strong, nonatomic) DBWAnimationTransitionController *transitionController;
 

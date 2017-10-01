@@ -193,9 +193,6 @@
     // a template exercise by checking if it is attached to a workout.
     // lastly, since it is a past exercise, it can't be on the curent day
     NSDateComponents *todaysComponents = [[NSCalendar currentCalendar] components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:[NSDate date]];
-    
-
-    
     return [DBWExercise objectsInRealm:_templates withPredicate:[NSPredicate predicateWithFormat:@"placeholder.primaryKey == %@ AND workouts.@count > 0 AND SUBQUERY(workouts, $workouts, $workouts.day == %d AND $workouts.month == %d AND $workouts.year == %d).@count == 0", placeholder.primaryKey, todaysComponents.day, todaysComponents.month, todaysComponents.year]];
 }
 

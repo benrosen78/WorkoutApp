@@ -6,12 +6,10 @@
 //  Copyright © 2017 Ben Rosen. All rights reserved.
 //
 
-#import "DBWWorkoutTodayViewController.h"
+#import "DBWWorkoutTodayExercisesViewController.h"
 
 @class DBWWorkout;
 
-@interface DBWWorkoutTableViewController : DBWWorkoutTodayViewController
-
-- (instancetype)initWithWorkout:(DBWWorkout *)workout;
+@interface DBWWorkoutTableViewController : DBWWorkoutTodayExercisesViewController
 
 @end

@@ -9,6 +9,8 @@
 #import "DBWWorkoutTableViewController.h"
 #import "DBWWorkout.h"
 #import "DBWExercise.h"
+#import "DBWWorkoutPlanDayCell.h"
+#import "DBWWorkoutCalendarViewController.h"
 
 @interface DBWWorkoutTableViewController ()
 
@@ -16,19 +18,14 @@
 
 @implementation DBWWorkoutTableViewController
 
-- (instancetype)initWithWorkout:(DBWWorkout *)workout {
-    self = [super init];
-    if (self) {
-        self.workout = workout;
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.headerCell.alpha = 1;
+    
     self.navigationItem.rightBarButtonItem = nil;
-        
+    self.navigationItem.hidesBackButton = NO;
+
     NSDateComponents *components = [[NSDateComponents alloc] init];
     components.day = self.workout.day;
     components.month = self.workout.month;
@@ -43,15 +40,8 @@
     self.title = [dateFormatter stringFromDate:dateFromComponents];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC {
+    return [toVC isKindOfClass:[DBWWorkoutCalendarViewController class]] ? nil : [super navigationController:navigationController animationControllerForOperation:operation fromViewController:fromVC toViewController:toVC];
 }
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-   // UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
-    //cell.userInteractionEnabled = NO;
-    return cell;
-}
-*/
+
 @end

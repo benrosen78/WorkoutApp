@@ -10,9 +10,11 @@
 
 @class DBWWorkout, DBWWorkoutPlanDayCell;
 
-@interface DBWWorkoutTodayExercisesViewController : UICollectionViewController
+@interface DBWWorkoutTodayExercisesViewController : UICollectionViewController <UINavigationControllerDelegate>
 
 - (instancetype)initWithWorkout:(DBWWorkout *)workout;
+
+@property (strong, nonatomic) DBWWorkout *workout;
 
 @property (strong, nonatomic) DBWWorkoutPlanDayCell *headerCell;
 
