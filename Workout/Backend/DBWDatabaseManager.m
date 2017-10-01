@@ -56,19 +56,22 @@
         }
 
         /* for loading in arbitrary data:
- 
-        int day = 10;
         
-         for (DBWWorkoutTemplate *template in [self templateList].list) {
+        for (int day = 17; day <= 23; day++) {
+            DBWWorkoutTemplate *template = [self templateList].list[0];
             DBWWorkout *wo = [[DBWWorkout alloc] init];
             wo.selectedColorIndex = template.selectedColorIndex;
             wo.templateDay = [self.templateList.list indexOfObject:template] + 1;
-            wo.day = day;
+            wo.day = day
+             ;
             wo.month = 9;
             wo.year = 2017;
-            [self saveNewWorkout:wo];
-             
-             [[DBWDatabaseManager sharedDatabaseManager] addExercises:template.exercises toWorkout:wo];
+         
+             [self addExercises:template.exercises toWorkout:wo];
+         
+         [self saveNewWorkout:wo];
+
+             [_templates beginWriteTransaction];
              for (DBWExercise *exercise in wo.exercises) {
                  DBWSet *set1 = [[DBWSet alloc] init];
                  set1.weight = day * 5;
@@ -85,9 +88,8 @@
                  [exercise.sets addObject:set3];
                  
              }
+             [_templates commitWriteTransaction];
 
-             
-            day+= 3;
         }
         */
     }
@@ -187,13 +189,40 @@
     return [DBWExerciseDatabase allObjectsInRealm:_templates][0];
 }
 
-- (RLMResults *)exercisesForPlaceholder:(DBWExercisePlaceholder *)placeholder {
+- (NSArray *)exercisesForPlaceholder:(DBWExercisePlaceholder *)placeholder count:(NSInteger)count lastExercise:(DBWExercise *)exercise {
     // this will obtain all past exercises from all past workouts for a given placeholder.
     // it does this by getting all the exercises with that placeholder, and then it makes sure that it is not
     // a template exercise by checking if it is attached to a workout.
-    // lastly, since it is a past exercise, it can't be on the curent day
-    NSDateComponents *todaysComponents = [[NSCalendar currentCalendar] components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:[NSDate date]];
-    return [DBWExercise objectsInRealm:_templates withPredicate:[NSPredicate predicateWithFormat:@"placeholder.primaryKey == %@ AND workouts.@count > 0 AND SUBQUERY(workouts, $workouts, $workouts.day == %d AND $workouts.month == %d AND $workouts.year == %d).@count == 0", placeholder.primaryKey, todaysComponents.day, todaysComponents.month, todaysComponents.year]];
+    //
+    // the issue with this request is that Realm does not allow objects to be sorted the way I need them to be sorted
+    // because the objects are lazy-loaded.
+    // i tackle this by getting the current date and then subtract 1 day until it gets to 'count' # number of exercises.
+    // i then return this array
+    NSCalendar *currentCalendar = [NSCalendar currentCalendar];
+    NSDate *loopedDate;
+    if (exercise) {
+        DBWWorkout *workoutForLastExercise = exercise.workouts.firstObject;
+        
+        NSDateComponents *lastExerciseComponents = [[NSDateComponents alloc] init];
+        lastExerciseComponents.day = workoutForLastExercise.day;
+        lastExerciseComponents.month = workoutForLastExercise.month;
+        lastExerciseComponents.year = workoutForLastExercise.year;
+        loopedDate = [currentCalendar dateFromComponents:lastExerciseComponents];
+    } else {
+        loopedDate = [NSDate date];
+    }
+    
+    NSMutableArray *results = [NSMutableArray array];
+    while (results.count < count) {
+        loopedDate = [currentCalendar dateByAddingUnit:NSCalendarUnitDay value:-1 toDate:loopedDate options:kNilOptions];
+        NSDateComponents *loopedDateComponents = [currentCalendar components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:loopedDate];
+
+        RLMResults *dateSearchResults = [DBWExercise objectsInRealm:_templates withPredicate:[NSPredicate predicateWithFormat:@"placeholder.primaryKey == %@ AND workouts.@count > 0 AND SUBQUERY(workouts, $workouts, $workouts.day == %d AND $workouts.month == %d AND $workouts.year == %d).@count == 1", placeholder.primaryKey, loopedDateComponents.day, loopedDateComponents.month, loopedDateComponents.year]];
+        if (dateSearchResults.count > 0) {
+            [results addObject:dateSearchResults[0]];
+        }
+    }
+    return [NSArray arrayWithArray:results];
 }
 
 @end

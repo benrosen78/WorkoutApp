@@ -19,7 +19,7 @@
 
 @property (strong, nonatomic) DBWExercisePlaceholder *placeholder;
 
-@property (strong, nonatomic) RLMResults *exercises;
+@property (strong, nonatomic) NSArray *exercises;
 
 @end
 
@@ -46,10 +46,11 @@ static NSString * const kSetCell = @"date.set.cell";
     
     self.collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
-    _exercises = [[DBWDatabaseManager sharedDatabaseManager] exercisesForPlaceholder:_placeholder];
-    
+    _exercises = [[DBWDatabaseManager sharedDatabaseManager] exercisesForPlaceholder:_placeholder count:5 lastExercise:nil];
+
     [self.collectionView registerClass:[DBWExercisePastSetsCollectionViewCell class] forCellWithReuseIdentifier:kDateHeaderCell];
     [self.collectionView registerClass:[DBWExerciseSetInformationCollectionViewCell class] forCellWithReuseIdentifier:kSetCell];
+ 
 }
 
 - (void)didReceiveMemoryWarning {
