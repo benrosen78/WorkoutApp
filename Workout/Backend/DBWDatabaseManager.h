@@ -45,7 +45,7 @@ RLM_ARRAY_TYPE(DBWExercise)
 
 - (DBWExerciseDatabase *)allExercisePlaceholders;
 
-- (NSArray *)exercisesForPlaceholder:(DBWExercisePlaceholder *)placeholder count:(NSInteger)count lastExercise:(DBWExercise *)exercise;
+- (NSArray *)pastExercisesForPlaceholder:(DBWExercisePlaceholder *)placeholder;
 
 @end
 

@@ -48,7 +48,7 @@ static NSString * const kSetCell = @"date.set.cell";
     
     self.collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
-    _exercises = [[DBWDatabaseManager sharedDatabaseManager] exercisesForPlaceholder:_placeholder count:5 lastExercise:nil];
+    _exercises = [[DBWDatabaseManager sharedDatabaseManager] pastExercisesForPlaceholder:_placeholder];
 
     [self.collectionView registerClass:[DBWExercisePastSetsCollectionViewCell class] forCellWithReuseIdentifier:kDateHeaderCell];
     [self.collectionView registerClass:[DBWExerciseSetInformationCollectionViewCell class] forCellWithReuseIdentifier:kSetCell];
@@ -78,7 +78,11 @@ static NSString * const kSetCell = @"date.set.cell";
     
     if (indexPath.row == 0) {
         DBWExercisePastSetsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kDateHeaderCell forIndexPath:indexPath];
-        cell.dateLabel.text = [NSString stringWithFormat:@"%lu/%lu/%lu", workout.month, workout.day, workout.year];
+        
+        
+        NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:workout.date];
+
+        cell.dateLabel.text = [NSString stringWithFormat:@"%lu/%lu/%lu", components.month, components.day, components.year];
         cell.expectedDataLabel.text = [NSString stringWithFormat:@"Expected: %lu x %lu", exercise.expectedSets, exercise.expectedReps];
         
         UIBezierPath *rounded = [UIBezierPath bezierPathWithRoundedRect:cell.bounds byRoundingCorners:(UIRectCornerTopLeft | UIRectCornerTopRight) cornerRadii:CGSizeMake(8, 8)];
@@ -152,7 +156,7 @@ static NSString * const kSetCell = @"date.set.cell";
 }
 
 - (void)showMoreResults {
-    _exercises = [[DBWDatabaseManager sharedDatabaseManager] exercisesForPlaceholder:_placeholder count:5 lastExercise:[_exercises lastObject]];
+   // _exercises = [[DBWDatabaseManager sharedDatabaseManager] exercisesForPlaceholder:_placeholder count:5 lastExercise:[_exercises lastObject]];
     [self.collectionView reloadData];
 }
 

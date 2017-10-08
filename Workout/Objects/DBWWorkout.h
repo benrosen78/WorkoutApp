@@ -15,7 +15,7 @@ RLM_ARRAY_TYPE(DBWExercise)
 
 @interface DBWWorkout : RLMObject
 
-@property NSInteger day, month, year;
+@property NSDate *date;
 
 @property RLMArray <DBWExercise> *exercises;
 

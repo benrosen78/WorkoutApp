@@ -15,10 +15,11 @@
 #import "DBWExercisePlaceholder.h"
 #import "DBWExerciseDatabase.h"
 #import "DBWSet.h"
+#import "DBWCalendar.h"
 
 @interface DBWDatabaseManager ()
 
-@property (strong, nonatomic) RLMRealm *templates;
+@property (strong, nonatomic) RLMRealm *userRealm;
 
 @end
 
@@ -38,40 +39,51 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        RLMSyncConfiguration *templateSyncConfig = [[RLMSyncConfiguration alloc] initWithUser:[RLMSyncUser currentUser] realmURL:[NSURL URLWithString:@"realms://wa.benrosen.me/~/templates"]];
-        RLMRealmConfiguration *templateRealmConfig = [RLMRealmConfiguration defaultConfiguration];
-        templateRealmConfig.syncConfiguration = templateSyncConfig;
-        _templates = [RLMRealm realmWithConfiguration:templateRealmConfig error:nil];
+        RLMSyncConfiguration *userRealmSyncConfig = [[RLMSyncConfiguration alloc] initWithUser:[RLMSyncUser currentUser] realmURL:[NSURL URLWithString:@"realms://wa.benrosen.me/~/userRealm"]];
+        RLMRealmConfiguration *userRealmConfig = [RLMRealmConfiguration defaultConfiguration];
+        userRealmConfig.syncConfiguration = userRealmSyncConfig;
         
-        if ([DBWWorkoutTemplateList allObjectsInRealm:_templates].count < 1) {
-            [_templates beginWriteTransaction];
-            [_templates addObject:[DBWWorkoutTemplateList new]];
-            [_templates commitWriteTransaction];
+        _userRealm = [RLMRealm realmWithConfiguration:userRealmConfig error:nil];
+        
+        if ([DBWWorkoutTemplateList allObjectsInRealm:_userRealm].count < 1) {
+            [_userRealm beginWriteTransaction];
+            [_userRealm addObject:[DBWWorkoutTemplateList new]];
+            [_userRealm commitWriteTransaction];
         }
         
-        if ([DBWExerciseDatabase allObjectsInRealm:_templates].count < 1) {
-            [_templates beginWriteTransaction];
-            [_templates addObject:[DBWExerciseDatabase new]];
-            [_templates commitWriteTransaction];
+        if ([DBWExerciseDatabase allObjectsInRealm:_userRealm].count < 1) {
+            [_userRealm beginWriteTransaction];
+            [_userRealm addObject:[DBWExerciseDatabase new]];
+            [_userRealm commitWriteTransaction];
         }
 
+        if ([DBWCalendar allObjectsInRealm:_userRealm].count < 1) {
+            [_userRealm beginWriteTransaction];
+            [_userRealm addObject:[DBWCalendar new]];
+            [_userRealm commitWriteTransaction];
+        }
+        
         /* for loading in arbitrary data:
         
-        for (int day = 17; day <= 23; day++) {
+        for (int day = 1; day <= 6; day++) {
             DBWWorkoutTemplate *template = [self templateList].list[0];
             DBWWorkout *wo = [[DBWWorkout alloc] init];
             wo.selectedColorIndex = template.selectedColorIndex;
             wo.templateDay = [self.templateList.list indexOfObject:template] + 1;
-            wo.day = day
-             ;
-            wo.month = 9;
-            wo.year = 2017;
-         
+            
+            NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
+            dateComponents.day = day;
+            dateComponents.month = 10;
+            dateComponents.year = 2017;
+            
+            wo.date = [[NSCalendar currentCalendar] dateFromComponents:dateComponents];
+            
+            
              [self addExercises:template.exercises toWorkout:wo];
          
          [self saveNewWorkout:wo];
 
-             [_templates beginWriteTransaction];
+             [_userRealm beginWriteTransaction];
              for (DBWExercise *exercise in wo.exercises) {
                  DBWSet *set1 = [[DBWSet alloc] init];
                  set1.weight = day * 5;
@@ -88,10 +100,10 @@
                  [exercise.sets addObject:set3];
                  
              }
-             [_templates commitWriteTransaction];
+             [_userRealm commitWriteTransaction];
 
-        }
-        */
+        }*/
+        
     }
     return self;
 }
@@ -99,61 +111,73 @@
 #pragma mark - Templates DB Management
 
 - (void)addExercises:(RLMArray<DBWExercise> *)exercises toWorkout:(DBWWorkout *)workout {
-    [_templates beginWriteTransaction];
+    [_userRealm beginWriteTransaction];
     for (DBWExercise *exercise in exercises) {
-        [workout.exercises addObject:[DBWExercise createInRealm:_templates withValue:exercise]];
+        [workout.exercises addObject:[DBWExercise createInRealm:_userRealm withValue:exercise]];
     }
-    [_templates commitWriteTransaction];
+    [_userRealm commitWriteTransaction];
 }
 
 - (void)saveNewWorkoutTemplate:(DBWWorkoutTemplate *)workoutTemplate {
-    [_templates beginWriteTransaction];
+    [_userRealm beginWriteTransaction];
     
-    DBWWorkoutTemplateList *list = [DBWWorkoutTemplateList allObjectsInRealm:_templates][0];
+    DBWWorkoutTemplateList *list = [DBWWorkoutTemplateList allObjectsInRealm:_userRealm][0];
     [list.list addObject:workoutTemplate];
-    [_templates commitWriteTransaction];
+    [_userRealm commitWriteTransaction];
 }
 
 - (DBWWorkoutTemplateList *)templateList {
-    return [DBWWorkoutTemplateList allObjectsInRealm:_templates][0];
+    return [DBWWorkoutTemplateList allObjectsInRealm:_userRealm][0];
 }
 
 - (void)deleteWorkoutTemplate:(DBWWorkoutTemplate *)workoutTemplate {
-    [_templates beginWriteTransaction];
-    [_templates deleteObject:workoutTemplate];
-    [_templates commitWriteTransaction];
+    [_userRealm beginWriteTransaction];
+    [_userRealm deleteObject:workoutTemplate];
+    [_userRealm commitWriteTransaction];
 }
 
 - (void)moveWorkoutTemplate:(DBWWorkoutTemplate *)workoutTemplate toIndex:(NSInteger)newIndex {  
-    DBWWorkoutTemplateList *list = [DBWWorkoutTemplateList allObjectsInRealm:_templates][0];
+    DBWWorkoutTemplateList *list = [DBWWorkoutTemplateList allObjectsInRealm:_userRealm][0];
     RLMArray <DBWWorkoutTemplate> *templates = list.list;
     
     NSInteger index = [templates indexOfObject:workoutTemplate];
     if (index != NSNotFound) {
-        [_templates beginWriteTransaction];
+        [_userRealm beginWriteTransaction];
         [templates moveObjectAtIndex:index toIndex:newIndex];
-        [_templates commitWriteTransaction];
+        [_userRealm commitWriteTransaction];
     }
 }
 
 - (void)startTemplateWriting {
-    [_templates beginWriteTransaction];
+    [_userRealm beginWriteTransaction];
 }
 
 - (void)endTemplateWriting {
-    [_templates commitWriteTransaction];
+    [_userRealm commitWriteTransaction];
 }
 
 #pragma mark - Workouts DB Management
 
 - (void)saveNewWorkout:(DBWWorkout *)workout {
-    [_templates beginWriteTransaction];
-    [_templates addObject:workout];
-    [_templates commitWriteTransaction];
+    [_userRealm beginWriteTransaction];
+    
+    DBWCalendar *calendar = [DBWCalendar allObjectsInRealm:_userRealm][0];
+    [calendar.workouts addObject:workout];
+    [_userRealm commitWriteTransaction];
 }
 
 - (DBWWorkout *)workoutForDay:(NSInteger)day month:(NSInteger)month year:(NSInteger)year {
-    return [DBWWorkout objectsInRealm:_templates withPredicate:[NSPredicate predicateWithFormat:@"day = %d AND month = %d AND year = %d", day, month, year]].firstObject;
+    NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
+    dateComponents.day = day;
+    dateComponents.month = month;
+    dateComponents.year = year;
+    dateComponents.hour = 0;
+    dateComponents.minute = 0;
+    dateComponents.second = 0;
+    NSDate *startDate = [[NSCalendar currentCalendar] dateFromComponents:dateComponents];
+    NSDate *endDate = [[NSCalendar currentCalendar] dateByAddingUnit:NSCalendarUnitDay value:1 toDate:startDate options:kNilOptions];
+    
+    return [DBWWorkout objectsInRealm:_userRealm withPredicate:[NSPredicate predicateWithFormat:@"date >= %@ && date < %@", startDate, endDate]].firstObject;
 }
 
 - (DBWWorkout *)todaysWorkout {
@@ -168,7 +192,7 @@
     [years addObject:@(components.year)];
     
     NSInteger year = components.year;
-    while ([[DBWWorkout objectsInRealm:_templates withPredicate:[NSPredicate predicateWithFormat:@"year = %d", --year]] count] > 0) {
+    while ([[DBWWorkout objectsInRealm:_userRealm withPredicate:[NSPredicate predicateWithFormat:@"year = %d", --year]] count] > 0) {
         [years addObject:@(year)];
     }
     return [[[NSArray arrayWithArray:years] reverseObjectEnumerator] allObjects];
@@ -177,52 +201,34 @@
 #pragma mark - Exercise Placeholders
 
 - (void)saveNewExercisePlaceholder:(DBWExercisePlaceholder *)placeholer {
-    [_templates beginWriteTransaction];
+    [_userRealm beginWriteTransaction];
     
-    DBWExerciseDatabase *list = [DBWExerciseDatabase allObjectsInRealm:_templates][0];
+    DBWExerciseDatabase *list = [DBWExerciseDatabase allObjectsInRealm:_userRealm][0];
     [list.list addObject:placeholer];
-    [_templates commitWriteTransaction];
+    [_userRealm commitWriteTransaction];
     
 }
 
 - (DBWExerciseDatabase *)allExercisePlaceholders {
-    return [DBWExerciseDatabase allObjectsInRealm:_templates][0];
+    return [DBWExerciseDatabase allObjectsInRealm:_userRealm][0];
 }
 
-- (NSArray *)exercisesForPlaceholder:(DBWExercisePlaceholder *)placeholder count:(NSInteger)count lastExercise:(DBWExercise *)exercise {
-    // this will obtain all past exercises from all past workouts for a given placeholder.
-    // it does this by getting all the exercises with that placeholder, and then it makes sure that it is not
-    // a template exercise by checking if it is attached to a workout.
-    //
-    // the issue with this request is that Realm does not allow objects to be sorted the way I need them to be sorted
-    // because the objects are lazy-loaded.
-    // i tackle this by getting the current date and then subtract 1 day until it gets to 'count' # number of exercises.
-    // i then return this array
-    NSCalendar *currentCalendar = [NSCalendar currentCalendar];
-    NSDate *loopedDate;
-    if (exercise) {
-        DBWWorkout *workoutForLastExercise = exercise.workouts.firstObject;
-        
-        NSDateComponents *lastExerciseComponents = [[NSDateComponents alloc] init];
-        lastExerciseComponents.day = workoutForLastExercise.day;
-        lastExerciseComponents.month = workoutForLastExercise.month;
-        lastExerciseComponents.year = workoutForLastExercise.year;
-        loopedDate = [currentCalendar dateFromComponents:lastExerciseComponents];
-    } else {
-        loopedDate = [NSDate date];
-    }
+- (NSArray *)pastExercisesForPlaceholder:(DBWExercisePlaceholder *)placeholder  {
+    NSDateComponents *dateComponents = [[NSCalendar currentCalendar] components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:[NSDate date]];
+    dateComponents.hour = 0;
+    dateComponents.minute = 0;
+    dateComponents.second = 0;
+    NSDate *startDate = [[NSCalendar currentCalendar] dateFromComponents:dateComponents];
     
-    NSMutableArray *results = [NSMutableArray array];
-    while (results.count < count) {
-        loopedDate = [currentCalendar dateByAddingUnit:NSCalendarUnitDay value:-1 toDate:loopedDate options:kNilOptions];
-        NSDateComponents *loopedDateComponents = [currentCalendar components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:loopedDate];
-
-        RLMResults *dateSearchResults = [DBWExercise objectsInRealm:_templates withPredicate:[NSPredicate predicateWithFormat:@"placeholder.primaryKey == %@ AND workouts.@count > 0 AND SUBQUERY(workouts, $workouts, $workouts.day == %d AND $workouts.month == %d AND $workouts.year == %d).@count == 1", placeholder.primaryKey, loopedDateComponents.day, loopedDateComponents.month, loopedDateComponents.year]];
-        if (dateSearchResults.count > 0) {
-            [results addObject:dateSearchResults[0]];
+    RLMResults *unsortedWorkoutResults = [DBWWorkout objectsInRealm:_userRealm withPredicate:[NSPredicate predicateWithFormat:@"SUBQUERY(exercises, $exercises, $exercises.placeholder.primaryKey == %@).@count > 0 AND date < %@", placeholder.primaryKey, startDate]];
+    RLMResults *workoutResults = [unsortedWorkoutResults sortedResultsUsingKeyPath:@"date" ascending:NO];
+    NSMutableArray *exercises = [NSMutableArray array];
+    for (DBWWorkout *workout in workoutResults) {
+        for (DBWExercise *exercise in [workout.exercises objectsWithPredicate:[NSPredicate predicateWithFormat:@"placeholder.primaryKey == %@", placeholder.primaryKey]]) {
+            [exercises addObject:exercise];
         }
     }
-    return [NSArray arrayWithArray:results];
+    return [NSArray arrayWithArray:exercises];
 }
 
 @end

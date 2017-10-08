@@ -22,11 +22,7 @@
     workout.comments = workoutTemplate.shortDescription;
     workout.templateDay = [[DBWDatabaseManager sharedDatabaseManager].templateList.list indexOfObject:workoutTemplate] + 1;
     
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *todaysComponents = [calendar components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:[NSDate date]];
-    workout.day = todaysComponents.day;
-    workout.month = todaysComponents.month;
-    workout.year = todaysComponents.year;
+    workout.date = [NSDate date];
     return workout;
 }
 

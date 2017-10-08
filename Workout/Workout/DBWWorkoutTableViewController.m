@@ -26,18 +26,9 @@
     self.navigationItem.rightBarButtonItem = nil;
     self.navigationItem.hidesBackButton = NO;
 
-    NSDateComponents *components = [[NSDateComponents alloc] init];
-    components.day = self.workout.day;
-    components.month = self.workout.month;
-    components.year = self.workout.year;
-    
-    NSDate *dateFromComponents = [[NSCalendar currentCalendar] dateFromComponents:components];
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateStyle = NSDateFormatterShortStyle;
-    dateFormatter.timeStyle = NSDateFormatterNoStyle;
-    
-    self.title = [dateFormatter stringFromDate:dateFromComponents];
+
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:self.workout.date];
+    self.title = [NSString stringWithFormat:@"%lu/%lu/%lu", components.month, components.day, components.year];
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC {
