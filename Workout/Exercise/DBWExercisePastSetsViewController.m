@@ -51,9 +51,7 @@ static NSString * const kSetCell = @"date.set.cell";
     _exercises = [[DBWDatabaseManager sharedDatabaseManager] pastExercisesForPlaceholder:_placeholder];
 
     [self.collectionView registerClass:[DBWExercisePastSetsCollectionViewCell class] forCellWithReuseIdentifier:kDateHeaderCell];
-    [self.collectionView registerClass:[DBWExerciseSetInformationCollectionViewCell class] forCellWithReuseIdentifier:kSetCell];
-    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"show.more.footer"];
- 
+    [self.collectionView registerClass:[DBWExerciseSetInformationCollectionViewCell class] forCellWithReuseIdentifier:kSetCell]; 
 }
 
 - (void)didReceiveMemoryWarning {
@@ -65,7 +63,6 @@ static NSString * const kSetCell = @"date.set.cell";
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return _exercises.count;
 }
-
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     DBWExercise *exercise = _exercises[section];
@@ -118,46 +115,10 @@ static NSString * const kSetCell = @"date.set.cell";
     return nil;
 }
 
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == [_exercises count] - 1 && kind == UICollectionElementKindSectionFooter) {
-        UICollectionReusableView *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"show.more.footer" forIndexPath:indexPath];
-        
-        UIButton *seeMoreButton = [footerView viewWithTag:999] ?: [[UIButton alloc] init];
-        seeMoreButton.tag = 999;
-        seeMoreButton.backgroundColor = [UIColor appTintColor];
-        [seeMoreButton addTarget:self action:@selector(showMoreResults) forControlEvents:UIControlEventTouchUpInside];
-        [seeMoreButton setTitle:@"Show more" forState:UIControlStateNormal];
-        seeMoreButton.layer.masksToBounds = YES;
-        seeMoreButton.layer.cornerRadius = 8;
-        seeMoreButton.translatesAutoresizingMaskIntoConstraints = NO;
-        [footerView addSubview:seeMoreButton];
-        [footerView addCompactConstraints:@[@"seeMore.centerX = view.centerX",
-                                            @"seeMore.top = view.top",
-                                            @"seeMore.width = 110",
-                                            @"seeMore.height = 38"]
-                                  metrics:nil
-                                    views:@{@"seeMore": seeMoreButton,
-                                            @"view": footerView
-                                            }];
-        return footerView;
-    } else {
-        return [UICollectionReusableView new];
-    }
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(nonnull UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
-    return section == [_exercises count] - 1 ? CGSizeMake(self.view.frame.size.width, 94): CGSizeZero;
-}
-
 #pragma mark <UICollectionViewDelegate>
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return CGSizeMake([[UIScreen mainScreen] bounds].size.width - 50, indexPath.row == 0 ? 80 : 64);
-}
-
-- (void)showMoreResults {
-   // _exercises = [[DBWDatabaseManager sharedDatabaseManager] exercisesForPlaceholder:_placeholder count:5 lastExercise:[_exercises lastObject]];
-    [self.collectionView reloadData];
 }
 
 @end
