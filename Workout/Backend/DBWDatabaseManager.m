@@ -189,11 +189,23 @@
 - (NSArray <NSNumber *> *)yearsInDatabase {
     NSMutableArray <NSNumber *> *years = [NSMutableArray array];
     NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
-    [years addObject:@(components.year)];
     
+    components.month = 0;
+    components.day = 0;
     NSInteger year = components.year;
-    while ([[DBWWorkout objectsInRealm:_userRealm withPredicate:[NSPredicate predicateWithFormat:@"year = %d", --year]] count] > 0) {
+    
+    NSDate *startDate = [[NSCalendar currentCalendar] dateFromComponents:components];
+    NSDate *endDate = [[NSCalendar currentCalendar] dateByAddingUnit:NSCalendarUnitYear value:1 toDate:startDate options:kNilOptions];
+
+    while ([[DBWWorkout objectsInRealm:_userRealm withPredicate:[NSPredicate predicateWithFormat:@"date >= %@ && date < %@", startDate, endDate]] count] > 0) {
         [years addObject:@(year)];
+        year--;
+        
+        components.year = year;
+        startDate = [[NSCalendar currentCalendar] dateFromComponents:components];
+        endDate = [[NSCalendar currentCalendar] dateByAddingUnit:NSCalendarUnitYear value:1 toDate:startDate options:kNilOptions];
+
+        
     }
     return [[[NSArray arrayWithArray:years] reverseObjectEnumerator] allObjects];
 }
