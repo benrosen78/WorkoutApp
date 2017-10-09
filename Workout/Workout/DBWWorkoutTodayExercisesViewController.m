@@ -30,9 +30,9 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (instancetype)initWithWorkout:(DBWWorkout *)workout {
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width - 50, 68);
+    flowLayout.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width - 25, 68);
     flowLayout.minimumLineSpacing = 1;
-    flowLayout.sectionInset = UIEdgeInsetsMake(150, 0, 25, 0);
+    flowLayout.sectionInset = UIEdgeInsetsMake(140, 0, 25, 0);
     self = [super initWithCollectionViewLayout:flowLayout];
     if (self) {
         _workout = workout;
@@ -46,7 +46,7 @@ static NSString * const reuseIdentifier = @"Cell";
     
     self.title = @"Today's Gains";
     
-    _headerCell = [[DBWWorkoutPlanDayCell alloc] initWithFrame:CGRectMake(25, 20.5, self.view.frame.size.width - 50, 110)];
+    _headerCell = [[DBWWorkoutPlanDayCell alloc] initWithFrame:CGRectMake(12.5, 14, self.view.frame.size.width - 25, 105)];
     _headerCell.layer.cornerRadius = 8;
     _headerCell.alpha = _headerCellAlpha;
     _headerCell.layer.masksToBounds = YES;

@@ -38,7 +38,7 @@
     
     // move it to top position for the next view
     [UIView animateWithDuration:0.55 delay:0.15 usingSpringWithDamping:0.95 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        _snapshotCellView.frame = CGRectMake(_snapshotCellView.frame.origin.x, 134, _snapshotCellView.frame.size.width, _snapshotCellView.frame.size.height);
+        _snapshotCellView.frame = CGRectMake(_snapshotCellView.frame.origin.x, 80, _snapshotCellView.frame.size.width, _snapshotCellView.frame.size.height);
     } completion:nil];
     
     

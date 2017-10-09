@@ -26,7 +26,8 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
 
 - (instancetype)init {
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width - 50, 100);
+    flowLayout.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width - 25
+                                     , 100);
     flowLayout.minimumLineSpacing = 20;
     flowLayout.minimumInteritemSpacing = 0;
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 15, 0);
@@ -47,23 +48,6 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
     
     self.title = [NSString stringWithFormat:@"Exercise %lu", _exerciseNumber];
     
-    
-    
-    
-    
-    
-    
-    
-    
-   
-  /*   DBWWorkoutCurrentSetsViewController *currentSetsViewController = [[DBWWorkoutCurrentSetsViewController alloc] init];
-     currentSetsViewController.view.frame = CGRectMake(0, 245, self.view.frame.size.width, self.view.frame.size.height - 135);
-     currentSetsViewController.workout = _workout;
-     [self addChildViewController:currentSetsViewController];
-     [self.view addSubview:currentSetsViewController.view];
-     [currentSetsViewController didMoveToParentViewController:self];
-     
-     */
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(add:)];
     [self.collectionView registerClass:[DBWExerciseSetCollectionViewCell class] forCellWithReuseIdentifier:kCellIdentifier];
     

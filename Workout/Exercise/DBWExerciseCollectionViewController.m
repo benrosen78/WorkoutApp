@@ -37,11 +37,6 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
 @implementation DBWExerciseCollectionViewController
 
 - (instancetype)initWithExercise:(DBWExercise *)exercise exerciseNumber:(NSInteger)number {
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width - 50, 100);
-    flowLayout.minimumLineSpacing = 20;
-    flowLayout.minimumInteritemSpacing = 0;
-    flowLayout.sectionInset = UIEdgeInsetsMake(108, 0, 15, 0);
     self = [super init];
     if (self) {
         _exercise = exercise;
@@ -53,12 +48,15 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+   // self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.navigationController.navigationBar.prefersLargeTitles = NO;
+    
     self.title = [NSString stringWithFormat:@"Exercise %lu", _exerciseNumber];
 
     //self.collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
-    _headerCell = [[DBWExerciseCollectionViewCell alloc] initWithFrame:CGRectMake(25, 135, self.view.frame.size.width - 50, 68)];
+    _headerCell = [[DBWExerciseCollectionViewCell alloc] initWithFrame:CGRectMake(12.5, 80, self.view.frame.size.width - 25, 68)];
     _headerCell.layer.cornerRadius = 8;
     _headerCell.layer.shadowRadius = 10;
     _headerCell.layer.shadowOffset = CGSizeMake(0, 0);
@@ -74,20 +72,20 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
     _scrollView.showsVerticalScrollIndicator = NO;
     _scrollView.pagingEnabled = YES;
     _scrollView.delegate = self;
-    _scrollView.frame = CGRectMake(0, 225, self.view.frame.size.width, self.view.frame.size.height - 225);
+    _scrollView.frame = CGRectMake(0, 170, self.view.frame.size.width, self.view.frame.size.height - 225);
     _scrollView.contentSize = CGSizeMake((self.view.frame.size.width * 2), _scrollView.frame.size.height);
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view insertSubview:_scrollView belowSubview:_headerCell];
     
     DBWExerciseCurrentSetsViewController *currentSetsViewController = [[DBWExerciseCurrentSetsViewController alloc] init];
-    currentSetsViewController.view.frame = CGRectMake(25, 0, self.view.frame.size.width - 50, self.view.frame.size.height - 225);
+    currentSetsViewController.view.frame = CGRectMake(12.5, 0, self.view.frame.size.width - 25, self.view.frame.size.height - 225);
     currentSetsViewController.exercise = _exercise;
     [self addChildViewController:currentSetsViewController];
     [self.scrollView addSubview:currentSetsViewController.view];
     [currentSetsViewController didMoveToParentViewController:self];
     
     DBWExercisePastSetsViewController *pastSetsViewController = [[DBWExercisePastSetsViewController alloc] initWithExercisePlaceholder:_exercise.placeholder];
-    pastSetsViewController.view.frame = CGRectMake(25 + self.view.frame.size.width, 0, self.view.frame.size.width - 50, self.view.frame.size.height - 225);
+    pastSetsViewController.view.frame = CGRectMake(12.5 + self.view.frame.size.width, 0, self.view.frame.size.width - 25, self.view.frame.size.height - 225);
     [self addChildViewController:pastSetsViewController];
     [self.scrollView addSubview:pastSetsViewController.view];
     [pastSetsViewController didMoveToParentViewController:self];
@@ -132,55 +130,6 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 1;
-}
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [_exercise.sets count];
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    DBWExerciseSetCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCellIdentifier forIndexPath:indexPath];
-    
-    UITextField *weightTF = cell.textFields[0];
-    UITextField *repsTF = cell.textFields[1];
-
-    weightTF.delegate = self;
-    repsTF.delegate = self;
-    
-    weightTF.tag = 1;
-    repsTF.tag = 2;
-    
-    DBWSet *set = _exercise.sets[indexPath.row];
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    formatter.numberStyle = NSNumberFormatterDecimalStyle;
-    formatter.maximumFractionDigits = 20;
-        
-    weightTF.text = set.weight ? [NSString stringWithFormat:@"%@", [formatter stringFromNumber:@(set.weight)]] : @"";
-    repsTF.text = set.reps ? [NSString stringWithFormat:@"%lu", set.reps] : @"";
-    
-    return cell;
-}
-
-
-
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [[DBWDatabaseManager sharedDatabaseManager] startTemplateWriting];
-        [_exercise.sets removeObjectAtIndex:indexPath.section];
-        [[DBWDatabaseManager sharedDatabaseManager] endTemplateWriting];
-        [tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
-    }
 }
 
 #pragma mark - UINavigationControllerDelegate

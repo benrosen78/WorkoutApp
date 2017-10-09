@@ -20,8 +20,8 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.layer.borderColor = [UIColor lightGrayColor].CGColor;
-       // self.layer.borderWidth = 1;
+        self.layer.borderColor = [UIColor colorWithRed:0.784 green:0.780 blue:0.800 alpha:1.00].CGColor;
+       // self.layer.borderWidth = 0.5;
     
         
         _titleLabel = [[UILabel alloc] init];
@@ -56,9 +56,9 @@
                                                   @"color.top = view.top + 20",
                                                   @"color.width = 25",
                                                   @"color.height = color.width",
-                                                  @"titleLabel.left = view.left + 10",
-                                                  @"titleLabel.right = view.right - 10",
-                                                  @"titleLabel.top = view.top + 10",
+                                                  @"titleLabel.left = view.left + 15",
+                                                  @"titleLabel.right = view.right - 15",
+                                                  @"titleLabel.top = view.top + 13",
                                                   @"detailLabel.top = titleLabel.bottom + 10",
                                                   @"detailLabel.left = titleLabel.left",
                                                   @"detailLabel.right = titleLabel.right",

@@ -72,7 +72,7 @@ static NSString *const headerIdentifier = @"header-identifier";
 }
 
 - (CGSize)collectionView:(UICollectionViewCell *)collectionView layout:(nonnull UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    return CGSizeMake(self.view.frame.size.width - 50, 110);
+    return CGSizeMake(self.view.frame.size.width - 25, 105);
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -117,7 +117,7 @@ static NSString *const headerIdentifier = @"header-identifier";
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(nonnull UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    return CGSizeMake(self.view.frame.size.width, 165);
+    return CGSizeMake(self.view.frame.size.width, [_templateList.list count] > 0 ? 120 : self.collectionView.frame.size.height - 200);
 }
 
 @end

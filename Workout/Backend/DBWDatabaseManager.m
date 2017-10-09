@@ -218,7 +218,6 @@
     DBWExerciseDatabase *list = [DBWExerciseDatabase allObjectsInRealm:_userRealm][0];
     [list.list addObject:placeholer];
     [_userRealm commitWriteTransaction];
-    
 }
 
 - (DBWExerciseDatabase *)allExercisePlaceholders {

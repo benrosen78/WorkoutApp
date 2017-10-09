@@ -72,7 +72,7 @@
     });
     
         toViewController.collectionView.frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
-        toViewController.headerCell.frame = CGRectMake(25, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width - 50, 110);
+        toViewController.headerCell.frame = CGRectMake(12.5, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width - 25, 110);
     
     
     // then add the new view. add it as a child view controller so the old view is behind it. then later we actually push it. animate the collection view frame back into view
@@ -82,8 +82,7 @@
         
         [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
             toViewController.collectionView.frame = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
-            toViewController.headerCell.frame = CGRectMake(25, 20.5, [[UIScreen mainScreen] bounds].size.width - 50, 110);
-
+            toViewController.headerCell.frame = CGRectMake(12.5, 14, [[UIScreen mainScreen] bounds].size.width - 25, 105);
         } completion:nil];
     });
     

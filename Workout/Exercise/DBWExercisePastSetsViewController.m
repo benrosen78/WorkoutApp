@@ -118,7 +118,7 @@ static NSString * const kSetCell = @"date.set.cell";
 #pragma mark <UICollectionViewDelegate>
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake([[UIScreen mainScreen] bounds].size.width - 50, indexPath.row == 0 ? 80 : 64);
+    return CGSizeMake([[UIScreen mainScreen] bounds].size.width - 25, indexPath.row == 0 ? 80 : 64);
 }
 
 @end
