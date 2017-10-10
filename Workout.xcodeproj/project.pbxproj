@@ -40,6 +40,9 @@
 		B57E6D281F5329C800849CB6 /* DBWCalendarDatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B57E6D271F5329C800849CB6 /* DBWCalendarDatePickerViewController.m */; };
 		B57E6D2B1F53521C00849CB6 /* DBWColorTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B57E6D2A1F53521C00849CB6 /* DBWColorTableViewCell.m */; };
 		B57E6D2E1F536F7500849CB6 /* DBWSettingsSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B57E6D2D1F536F7500849CB6 /* DBWSettingsSplitViewController.m */; };
+		B58F66F11F8D26420082A30C /* DBWStopwatchCircularCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = B58F66F01F8D26420082A30C /* DBWStopwatchCircularCollectionViewLayout.m */; };
+		B58F66F41F8D2A6D0082A30C /* DBWStopwatchCircularCollectionViewLayoutAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = B58F66F31F8D2A6D0082A30C /* DBWStopwatchCircularCollectionViewLayoutAttributes.m */; };
+		B58F66F71F8D2E490082A30C /* DBWStopwatchCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B58F66F61F8D2E490082A30C /* DBWStopwatchCollectionViewCell.m */; };
 		B596A3381F2F9BAE00524503 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B596A3371F2F9BAE00524503 /* Launch Screen.storyboard */; };
 		B5B192BF1F537C10005B3F8B /* UIColor+ColorPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B192BE1F537C10005B3F8B /* UIColor+ColorPalette.m */; };
 		B5BDC5921F3B4A5800C77CFC /* DBWCustomizeWorkoutPlanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5BDC5911F3B4A5800C77CFC /* DBWCustomizeWorkoutPlanViewController.m */; };
@@ -147,6 +150,12 @@
 		B57E6D2A1F53521C00849CB6 /* DBWColorTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWColorTableViewCell.m; sourceTree = "<group>"; };
 		B57E6D2C1F536F7500849CB6 /* DBWSettingsSplitViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWSettingsSplitViewController.h; sourceTree = "<group>"; };
 		B57E6D2D1F536F7500849CB6 /* DBWSettingsSplitViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWSettingsSplitViewController.m; sourceTree = "<group>"; };
+		B58F66EF1F8D26420082A30C /* DBWStopwatchCircularCollectionViewLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWStopwatchCircularCollectionViewLayout.h; sourceTree = "<group>"; };
+		B58F66F01F8D26420082A30C /* DBWStopwatchCircularCollectionViewLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWStopwatchCircularCollectionViewLayout.m; sourceTree = "<group>"; };
+		B58F66F21F8D2A6D0082A30C /* DBWStopwatchCircularCollectionViewLayoutAttributes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWStopwatchCircularCollectionViewLayoutAttributes.h; sourceTree = "<group>"; };
+		B58F66F31F8D2A6D0082A30C /* DBWStopwatchCircularCollectionViewLayoutAttributes.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWStopwatchCircularCollectionViewLayoutAttributes.m; sourceTree = "<group>"; };
+		B58F66F51F8D2E490082A30C /* DBWStopwatchCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWStopwatchCollectionViewCell.h; sourceTree = "<group>"; };
+		B58F66F61F8D2E490082A30C /* DBWStopwatchCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWStopwatchCollectionViewCell.m; sourceTree = "<group>"; };
 		B596A3371F2F9BAE00524503 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		B5B192BD1F537C10005B3F8B /* UIColor+ColorPalette.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+ColorPalette.h"; sourceTree = "<group>"; };
 		B5B192BE1F537C10005B3F8B /* UIColor+ColorPalette.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ColorPalette.m"; sourceTree = "<group>"; };
@@ -376,6 +385,12 @@
 			children = (
 				B57E6D1D1F51C6D900849CB6 /* DBWStopwatchViewController.h */,
 				B57E6D1E1F51C6D900849CB6 /* DBWStopwatchViewController.m */,
+				B58F66F51F8D2E490082A30C /* DBWStopwatchCollectionViewCell.h */,
+				B58F66F61F8D2E490082A30C /* DBWStopwatchCollectionViewCell.m */,
+				B58F66EF1F8D26420082A30C /* DBWStopwatchCircularCollectionViewLayout.h */,
+				B58F66F01F8D26420082A30C /* DBWStopwatchCircularCollectionViewLayout.m */,
+				B58F66F21F8D2A6D0082A30C /* DBWStopwatchCircularCollectionViewLayoutAttributes.h */,
+				B58F66F31F8D2A6D0082A30C /* DBWStopwatchCircularCollectionViewLayoutAttributes.m */,
 			);
 			path = Stopwatch;
 			sourceTree = "<group>";
@@ -674,6 +689,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B58F66F71F8D2E490082A30C /* DBWStopwatchCollectionViewCell.m in Sources */,
 				B5BDC5971F3B4D4C00C77CFC /* DBWWorkoutPlanDayCell.m in Sources */,
 				B53CF2D51F3366D000F30CB8 /* DBWSettingsTableViewController.m in Sources */,
 				B515D7661F5ADF8800828E99 /* DBWWorkoutTodayExercisesViewController.m in Sources */,
@@ -684,6 +700,7 @@
 				B5BDC5921F3B4A5800C77CFC /* DBWCustomizeWorkoutPlanViewController.m in Sources */,
 				B5D2E2ED1F2A93B800CB4540 /* main.m in Sources */,
 				B52B52631F7927FC00DD90CF /* DBWExercisePastSetsViewController.m in Sources */,
+				B58F66F41F8D2A6D0082A30C /* DBWStopwatchCircularCollectionViewLayoutAttributes.m in Sources */,
 				B541A9C51F800D2B00D649CC /* DBWExerciseSetInformationCollectionViewCell.m in Sources */,
 				B50CBD991F3E1B4D007D3962 /* DBWAuthenticationManager.m in Sources */,
 				B5369C6D1F7406EA000FFD9F /* DBWExerciseDatabaseTableViewController.m in Sources */,
@@ -711,6 +728,7 @@
 				B53CF2CF1F33661300F30CB8 /* DBWSet.m in Sources */,
 				B53CF2D01F33661300F30CB8 /* DBWWorkout.m in Sources */,
 				B5F635391F41DD6B00B866DC /* DBWDatabaseManager.m in Sources */,
+				B58F66F11F8D26420082A30C /* DBWStopwatchCircularCollectionViewLayout.m in Sources */,
 				B5DF74381F408DA5009FA3B4 /* DBWWorkoutTemplateList.m in Sources */,
 				B5B192BF1F537C10005B3F8B /* UIColor+ColorPalette.m in Sources */,
 				B57E6D1F1F51C6D900849CB6 /* DBWStopwatchViewController.m in Sources */,
