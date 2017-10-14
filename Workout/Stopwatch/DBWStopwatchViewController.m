@@ -11,6 +11,7 @@
 #import "DBWStopwatchCircularCollectionViewLayout.h"
 #import "DBWStopwatchCollectionViewCell.h"
 #import "DBWStopwatchCircularCollectionViewLayoutAttributes.h"
+#import "UIColor+ColorPalette.h"
 
 static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
 
@@ -31,7 +32,7 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _feedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleMedium];
+    _feedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
     
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
 
@@ -71,14 +72,66 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
     [_collectionView.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor].active = YES;
 
     _feedbackChevronImageView = [[UIImageView alloc] init];
-    _feedbackChevronImageView.image = [UIImage imageNamed:@"stopwatcharrow"];
+    _feedbackChevronImageView.tintColor = [UIColor colorWithRed:0.678 green:0.729 blue:0.757 alpha:1.00];
+    _feedbackChevronImageView.image = [[UIImage imageNamed:@"stopwatcharrow"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     _feedbackChevronImageView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_feedbackChevronImageView];
     
     [_feedbackChevronImageView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
     [_feedbackChevronImageView.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:300].active = YES;
 
+    UIView *separator = [[UIView alloc] init];
+    separator.backgroundColor = [UIColor colorWithRed:0.678 green:0.729 blue:0.757 alpha:1.00];
+    separator.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:separator];
+    [separator.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor constant:25].active = YES;
+    [separator.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-25].active = YES;
+    [separator.topAnchor constraintEqualToAnchor:_feedbackChevronImageView.bottomAnchor constant:72].active = YES;
+    [separator.heightAnchor constraintEqualToConstant:1].active = YES;
+
+
+    UILabel *orLabel = [[UILabel alloc] init];
+    orLabel.textColor = separator.backgroundColor;
+    orLabel.textAlignment = NSTextAlignmentCenter;
+    orLabel.text = @"or";
+    orLabel.font = [UIFont systemFontOfSize:20 weight:UIFontWeightRegular];
+    orLabel.backgroundColor = self.view.backgroundColor;
+    orLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:orLabel];
     
+    [orLabel.centerXAnchor constraintEqualToAnchor:separator.centerXAnchor].active = YES;
+    [orLabel.centerYAnchor constraintEqualToAnchor:separator.centerYAnchor].active = YES;
+    [orLabel.widthAnchor constraintEqualToConstant:35].active = YES;
+    
+    UITextField *customTextField = [[UITextField alloc] init];
+    NSMutableAttributedString *textFieldPlaceholderAttibute = [[NSMutableAttributedString alloc] initWithString:@"m" attributes:@{NSForegroundColorAttributeName: [UIColor colorWithRed:0.678 green:0.729 blue:0.757 alpha:1.00]}];
+    [textFieldPlaceholderAttibute appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@" : " attributes:@{NSForegroundColorAttributeName: [UIColor blackColor]}]];
+     [textFieldPlaceholderAttibute appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@"ss" attributes:@{NSForegroundColorAttributeName: [UIColor colorWithRed:0.678 green:0.729 blue:0.757 alpha:1.00]}]];
+
+    
+    customTextField.attributedPlaceholder = textFieldPlaceholderAttibute;
+    customTextField.font = [UIFont systemFontOfSize:36 weight:UIFontWeightMedium];
+    customTextField.textAlignment = NSTextAlignmentCenter;
+    customTextField.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview: customTextField];
+    
+    [customTextField.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
+    [customTextField.topAnchor constraintEqualToAnchor:separator.bottomAnchor constant: 30].active = YES;
+    
+    UIButton *startButton = [[UIButton alloc] init];
+    startButton.layer.masksToBounds = YES;
+    startButton.layer.cornerRadius = 16;
+    startButton.backgroundColor = [UIColor appTintColor];
+    [startButton setTitle:@"Start" forState:UIControlStateNormal];
+    startButton.titleLabel.font = [UIFont systemFontOfSize:25 weight:UIFontWeightMedium];
+    [startButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    startButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:startButton];
+
+    [startButton.heightAnchor constraintEqualToConstant:48].active = YES;
+    [startButton.topAnchor constraintEqualToAnchor:customTextField.bottomAnchor constant:50].active = YES;
+    [startButton.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor constant:40].active = YES;
+    [startButton.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-40].active = YES;
 }
 
 
@@ -98,9 +151,15 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
     for (NSIndexPath *indexPath in _collectionView.indexPathsForVisibleItems) {
         DBWStopwatchCircularCollectionViewLayoutAttributes *attributes = (DBWStopwatchCircularCollectionViewLayoutAttributes *)[_collectionView layoutAttributesForItemAtIndexPath:indexPath];
   
-        if (attributes.angle > -0.1 && attributes.angle < 0.1 && ![indexPath isEqual:_currentIndexPath]) {
+        if (attributes.angle > -0.05 && attributes.angle < 0.05 && ![indexPath isEqual:_currentIndexPath]) {
             _currentIndexPath = indexPath;
             [_feedbackGenerator impactOccurred];
+            _feedbackChevronImageView.transform = CGAffineTransformMakeTranslation(0, -10);
+            
+            [UIView animateWithDuration:1 delay:0 usingSpringWithDamping:0.3 initialSpringVelocity: 0.0 options:kNilOptions animations:^{
+                _feedbackChevronImageView.transform = CGAffineTransformIdentity;
+            } completion:nil];
+            
         }
     }
 }
