@@ -10,4 +10,6 @@
 
 @interface DBWStopwatchCollectionViewCell : UICollectionViewCell
 
+@property (strong, nonatomic) UILabel *timeLabel;
+
 @end

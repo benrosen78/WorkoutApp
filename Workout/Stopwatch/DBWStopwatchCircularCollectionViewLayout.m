@@ -12,7 +12,7 @@
 @implementation DBWStopwatchCircularCollectionViewLayout
 
 - (CGFloat)anglePerItem {
-    return atan(_itemSize.width / _radius);
+    return atan(_itemSize.width / _radius) + 0.05;
 }
 
 - (void)setRadius:(CGFloat)radius {
@@ -61,6 +61,21 @@
 
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {
     return YES;
+}
+
+- (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity {
+    CGFloat factor = -self.angleAtExtreme/(self.collectionViewContentSize.width - CGRectGetWidth(self.collectionView.bounds));
+    CGFloat proposedAngle = proposedContentOffset.x * factor;
+    CGFloat ratio = proposedAngle/self.anglePerItem;
+    CGFloat multiplier;
+    if (velocity.x > 0) {
+        multiplier = ceil(ratio);
+    } else if (velocity.x < 0) {
+        multiplier = floor(ratio);
+    } else {
+        multiplier = round(ratio);
+    }
+    return CGPointMake(multiplier * self.anglePerItem / factor, proposedContentOffset.y);
 }
 
 @end
