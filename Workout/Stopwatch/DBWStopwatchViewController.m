@@ -47,7 +47,7 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
     detailTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:detailTitleLabel];
     
-    [detailTitleLabel.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor constant:20].active = YES;
+    [detailTitleLabel.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor constant: 15].active = YES;
     [detailTitleLabel.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor].active = YES;
     [detailTitleLabel.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor].active = YES;
 
@@ -66,7 +66,7 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
     _collectionView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_collectionView];
     
-    [_collectionView.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:-230].active = YES;
+    [_collectionView.topAnchor constraintEqualToAnchor:detailTitleLabel.bottomAnchor constant:15].active = YES;
     [_collectionView.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor].active = YES;
     [_collectionView.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor].active = YES;
     [_collectionView.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor].active = YES;
@@ -78,17 +78,25 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
     [self.view addSubview:_feedbackChevronImageView];
     
     [_feedbackChevronImageView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
-    [_feedbackChevronImageView.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:300].active = YES;
+    [_feedbackChevronImageView.topAnchor constraintEqualToAnchor:self.collectionView.topAnchor constant:circularLayout.itemSize.height + 22].active = YES;
 
+    UIStackView *bottomStackView = [[UIStackView alloc] init];
+    bottomStackView.spacing = 60;
+    bottomStackView.axis = UILayoutConstraintAxisVertical;
+    bottomStackView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:bottomStackView];
+    
+    [bottomStackView.topAnchor constraintEqualToAnchor:_feedbackChevronImageView.bottomAnchor constant:35].active = YES;
+    [bottomStackView.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor].active = YES;
+    [bottomStackView.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor].active = YES;
+    [bottomStackView.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor constant:-bottomStackView.spacing].active = YES;
+ 
     UIView *separator = [[UIView alloc] init];
     separator.backgroundColor = [UIColor colorWithRed:0.678 green:0.729 blue:0.757 alpha:1.00];
-    separator.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:separator];
+    [bottomStackView addArrangedSubview:separator];
     [separator.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor constant:25].active = YES;
     [separator.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-25].active = YES;
-    [separator.topAnchor constraintEqualToAnchor:_feedbackChevronImageView.bottomAnchor constant:72].active = YES;
     [separator.heightAnchor constraintEqualToConstant:1].active = YES;
-
 
     UILabel *orLabel = [[UILabel alloc] init];
     orLabel.textColor = separator.backgroundColor;
@@ -112,26 +120,25 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
     customTextField.attributedPlaceholder = textFieldPlaceholderAttibute;
     customTextField.font = [UIFont systemFontOfSize:36 weight:UIFontWeightMedium];
     customTextField.textAlignment = NSTextAlignmentCenter;
-    customTextField.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview: customTextField];
-    
+    [bottomStackView addArrangedSubview:customTextField];
+
     [customTextField.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
-    [customTextField.topAnchor constraintEqualToAnchor:separator.bottomAnchor constant: 30].active = YES;
-    
+
     UIButton *startButton = [[UIButton alloc] init];
     startButton.layer.masksToBounds = YES;
-    startButton.layer.cornerRadius = 16;
+    startButton.layer.cornerRadius = 14;
     startButton.backgroundColor = [UIColor appTintColor];
     [startButton setTitle:@"Start" forState:UIControlStateNormal];
-    startButton.titleLabel.font = [UIFont systemFontOfSize:25 weight:UIFontWeightMedium];
+    startButton.titleLabel.font = [UIFont systemFontOfSize:24 weight:UIFontWeightMedium];
     [startButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    startButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:startButton];
+    [bottomStackView addArrangedSubview:startButton];
 
-    [startButton.heightAnchor constraintEqualToConstant:48].active = YES;
-    [startButton.topAnchor constraintEqualToAnchor:customTextField.bottomAnchor constant:50].active = YES;
-    [startButton.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor constant:40].active = YES;
-    [startButton.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-40].active = YES;
+    [startButton.heightAnchor constraintEqualToConstant:45].active = YES;
+    [startButton.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor constant:45].active = YES;
+    [startButton.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-45].active = YES;
+    
+
+    
 }
 
 

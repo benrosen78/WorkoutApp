@@ -45,7 +45,7 @@
         DBWStopwatchCircularCollectionViewLayoutAttributes *attributes = [DBWStopwatchCircularCollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
         attributes.size = self.itemSize;
         attributes.anchorPoint = CGPointMake(0.5, anchorPointY);
-        attributes.center = CGPointMake(centerX, CGRectGetMidY(self.collectionView.bounds));
+        attributes.center = CGPointMake(centerX, _itemSize.height / 2);
         attributes.angle = self.angle + (self.anglePerItem * i);
         [_attributesList addObject:attributes];
     }
