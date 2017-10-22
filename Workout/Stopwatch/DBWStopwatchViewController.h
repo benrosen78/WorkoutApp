@@ -10,4 +10,6 @@
 
 @interface DBWStopwatchViewController : UIViewController
 
+@property (nonatomic, readonly, getter=getSelectedFrame) CGRect selectedFrame;
+
 @end

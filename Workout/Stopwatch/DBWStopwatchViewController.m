@@ -12,6 +12,7 @@
 #import "DBWStopwatchCollectionViewCell.h"
 #import "DBWStopwatchCircularCollectionViewLayoutAttributes.h"
 #import "UIColor+ColorPalette.h"
+#import "DBWStopwatchActiveViewController.h"
 
 static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
 
@@ -31,7 +32,7 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+        
     _feedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
     
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
@@ -125,6 +126,7 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
     [customTextField.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
 
     UIButton *startButton = [[UIButton alloc] init];
+    [startButton addTarget:self action:@selector(startTimer) forControlEvents:UIControlEventTouchUpInside];
     startButton.layer.masksToBounds = YES;
     startButton.layer.cornerRadius = 14;
     startButton.backgroundColor = [UIColor appTintColor];
@@ -136,11 +138,8 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
     [startButton.heightAnchor constraintEqualToConstant:45].active = YES;
     [startButton.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor constant:45].active = YES;
     [startButton.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-45].active = YES;
-    
 
-    
 }
-
 
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     DBWStopwatchCollectionViewCell *stopwatchCell = [collectionView dequeueReusableCellWithReuseIdentifier:kStopwatchCellIdentifier forIndexPath:indexPath];
@@ -170,5 +169,58 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
         }
     }
 }
+
+- (void)startTimer {
+  /* DBWStopwatchCollectionViewCell *selectedCell = [_collectionView cellForItemAtIndexPath:_currentIndexPath];
+    UIView *snapshotCellView = [selectedCell snapshotViewAfterScreenUpdates:NO];
+    [self.view addSubview:snapshotCellView];
+    [UIView animateWithDuration:0.5 animations:^{
+        snapshotCellView.layer.cornerRadius = 0;
+        snapshotCellView.frame = self.view.frame;
+    }];*/
+    
+    UIView *snapshotCellView = [self.view snapshotViewAfterScreenUpdates:NO];
+    [self.view addSubview:snapshotCellView];
+
+    [UIView animateWithDuration:0.3 animations:^{
+
+        snapshotCellView.transform = CGAffineTransformMakeScale(1.3, 1.3);
+        snapshotCellView.alpha = 0;
+    
+    }];
+    
+    for (UIView *subview in self.view.subviews) {
+        subview.alpha = 0;
+    }
+        
+    
+    DBWStopwatchActiveViewController *viewController = [[DBWStopwatchActiveViewController alloc] init];
+    [self addChildViewController:viewController];
+    viewController.view.frame = self.view.frame;
+    viewController.view.alpha = 0;
+    viewController.view.transform = CGAffineTransformMakeScale(0.3, 0.3);
+
+    [self.view addSubview:viewController.view];
+    [viewController didMoveToParentViewController:self];
+    [UIView animateWithDuration:0.3 delay: 0.1 options:kNilOptions
+                     animations:^{
+        
+        viewController.view.transform = CGAffineTransformIdentity;
+        viewController.view.alpha = 1;
+        
+    } completion:nil];
+    
+    
+    //viewController.transitioningDelegate = _animator;
+
+    //[self.navigationController presentViewController:viewController animated:YES completion:nil];
+    
+}
+
+- (CGRect)getSelectedFrame {
+    return CGRectMake([[UIScreen mainScreen] bounds].size.width / 2- 50, _collectionView.frame.origin.y, 100, 100);
+}
+
+
 
 @end
