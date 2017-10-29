@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B507F4851FA6403D002739A6 /* DBWStopwatchList.m in Sources */ = {isa = PBXBuildFile; fileRef = B507F4841FA6403D002739A6 /* DBWStopwatchList.m */; };
+		B507F4881FA6404A002739A6 /* DBWStopwatch.m in Sources */ = {isa = PBXBuildFile; fileRef = B507F4871FA6404A002739A6 /* DBWStopwatch.m */; };
 		B50CBD891F3DD8A6007D3962 /* DBWLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B50CBD881F3DD8A6007D3962 /* DBWLoginViewController.m */; };
 		B50CBD921F3DFCE2007D3962 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B50CBD8F1F3DFC20007D3962 /* FBSDKLoginKit.framework */; };
 		B50CBD931F3DFCE4007D3962 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B50CBD8E1F3DFC20007D3962 /* FBSDKCoreKit.framework */; };
@@ -89,6 +91,10 @@
 		1CD0FD741FEFA38936817806 /* Pods-Workout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Workout.release.xcconfig"; path = "Pods/Target Support Files/Pods-Workout/Pods-Workout.release.xcconfig"; sourceTree = "<group>"; };
 		271DEE926CA2C7D9100D4A23 /* Pods-DannyBenWorkout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DannyBenWorkout.release.xcconfig"; path = "Pods/Target Support Files/Pods-DannyBenWorkout/Pods-DannyBenWorkout.release.xcconfig"; sourceTree = "<group>"; };
 		A0F3AB7DBBFF19EFB1619676 /* Pods-DannyBenWorkout.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DannyBenWorkout.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DannyBenWorkout/Pods-DannyBenWorkout.debug.xcconfig"; sourceTree = "<group>"; };
+		B507F4831FA6403D002739A6 /* DBWStopwatchList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWStopwatchList.h; sourceTree = "<group>"; };
+		B507F4841FA6403D002739A6 /* DBWStopwatchList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWStopwatchList.m; sourceTree = "<group>"; };
+		B507F4861FA6404A002739A6 /* DBWStopwatch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWStopwatch.h; sourceTree = "<group>"; };
+		B507F4871FA6404A002739A6 /* DBWStopwatch.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWStopwatch.m; sourceTree = "<group>"; };
 		B50CBD871F3DD8A6007D3962 /* DBWLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWLoginViewController.h; sourceTree = "<group>"; };
 		B50CBD881F3DD8A6007D3962 /* DBWLoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWLoginViewController.m; sourceTree = "<group>"; };
 		B50CBD8D1F3DF333007D3962 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -323,6 +329,10 @@
 				B524F5A71F89272C004493D0 /* DBWCalendar.m */,
 				B5CEB76F1F7430F1001F3FAD /* DBWExerciseDatabase.h */,
 				B5CEB7701F7430F1001F3FAD /* DBWExerciseDatabase.m */,
+				B507F4831FA6403D002739A6 /* DBWStopwatchList.h */,
+				B507F4841FA6403D002739A6 /* DBWStopwatchList.m */,
+				B507F4861FA6404A002739A6 /* DBWStopwatch.h */,
+				B507F4871FA6404A002739A6 /* DBWStopwatch.m */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -729,6 +739,8 @@
 				B53CF2CE1F33661300F30CB8 /* DBWExercise.m in Sources */,
 				B5369C631F6D8404000FFD9F /* DBWAnimationTransitionMemory.m in Sources */,
 				B5CEB76E1F742E33001F3FAD /* DBWExercisePlaceholder.m in Sources */,
+				B507F4851FA6403D002739A6 /* DBWStopwatchList.m in Sources */,
+				B507F4881FA6404A002739A6 /* DBWStopwatch.m in Sources */,
 				B515D7691F5AE6BB00828E99 /* DBWExerciseCollectionViewCell.m in Sources */,
 				B5CEB7711F7430F1001F3FAD /* DBWExerciseDatabase.m in Sources */,
 				B53CF2CF1F33661300F30CB8 /* DBWSet.m in Sources */,

@@ -8,6 +8,7 @@
 
 #import "DBWStopwatchActiveViewController.h"
 #import "UIColor+ColorPalette.h"
+#import "DBWStopwatch.h"
 
 @interface DBWStopwatchActiveViewController ()
 
@@ -15,9 +16,20 @@
 
 @property (strong, nonatomic) UIButton *cancelButton, *pauseButton;
 
+@property (strong, nonatomic) DBWStopwatch *stopwatch;
+
 @end
 
 @implementation DBWStopwatchActiveViewController
+
+NSTimeInterval startingTime;
+
+- (instancetype)initWithStopwatch:(DBWStopwatch *)stopwatch {
+    if (self = [super init]) {
+        _stopwatch = stopwatch;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -26,7 +38,7 @@
     _timeLabel = [[UILabel alloc] init];
     _timeLabel.font = [UIFont systemFontOfSize:100 weight:UIFontWeightLight];
     _timeLabel.adjustsFontSizeToFitWidth = YES;
-    _timeLabel.text = @"1:59";
+    _timeLabel.text = _stopwatch.textRepresentation;
     _timeLabel.textAlignment = NSTextAlignmentCenter;
     _timeLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_timeLabel];
@@ -66,10 +78,33 @@
     [_cancelButton.widthAnchor constraintEqualToConstant:100].active = YES;
     [_cancelButton.topAnchor constraintEqualToAnchor:_pauseButton.bottomAnchor constant:40].active = YES;
     
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (startingTime == 0) {
+        startingTime = [[NSDate date] timeIntervalSince1970];
+        [self performSelector:@selector(timerFired) withObject:nil afterDelay:0];
+    }
+}
+
+
+- (void)timerFired {
+    NSTimeInterval dateNow = [[NSDate date] timeIntervalSince1970];
+    NSTimeInterval difference = dateNow - startingTime;
+   ;
+    
+    NSTimeInterval timeLeft = _stopwatch.minutes * 60 + _stopwatch.seconds - difference;
+    NSInteger minutes = timeLeft / 60;
+    NSInteger seconds = (int)timeLeft % 60;
+
+    _timeLabel.text = [NSString stringWithFormat:@"%lu:%02lu", minutes, seconds];
     
     
     
+    [self performSelector:@selector(timerFired) withObject:nil afterDelay:1.0];
     
+
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

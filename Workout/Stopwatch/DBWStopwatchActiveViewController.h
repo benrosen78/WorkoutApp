@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class DBWStopwatch;
+
 @interface DBWStopwatchActiveViewController : UIViewController
+
+- (instancetype)initWithStopwatch:(DBWStopwatch *)stopwatch;
 
 @end

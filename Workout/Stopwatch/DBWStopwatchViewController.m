@@ -13,6 +13,9 @@
 #import "DBWStopwatchCircularCollectionViewLayoutAttributes.h"
 #import "UIColor+ColorPalette.h"
 #import "DBWStopwatchActiveViewController.h"
+#import "DBWDatabaseManager.h"
+#import "DBWStopwatchList.h"
+#import "DBWStopwatch.h"
 
 static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
 
@@ -26,13 +29,17 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
 
 @property (strong, nonatomic) NSIndexPath *currentIndexPath;
 
+@property (strong, nonatomic) DBWStopwatchList *stopwatchList;
+
 @end
 
 @implementation DBWStopwatchViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-        
+    
+    _stopwatchList = [[DBWDatabaseManager sharedDatabaseManager] stopwatchList];
+    
     _feedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
     
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
@@ -145,12 +152,13 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
     DBWStopwatchCollectionViewCell *stopwatchCell = [collectionView dequeueReusableCellWithReuseIdentifier:kStopwatchCellIdentifier forIndexPath:indexPath];
     //stopwatchCell.timeLabel.layer.transform = CATransform3DConcat(stopwatchCell.timeLabel.layer.transform, CATransform3DMakeRotation(M_PI, 1.0, 0.0, 0.0));
 
-    stopwatchCell.timeLabel.text = @[@"1:00", @"1:15", @"1:30", @"1:45", @"2:00", @"2:30", @"2:45", @"3:00"][indexPath.row];
+    DBWStopwatch *cellStopwatch = _stopwatchList.list[indexPath.row];
+    stopwatchCell.timeLabel.text = cellStopwatch.textRepresentation;
     return stopwatchCell;
 }
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 6;
+    return [_stopwatchList.list count];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -194,7 +202,7 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
     }
         
     
-    DBWStopwatchActiveViewController *viewController = [[DBWStopwatchActiveViewController alloc] init];
+    DBWStopwatchActiveViewController *viewController = [[DBWStopwatchActiveViewController alloc] initWithStopwatch:_stopwatchList.list[_currentIndexPath.row]];
     [self addChildViewController:viewController];
     viewController.view.frame = self.view.frame;
     viewController.view.alpha = 0;
@@ -202,25 +210,17 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
 
     [self.view addSubview:viewController.view];
     [viewController didMoveToParentViewController:self];
-    [UIView animateWithDuration:0.3 delay: 0.1 options:kNilOptions
+    [UIView animateWithDuration:0.25 delay: 0.1 options:kNilOptions
                      animations:^{
         
         viewController.view.transform = CGAffineTransformIdentity;
         viewController.view.alpha = 1;
         
     } completion:nil];
-    
-    
-    //viewController.transitioningDelegate = _animator;
-
-    //[self.navigationController presentViewController:viewController animated:YES completion:nil];
-    
 }
 
 - (CGRect)getSelectedFrame {
-    return CGRectMake([[UIScreen mainScreen] bounds].size.width / 2- 50, _collectionView.frame.origin.y, 100, 100);
+    return CGRectMake([[UIScreen mainScreen] bounds].size.width / 2 - 50, _collectionView.frame.origin.y, 100, 100);
 }
-
-
 
 @end

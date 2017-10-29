@@ -21,6 +21,13 @@
 }
 
 - (CGSize)collectionViewContentSize {
+    
+    // find the amount of widths that add up to something greater than the collection view width
+   
+    
+    if ([self.collectionView numberOfItemsInSection:0] * _itemSize.width < CGRectGetWidth(self.collectionView.bounds)) {
+        return CGSizeMake([self.collectionView numberOfItemsInSection:0] * _itemSize.width * 2, CGRectGetHeight(self.collectionView.bounds));
+    }
     return CGSizeMake([self.collectionView numberOfItemsInSection:0] * _itemSize.width, CGRectGetHeight(self.collectionView.bounds));
 }
 

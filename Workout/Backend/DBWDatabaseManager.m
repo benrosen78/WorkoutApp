@@ -16,6 +16,8 @@
 #import "DBWExerciseDatabase.h"
 #import "DBWSet.h"
 #import "DBWCalendar.h"
+#import "DBWStopwatchList.h"
+#import "DBWStopwatch.h"
 
 @interface DBWDatabaseManager ()
 
@@ -63,6 +65,24 @@
             [_userRealm commitWriteTransaction];
         }
         
+        if ([DBWStopwatchList allObjectsInRealm:_userRealm].count < 1) {
+            [_userRealm beginWriteTransaction];
+            [_userRealm addObject:[DBWStopwatchList new]];
+            [_userRealm commitWriteTransaction];
+        }
+
+        
+        
+        
+        /* for loading in stopwatch data:
+         
+       // for (int i = 0; i < 3; i++) {
+            DBWStopwatch *stopwatch = [[DBWStopwatch alloc] init];
+            stopwatch.minutes = 2;
+            stopwatch.seconds = 15;
+            [self saveNewStopwatch:stopwatch];
+      //  }
+        */
         /* for loading in arbitrary data:
         
         for (int day = 1; day <= 6; day++) {
@@ -240,6 +260,18 @@
         }
     }
     return [NSArray arrayWithArray:exercises];
+}
+
+#pragma mark - Stopwatch
+
+- (DBWStopwatchList *)stopwatchList {
+    return [DBWStopwatchList allObjectsInRealm:_userRealm][0];
+}
+
+- (void)saveNewStopwatch:(DBWStopwatch *)stopwatch {
+    [_userRealm beginWriteTransaction];
+    [[self stopwatchList].list addObject:stopwatch];
+    [_userRealm commitWriteTransaction];
 }
 
 @end

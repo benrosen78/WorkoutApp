@@ -11,7 +11,7 @@
 #import "DBWWorkoutTemplateList.h"
 #import "DBWExercise.h"
 
-@class RLMResults, DBWWorkout, DBWExerciseDatabase, DBWExercisePlaceholder;
+@class RLMResults, DBWWorkout, DBWExerciseDatabase, DBWExercisePlaceholder, DBWStopwatchList, DBWStopwatch;
 
 RLM_ARRAY_TYPE(DBWExercise)
 
@@ -46,6 +46,10 @@ RLM_ARRAY_TYPE(DBWExercise)
 - (DBWExerciseDatabase *)allExercisePlaceholders;
 
 - (NSArray *)pastExercisesForPlaceholder:(DBWExercisePlaceholder *)placeholder;
+
+- (DBWStopwatchList *)stopwatchList;
+
+- (void)saveNewStopwatch:(DBWStopwatch *)stopwatch;
 
 @end
 
