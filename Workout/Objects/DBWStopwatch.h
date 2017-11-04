@@ -14,7 +14,7 @@
 
 @property NSInteger seconds;
 
-@property NSString *textRepresentation;
+- (NSString *)formattedTimeString;
 
 @end
 

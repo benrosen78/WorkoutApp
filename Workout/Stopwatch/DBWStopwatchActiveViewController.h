@@ -10,7 +10,16 @@
 
 @class DBWStopwatch;
 
+@protocol DBWStopwatchCompletionDelegate
+
+@required
+- (void)stopwatchCompleted;
+
+@end
+
 @interface DBWStopwatchActiveViewController : UIViewController
+
+@property (nonatomic) id<DBWStopwatchCompletionDelegate> delegate;
 
 - (instancetype)initWithStopwatch:(DBWStopwatch *)stopwatch;
 

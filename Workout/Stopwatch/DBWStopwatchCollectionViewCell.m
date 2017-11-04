@@ -16,7 +16,6 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor appTintColor];
         self.layer.masksToBounds = YES;
         self.layer.cornerRadius = 50;
         

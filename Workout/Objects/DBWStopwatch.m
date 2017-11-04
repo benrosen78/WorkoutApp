@@ -10,8 +10,8 @@
 
 @implementation DBWStopwatch
 
-- (NSString *)textRepresentation {
-    return [NSString stringWithFormat:@"%li:%li", (long)_minutes, (long)_seconds];
+- (NSString *)formattedTimeString {
+    return [NSString stringWithFormat:@"%lu:%02lu", self.minutes, self.seconds];
 }
 
 @end

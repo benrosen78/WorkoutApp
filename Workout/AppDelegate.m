@@ -18,6 +18,7 @@
 #import "DBWDatabaseManager.h"
 #import "DBWStopwatchViewController.h"
 #import "DBWSettingsSplitViewController.h"
+#import <UserNotifications/UserNotifications.h>
 
 @interface AppDelegate () <GIDSignInDelegate>
 
@@ -31,6 +32,12 @@
     [GIDSignIn sharedInstance].delegate = self;
     [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
     [FBSDKProfile enableUpdatesOnAccessTokenChange:YES];
+    
+    // notification stuff
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    [center requestAuthorizationWithOptions:UNAuthorizationOptionAlert completionHandler:^(BOOL granted, NSError * _Nullable error) {
+        NSLog(@"Notification status: %d, %@", granted, error);
+    }];
     
     //[[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
    // [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];

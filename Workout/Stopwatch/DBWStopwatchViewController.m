@@ -19,17 +19,22 @@
 
 static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
 
-@interface DBWStopwatchViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
+@interface DBWStopwatchViewController () <UICollectionViewDelegate, UICollectionViewDataSource, DBWStopwatchCompletionDelegate>
 
 @property (strong, nonatomic) UICollectionView *collectionView;
 
-@property (strong, nonatomic) UIImpactFeedbackGenerator *feedbackGenerator;
+@property (strong, nonatomic) UISelectionFeedbackGenerator *feedbackGenerator;
 
 @property (strong, nonatomic) UIImageView *feedbackChevronImageView;
 
 @property (strong, nonatomic) NSIndexPath *currentIndexPath;
 
 @property (strong, nonatomic) DBWStopwatchList *stopwatchList;
+
+// timing view controller
+@property (strong, nonatomic) DBWStopwatchActiveViewController *currentActiveViewController;
+// snapshot of current view, used for animations. will be nil otherwise
+@property (strong, nonatomic) UIView *animationSnapshotView;
 
 @end
 
@@ -40,7 +45,7 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
     
     _stopwatchList = [[DBWDatabaseManager sharedDatabaseManager] stopwatchList];
     
-    _feedbackGenerator = [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
+    _feedbackGenerator = [[UISelectionFeedbackGenerator alloc] init];
     
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
 
@@ -150,10 +155,15 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
 
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     DBWStopwatchCollectionViewCell *stopwatchCell = [collectionView dequeueReusableCellWithReuseIdentifier:kStopwatchCellIdentifier forIndexPath:indexPath];
-    //stopwatchCell.timeLabel.layer.transform = CATransform3DConcat(stopwatchCell.timeLabel.layer.transform, CATransform3DMakeRotation(M_PI, 1.0, 0.0, 0.0));
+    
+    CGFloat h, s, b, a;
+    [[UIColor appTintColor] getHue:&h saturation:&s brightness:&b alpha:&a];
+    UIColor *cellColor = [[UIColor alloc] initWithHue:h saturation:s brightness:0.33 + (indexPath.row / 20.0) alpha:a];
+    
+    stopwatchCell.backgroundColor = cellColor;
 
     DBWStopwatch *cellStopwatch = _stopwatchList.list[indexPath.row];
-    stopwatchCell.timeLabel.text = cellStopwatch.textRepresentation;
+    stopwatchCell.timeLabel.text = cellStopwatch.formattedTimeString;
     return stopwatchCell;
 }
 
@@ -167,7 +177,7 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
   
         if (attributes.angle > -0.05 && attributes.angle < 0.05 && ![indexPath isEqual:_currentIndexPath]) {
             _currentIndexPath = indexPath;
-            [_feedbackGenerator impactOccurred];
+            [_feedbackGenerator selectionChanged];
             _feedbackChevronImageView.transform = CGAffineTransformMakeTranslation(0, -10);
             
             [UIView animateWithDuration:1 delay:0 usingSpringWithDamping:0.3 initialSpringVelocity: 0.0 options:kNilOptions animations:^{
@@ -179,48 +189,63 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
 }
 
 - (void)startTimer {
-  /* DBWStopwatchCollectionViewCell *selectedCell = [_collectionView cellForItemAtIndexPath:_currentIndexPath];
-    UIView *snapshotCellView = [selectedCell snapshotViewAfterScreenUpdates:NO];
-    [self.view addSubview:snapshotCellView];
-    [UIView animateWithDuration:0.5 animations:^{
-        snapshotCellView.layer.cornerRadius = 0;
-        snapshotCellView.frame = self.view.frame;
-    }];*/
-    
-    UIView *snapshotCellView = [self.view snapshotViewAfterScreenUpdates:NO];
-    [self.view addSubview:snapshotCellView];
+    _animationSnapshotView = [self.view snapshotViewAfterScreenUpdates:NO];
+    [self.view addSubview:_animationSnapshotView];
 
     [UIView animateWithDuration:0.3 animations:^{
-
-        snapshotCellView.transform = CGAffineTransformMakeScale(1.3, 1.3);
-        snapshotCellView.alpha = 0;
-    
+        _animationSnapshotView.transform = CGAffineTransformMakeScale(1.3, 1.3);
+        _animationSnapshotView.alpha = 0;
     }];
     
     for (UIView *subview in self.view.subviews) {
         subview.alpha = 0;
     }
-        
     
-    DBWStopwatchActiveViewController *viewController = [[DBWStopwatchActiveViewController alloc] initWithStopwatch:_stopwatchList.list[_currentIndexPath.row]];
-    [self addChildViewController:viewController];
-    viewController.view.frame = self.view.frame;
-    viewController.view.alpha = 0;
-    viewController.view.transform = CGAffineTransformMakeScale(0.3, 0.3);
+    _currentActiveViewController = [[DBWStopwatchActiveViewController alloc] initWithStopwatch:_stopwatchList.list[_currentIndexPath.row]];
+    _currentActiveViewController.delegate = self;
+    [self addChildViewController:_currentActiveViewController];
+    _currentActiveViewController.view.frame = self.view.frame;
+    _currentActiveViewController.view.alpha = 0;
+    _currentActiveViewController.view.transform = CGAffineTransformMakeScale(0.3, 0.3);
 
-    [self.view addSubview:viewController.view];
-    [viewController didMoveToParentViewController:self];
-    [UIView animateWithDuration:0.25 delay: 0.1 options:kNilOptions
-                     animations:^{
-        
-        viewController.view.transform = CGAffineTransformIdentity;
-        viewController.view.alpha = 1;
-        
+    [self.view addSubview:_currentActiveViewController.view];
+    [_currentActiveViewController didMoveToParentViewController:self];
+    [UIView animateWithDuration:0.25 delay: 0.1 options:kNilOptions animations:^{
+        _currentActiveViewController.view.transform = CGAffineTransformIdentity;
+        _currentActiveViewController.view.alpha = 1;
     } completion:nil];
 }
 
 - (CGRect)getSelectedFrame {
     return CGRectMake([[UIScreen mainScreen] bounds].size.width / 2 - 50, _collectionView.frame.origin.y, 100, 100);
+}
+
+#pragma mark - DBWStopwatchCompletionDelegate
+
+- (void)stopwatchCompleted {
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        _currentActiveViewController.view.alpha = 0;
+        _currentActiveViewController.view.transform = CGAffineTransformMakeScale(0.3, 0.3);
+    } completion:^(BOOL finished) {
+        [_currentActiveViewController willMoveToParentViewController:nil];
+        [_currentActiveViewController.view removeFromSuperview];
+        [_currentActiveViewController removeFromParentViewController];
+        _currentActiveViewController = nil;
+    }];
+
+    [UIView animateWithDuration:0.25 delay: 0.1 options:kNilOptions animations:^{
+        _animationSnapshotView.transform = CGAffineTransformIdentity;
+        _animationSnapshotView.alpha = 1;
+    } completion:^(BOOL finished) {
+        for (UIView *subview in self.view.subviews) {
+            subview.alpha = 1;
+        }
+        _animationSnapshotView.alpha = 0;
+        [_animationSnapshotView removeFromSuperview];
+        _animationSnapshotView = nil;
+    }];
+    
 }
 
 @end
