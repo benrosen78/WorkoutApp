@@ -42,8 +42,7 @@ static NSString *const DBWStopwatchRestPeriodNotification = @"DBWStopwatchRestPe
     [super viewDidLoad];
 
     _timeLabel = [[UILabel alloc] init];
-    _timeLabel.font = [UIFont systemFontOfSize:100 weight:UIFontWeightLight];
-    _timeLabel.adjustsFontSizeToFitWidth = YES;
+    _timeLabel.font = [UIFont monospacedDigitSystemFontOfSize:100 weight:UIFontWeightLight];
     _timeLabel.textAlignment = NSTextAlignmentCenter;
     _timeLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_timeLabel];
