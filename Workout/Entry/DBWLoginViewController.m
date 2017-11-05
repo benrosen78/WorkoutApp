@@ -36,33 +36,42 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
 
-    UIView *headerView = [[UIView alloc] init];
-    headerView.backgroundColor = [UIColor colorWithRed:0.201 green:0.220 blue:0.376 alpha:1.00];
+    //UIView *headerView = [[UIView alloc] init];
+    UIImageView *headerView = [[UIImageView alloc] init];
+    headerView.contentMode = UIViewContentModeScaleAspectFill;
+    headerView.image = [UIImage imageNamed:@"gym-large"];
+    //headerView.backgroundColor = [UIColor colorWithRed:0.201 green:0.220 blue:0.376 alpha:1.00];
     headerView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:headerView];
     
-    UIImageView *imageView = [[UIImageView alloc] init];
-    imageView.image = [[UIImage imageNamed:@"barbelli"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    imageView.tintColor = [UIColor whiteColor];
-    imageView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:imageView];
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    blurEffectView.alpha = 0.7;
+    [blurEffectView setFrame:self.view.bounds];
+    [self.view addSubview:blurEffectView];
     
+    UIImageView *barbellImageView = [[UIImageView alloc] init];
+    barbellImageView.image = [[UIImage imageNamed:@"barbelli"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    barbellImageView.tintColor = [UIColor whiteColor];
+    barbellImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:barbellImageView];
+
     UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.text = @"Workout Routine";
+    titleLabel.text = @"Gym Notebook";
     titleLabel.numberOfLines = 0;
     titleLabel.adjustsFontSizeToFitWidth = YES;
-    titleLabel.font = [UIFont systemFontOfSize:40 weight:UIFontWeightBold];
-    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.font = [UIFont systemFontOfSize:23 weight:UIFontWeightBold];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:titleLabel];
+    //[titleLabel.topAnchor constraint]
     
     UILabel *subtitleLabel = [[UILabel alloc] init];
-    subtitleLabel.text = @"You'll be up and running in just a second.\nChoose to login with Google, Facebook, or an email.";
+    subtitleLabel.text = @"Hello.\nChoose an option to sign in";
     subtitleLabel.numberOfLines = 0;
     subtitleLabel.adjustsFontSizeToFitWidth = YES;
-    subtitleLabel.font = [UIFont systemFontOfSize:20 weight:UIFontWeightMedium];
-    subtitleLabel.textAlignment = NSTextAlignmentCenter;
+    subtitleLabel.textColor = [UIColor whiteColor];
+    subtitleLabel.font = [UIFont systemFontOfSize:35 weight:UIFontWeightLight];
     subtitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:subtitleLabel];
 
@@ -86,12 +95,6 @@
     facebookButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:facebookButton];
     
-    UILabel *orLabel = [[UILabel alloc] init];
-    orLabel.text = @"OR";
-    orLabel.textAlignment = NSTextAlignmentCenter;
-    orLabel.font = [UIFont systemFontOfSize:21 weight:UIFontWeightSemibold];
-    orLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:orLabel];
     
     UIButton *emailButton = [[UIButton alloc] init];
     [emailButton addTarget:self action:@selector(emailTapped:) forControlEvents:UIControlEventTouchUpInside];
@@ -101,48 +104,52 @@
     emailButton.titleLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightMedium];
     emailButton.layer.masksToBounds = YES;
     emailButton.layer.cornerRadius = 3;
+    emailButton.layer.shadowColor = [[UIColor colorWithRed:0 green:0 blue:0 alpha:0.25f] CGColor];
+    emailButton.layer.shadowOffset = CGSizeMake(0, 1.0f);
+    emailButton.layer.shadowOpacity = 0.7f;
+    emailButton.layer.shadowRadius = 0.0f;
+    emailButton.layer.masksToBounds = NO;
     emailButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:emailButton];
-    
-    [self.view addCompactConstraints:@[@"title.bottom = header.bottom - 35",
-                                       @"title.left = view.left + 20",
-                                       @"title.right = view.right - 20",
-                                       @"subtitle.left = title.left",
-                                       @"subtitle.right = title.right",
-                                       @"subtitle.top = header.bottom+15",
+
+    [self.view addCompactConstraints:@[
+
                                        @"header.left = view.left",
                                        @"header.right = view.right",
                                        @"header.top = view.top",
-                                       @"header.height = 242",
-                                       @"image.centerX = view.centerX",
-                                       @"image.top = view.top+44",
-                                       @"image.width = 210",
-                                       @"image.height = 92",
-                                       @"google.centerX = view.centerX",
+                                       @"header.bottom = view.bottom",
+                                       @"barbell.leading = view.leading + 50",
+                                       @"barbell.top = view.top + 150",
+                                       @"title.top = barbell.bottom + 7",
+                                       @"title.left = barbell.left",
+                                       @"subtitle.top = title.bottom + 50",
+                                       @"subtitle.left = title.left",
+                                       @"subtitle.right = view.right - 50",
+
+
                                        @"google.top = subtitle.bottom + 40",
-                                       @"google.width = view.width - 150",
-                                       @"facebook.centerX = view.centerX",
+                                       @"google.left = subtitle.left",
+                                       @"google.right = subtitle.right",
+
                                        @"facebook.top = google.bottom + 30",
-                                       @"facebook.width = google.width - 8",
+                                       @"facebook.left = google.left + 4",
+                                       @"facebook.right = google.right - 4",
                                        @"facebook.height = 40",
-                                       
-                                       @"or.centerX = view.centerX",
-                                       @"or.top = facebook.bottom + 20",
-                                       @"email.centerX = view.centerX",
-                                       @"email.top = or.bottom + 20",
-                                       @"email.width = facebook.width",
+                                    
+                                       @"email.top = facebook.bottom + 30",
+                                       @"email.left = google.left + 4",
+                                       @"email.right = google.right - 4",
                                        @"email.height = facebook.height"
                                        ]
                              metrics:nil
                                views:@{@"title": titleLabel,
                                        @"view": self.view,
                                        @"subtitle": subtitleLabel,
-                                       @"image": imageView,
                                        @"header": headerView,
                                        @"google": googleButton,
                                        @"facebook": facebookButton,
-                                       @"or": orLabel,
-                                       @"email": emailButton
+                                       @"email": emailButton,
+                                       @"barbell": barbellImageView
                                        }];
 }
 
