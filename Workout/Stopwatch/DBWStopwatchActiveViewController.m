@@ -22,7 +22,10 @@ static NSString *const DBWStopwatchRestPeriodNotification = @"DBWStopwatchRestPe
 
 @property (strong, nonatomic) DBWStopwatch *stopwatch;
 
-@property (nonatomic, readwrite) NSTimeInterval startingTime;
+// pausedAtTime is the time, if it is paused, that it was paused at
+@property (nonatomic, readwrite) NSTimeInterval startingTime, pausedAtTime;
+
+@property (nonatomic) BOOL running;
 
 @end
 
@@ -56,6 +59,7 @@ static NSString *const DBWStopwatchRestPeriodNotification = @"DBWStopwatchRestPe
     _pauseButton.layer.masksToBounds = YES;
     _pauseButton.layer.cornerRadius = 50;
     [_pauseButton setTitle:@"Pause" forState:UIControlStateNormal];
+    [_pauseButton addTarget:self action:@selector(pauseTapped) forControlEvents:UIControlEventTouchUpInside];
     [_pauseButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _pauseButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_pauseButton];
@@ -86,28 +90,13 @@ static NSString *const DBWStopwatchRestPeriodNotification = @"DBWStopwatchRestPe
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     if (_startingTime == 0) {
+        _running = YES;
         _timeLabel.text = _stopwatch.formattedTimeString;
         _startingTime = [[NSDate date] timeIntervalSince1970] + 1;
         [self performSelector:@selector(timerFired) withObject:nil afterDelay:1];
         
-        // create the notification content
-        UNMutableNotificationContent *content = [UNMutableNotificationContent new];
-        content.body = @"Your rest period is over. Come back and finish your sets!";
-        content.sound = [UNNotificationSound defaultSound];
-
+        [self scheduleNotificationForTimeInFuture:_stopwatch.minutes * 60 + _stopwatch.seconds + 1];
         
-        // schedule it for x seconds from now
-        NSDate *date = [NSDate dateWithTimeIntervalSinceNow:_stopwatch.minutes * 60 + _stopwatch.seconds + 1];
-        NSDateComponents *triggerDate = [[NSCalendar currentCalendar] components:NSCalendarUnitYear + NSCalendarUnitMonth + NSCalendarUnitHour + NSCalendarUnitMinute + NSCalendarUnitSecond fromDate:date];
-        UNCalendarNotificationTrigger *trigger = [UNCalendarNotificationTrigger triggerWithDateMatchingComponents:triggerDate repeats:NO];
-        UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:DBWStopwatchRestPeriodNotification content:content trigger:trigger];
-    
-        // dispatch it
-        [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
-            if (error) {
-                NSLog(@"Notification error: %@",error);
-            }
-        }];
     }
 }
 
@@ -121,7 +110,7 @@ static NSString *const DBWStopwatchRestPeriodNotification = @"DBWStopwatchRestPe
 
     _timeLabel.text = [NSString stringWithFormat:@"%lu:%02lu", minutes, seconds];
     
-    if (minutes != 0 || seconds != 0) {
+    if (minutes >= 1 || seconds >= 1) {
         [self performSelector:@selector(timerFired) withObject:nil afterDelay:1.0];
     } else {
         [self timerFinished];
@@ -150,11 +139,62 @@ static NSString *const DBWStopwatchRestPeriodNotification = @"DBWStopwatchRestPe
 - (void)cancelTapped {
     [[UNUserNotificationCenter currentNotificationCenter] removePendingNotificationRequestsWithIdentifiers:@[DBWStopwatchRestPeriodNotification]];
     [self.delegate stopwatchCompleted];
-    
+}
+
+- (void)pauseTapped {
+    if (_running) {
+        _pausedAtTime = [[NSDate date] timeIntervalSince1970];
+        [NSObject cancelPreviousPerformRequestsWithTarget:self];
+        [_pauseButton setTitle:@"Resume" forState:UIControlStateNormal];
+        
+        // cancel the notification, we'll resume it when the pause is ended
+        [[UNUserNotificationCenter currentNotificationCenter] removePendingNotificationRequestsWithIdentifiers:@[DBWStopwatchRestPeriodNotification]];
+    } else {
+        [_pauseButton setTitle:@"Pause" forState:UIControlStateNormal];
+
+        // find the amount of time that it was paused.
+        // add it to the starting time to make it think that it started x seconds later
+        NSTimeInterval durationOfPause = [[NSDate date] timeIntervalSince1970] - _pausedAtTime;
+        _startingTime += durationOfPause;
+        
+        _pausedAtTime = 0;
+        
+        // find the time until the timer will now end and schedule notification for the new time in future
+        NSTimeInterval dateNow = [[NSDate date] timeIntervalSince1970];
+        NSTimeInterval difference = dateNow - _startingTime;
+        NSTimeInterval newTimeLeft = _stopwatch.minutes * 60 + _stopwatch.seconds - difference;
+        [self scheduleNotificationForTimeInFuture:newTimeLeft];
+
+        
+        [self timerFired];
+        
+        
+    }
+    _running = !_running;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
+}
+
+- (void)scheduleNotificationForTimeInFuture:(NSTimeInterval)time {
+    // create the notification content
+    UNMutableNotificationContent *content = [UNMutableNotificationContent new];
+    content.body = @"Your rest period is over. Come back and finish your sets!";
+    content.sound = [UNNotificationSound defaultSound];
+    
+    // schedule it for (time) seconds from now
+    NSDate *date = [NSDate dateWithTimeIntervalSinceNow:time];
+    NSDateComponents *triggerDate = [[NSCalendar currentCalendar] components:NSCalendarUnitYear + NSCalendarUnitMonth + NSCalendarUnitHour + NSCalendarUnitMinute + NSCalendarUnitSecond fromDate:date];
+    UNCalendarNotificationTrigger *trigger = [UNCalendarNotificationTrigger triggerWithDateMatchingComponents:triggerDate repeats:NO];
+    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:DBWStopwatchRestPeriodNotification content:content trigger:trigger];
+    
+    // dispatch it
+    [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"Notification error: %@",error);
+        }
+    }];
 }
 
 
