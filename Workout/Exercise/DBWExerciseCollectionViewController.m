@@ -28,6 +28,8 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
 
 @property (strong, nonatomic) UIPageControl *pageControl;
 
+@property (strong, nonatomic) UIBarButtonItem *plusButtonItem;
+
 @end
 
 @implementation DBWExerciseCollectionViewController
@@ -44,12 +46,8 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-   // self.edgesForExtendedLayout = UIRectEdgeNone;
     self.navigationController.navigationBar.prefersLargeTitles = NO;
-    
     self.title = [NSString stringWithFormat:@"Exercise %lu", _exerciseNumber];
-
-    //self.collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
     _headerCell = [[DBWExerciseCollectionViewCell alloc] init];
@@ -75,7 +73,6 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
     _scrollView.pagingEnabled = YES;
     _scrollView.delegate = self;
     _scrollView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.automaticallyAdjustsScrollViewInsets = NO;
 
     [self.view insertSubview:_scrollView belowSubview:_headerCell];
     
@@ -109,8 +106,6 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
     [pastSetsViewController.view.widthAnchor constraintEqualToAnchor:_scrollView.frameLayoutGuide.widthAnchor constant:-25].active = YES;
     [pastSetsViewController.view.topAnchor constraintEqualToAnchor:_scrollView.frameLayoutGuide.topAnchor].active = YES;
     [pastSetsViewController.view.bottomAnchor constraintEqualToAnchor:_scrollView.frameLayoutGuide.bottomAnchor].active = YES;
-
-    
     
     _pageControl = [[UIPageControl alloc] init];
     _pageControl.pageIndicatorTintColor = [UIColor colorWithRed:0.678 green:0.729 blue:0.757 alpha:1.00];
@@ -121,7 +116,8 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
     [_pageControl.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
     [_pageControl.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor].active = YES;
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:currentSetsViewController action:@selector(add:)];
+    _plusButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:currentSetsViewController action:@selector(add:)];
+    self.navigationItem.rightBarButtonItem = _plusButtonItem;
 }
 
 - (void)add:(UIBarButtonItem *)item {
@@ -130,20 +126,20 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
     [[DBWDatabaseManager sharedDatabaseManager] endTemplateWriting];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
     CGFloat width = scrollView.contentSize.width / 2;
     int page = floor((scrollView.contentOffset.x - width / 2) / width) + 1;
     _pageControl.currentPage = page;
-    //[scrollView setContentOffset:CGPointMake(scrollView.contentSize.width / 2.0 * page, 0) animated:NO];
-    
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    if (_pageControl.currentPage) {
+        [self.navigationItem setRightBarButtonItem:nil animated:NO];
+    } else {
+        [self.navigationItem setRightBarButtonItem:_plusButtonItem animated:NO];
+    }
 }
 
 @end
