@@ -14,13 +14,9 @@
 #import "DBWWorkoutPlanDayCell.h"
 #import "UIColor+ColorPalette.h"
 #import "DBWExerciseCollectionViewCell.h"
-#import "DBWAnimationTransitionController.h"
-#import "DBWAnimationTransitionMemory.h"
 #import "DBWExercisePlaceholder.h"
 
 @interface DBWWorkoutTodayExercisesViewController () <UIViewControllerPreviewingDelegate>
-
-@property (strong, nonatomic) DBWAnimationTransitionController *transitionController;
 
 @end
 
@@ -61,19 +57,11 @@ static NSString * const reuseIdentifier = @"Cell";
     
     self.navigationItem.hidesBackButton = YES;
     [self.collectionView registerClass:[DBWExerciseCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
-    
-    _transitionController = [[DBWAnimationTransitionController alloc] init];
 }
 
 - (void)setHeaderCellAlpha:(CGFloat)headerCellAlpha {
     _headerCellAlpha = headerCellAlpha;
     _headerCell.alpha = _headerCellAlpha;
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    self.navigationController.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -92,7 +80,6 @@ static NSString * const reuseIdentifier = @"Cell";
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return 1;
 }
-
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return [_workout.exercises count];
@@ -128,31 +115,10 @@ static NSString * const reuseIdentifier = @"Cell";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
     
-    
-    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-    cell.layer.mask = nil;
-    cell.layer.cornerRadius = 8;
-    cell.layer.masksToBounds = YES;
-
-    // create a snapshot and set up a shadow
-    UIView *headerView = [cell snapshotViewAfterScreenUpdates:YES];
-    headerView.layer.shadowRadius = 10;
-    headerView.layer.shadowOffset = CGSizeMake(0, 0);
-    headerView.layer.shadowOpacity = 0.0;
-    headerView.frame = [self.view convertRect:cell.frame fromView:self.collectionView];
-    [self.view addSubview:headerView];
-    
-    _transitionController.snapshotCellView = headerView;
-    [DBWAnimationTransitionMemory sharedInstance].originalCellFrame = headerView.frame;
-    
     DBWExercise *exercise = _workout.exercises[indexPath.row];
     
     DBWExerciseCollectionViewController *exercisesViewController = [[DBWExerciseCollectionViewController alloc] initWithExercise:exercise exerciseNumber:indexPath.row + 1];
     [self.navigationController pushViewController:exercisesViewController animated:YES];
-}
-
-- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC {
-    return _transitionController;
 }
 
 #pragma mark - UIViewControllerPreviewingDelegate
@@ -167,9 +133,6 @@ static NSString * const reuseIdentifier = @"Cell";
     
     DBWExercise *exercise = _workout.exercises[indexPath.row];
     DBWExerciseCollectionViewController *exercisesViewController = [[DBWExerciseCollectionViewController alloc] initWithExercise:exercise exerciseNumber:indexPath.row + 1];
-    
-    // even though they peek/pop to get into the view controller, they will be animated back so we must provide the frame
-    [DBWAnimationTransitionMemory sharedInstance].originalCellFrame = [self.view convertRect:layoutAttributes.frame fromView:self.collectionView];
     return exercisesViewController;
 }
 
