@@ -70,6 +70,7 @@
     headerView.layer.shadowOffset = CGSizeMake(0, 0);
     headerView.layer.shadowOpacity = 0.0;
     headerView.frame = [self.view convertRect:cell.frame fromView:self.collectionView];
+    headerView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:headerView];
 
     // make it appear above all other things with a transform and shadow
@@ -78,9 +79,15 @@
         headerView.layer.shadowOpacity = 0.18;
     }];
     
+    
     // move it to top position for the next view
+    [headerView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor constant:14].active = YES;
+    [headerView.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor constant:12.5].active = YES;
+    [headerView.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-12.5].active = YES;
+    [headerView.heightAnchor constraintEqualToConstant:105].active = YES;
+
     [UIView animateWithDuration:0.55 delay:0.15 usingSpringWithDamping:0.95 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        headerView.frame = CGRectMake(headerView.frame.origin.x, 80, headerView.frame.size.width, headerView.frame.size.height);
+        [self.view layoutIfNeeded];
     } completion:nil];
     
     // animate the collection view away

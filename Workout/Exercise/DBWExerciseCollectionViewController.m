@@ -93,8 +93,6 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
     [currentSetsViewController.view.topAnchor constraintEqualToAnchor:_scrollView.frameLayoutGuide.topAnchor].active = YES;
     [currentSetsViewController.view.bottomAnchor constraintEqualToAnchor:_scrollView.frameLayoutGuide.bottomAnchor].active = YES;
 
-    
-    
     DBWExercisePastSetsViewController *pastSetsViewController = [[DBWExercisePastSetsViewController alloc] initWithExercisePlaceholder:_exercise.placeholder];
     pastSetsViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
 

@@ -42,7 +42,7 @@ static NSString * const reuseIdentifier = @"Cell";
     
     self.title = @"Today's Gains";
     
-    _headerCell = [[DBWWorkoutPlanDayCell alloc] initWithFrame:CGRectMake(12.5, 14, self.view.frame.size.width - 25, 105)];
+    _headerCell = [[DBWWorkoutPlanDayCell alloc] init];
     _headerCell.layer.cornerRadius = 8;
     _headerCell.alpha = _headerCellAlpha;
     _headerCell.layer.masksToBounds = YES;
@@ -50,7 +50,14 @@ static NSString * const reuseIdentifier = @"Cell";
     _headerCell.titleLabel.text = [NSString stringWithFormat:@"Day %lu", _workout.templateDay];
     _headerCell.detailLabel.text = _workout.comments;
     _headerCell.color = [UIColor calendarColors][_workout.selectedColorIndex];
+    _headerCell.translatesAutoresizingMaskIntoConstraints = NO;
     [self.collectionView addSubview:_headerCell];
+    
+    [_headerCell.topAnchor constraintEqualToAnchor:self.collectionView.safeAreaLayoutGuide.topAnchor constant:14].active = YES;
+    [_headerCell.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor constant:12.5].active = YES;
+    [_headerCell.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-12.5].active = YES;
+    [_headerCell.heightAnchor constraintEqualToConstant:105].active = YES;
+
     
     self.collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
