@@ -38,12 +38,14 @@ PODS:
   - Realm (2.9.1):
     - Realm/Headers (= 2.9.1)
   - Realm/Headers (2.9.1)
+  - TLYShyNavBar (1.1.1)
   - VTAcknowledgementsViewController (1.2.1)
 
 DEPENDENCIES:
   - CompactConstraint
   - Google/SignIn
   - Realm
+  - TLYShyNavBar
   - VTAcknowledgementsViewController
 
 SPEC CHECKSUMS:
@@ -57,8 +59,9 @@ SPEC CHECKSUMS:
   GTMOAuth2: 7fc9c10f5c745f4d9850419ea88889fe3baa6b7d
   GTMSessionFetcher: 5ad62e8200fa00ed011fe5e08d27fef72c5b1429
   Realm: f91fb43bd474c4f731a116ebf7392c75dd015920
+  TLYShyNavBar: d200e598923fbc2bd21a5c5efdfabf4898b11da0
   VTAcknowledgementsViewController: e1de80f2c0ce31cc7e1c6f1c8aaeec2770371f09
 
-PODFILE CHECKSUM: 958399d82a64cc0bbf0bce3a952983b97cae3ad7
+PODFILE CHECKSUM: 8a5f44e3cf46a7f2b24e9815a3af2996d58f5430
 
 COCOAPODS: 1.2.1

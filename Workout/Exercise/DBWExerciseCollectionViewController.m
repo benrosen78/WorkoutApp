@@ -17,10 +17,12 @@
 #import "DBWExerciseCurrentSetsViewController.h"
 #import "UIColor+ColorPalette.h"
 #import "DBWExercisePastSetsViewController.h"
+#import <TLYShyNavBar/TLYShyNavBarManager.h>
+#import "DBWExerciseDetailDelegate.h"
 
 static NSString *const kCellIdentifier = @"set-cell-identifier";
 
-@interface DBWExerciseCollectionViewController () <UITextFieldDelegate, UINavigationControllerDelegate, UIScrollViewDelegate>
+@interface DBWExerciseCollectionViewController () <UITextFieldDelegate, UINavigationControllerDelegate, UIScrollViewDelegate, DBWExerciseDetailDelegate>
 
 @property (strong, nonatomic) DBWExercise *exercise;
 
@@ -49,7 +51,23 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
     self.navigationController.navigationBar.prefersLargeTitles = NO;
     self.title = [NSString stringWithFormat:@"Exercise %lu", _exerciseNumber];
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    
+    UILabel *titleLabelView = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 100.0f, 100) /* auto-sized anyway */];
+    titleLabelView.backgroundColor = [UIColor clearColor];
+    titleLabelView.textAlignment = NSTextAlignmentCenter;
+    titleLabelView.textColor = [UIColor blackColor];
+    titleLabelView.font = [UIFont systemFontOfSize:17 weight:UIFontWeightSemibold];
+    titleLabelView.adjustsFontSizeToFitWidth = YES;
+    titleLabelView.text = self.title;
+    self.navigationItem.titleView = titleLabelView;
+
+    _scrollView = [[UIScrollView alloc] init];
+    _scrollView.showsHorizontalScrollIndicator = NO;
+    _scrollView.showsVerticalScrollIndicator = NO;
+    _scrollView.pagingEnabled = YES;
+    _scrollView.delegate = self;
+    _scrollView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:_scrollView];
+
     _headerCell = [[DBWExerciseCollectionViewCell alloc] init];
     _headerCell.layer.cornerRadius = 8;
     _headerCell.layer.shadowRadius = 10;
@@ -60,28 +78,14 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
     _headerCell.detailLabel.text = [NSString stringWithFormat:@"%lu x %lu", _exercise.expectedSets, _exercise.expectedReps];
     _headerCell.numberLabel.text = [NSString stringWithFormat:@"%lu", _exerciseNumber];
     _headerCell.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:_headerCell];
-    
-    [_headerCell.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor constant:12.5].active = YES;
-    [_headerCell.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-12.5].active = YES;
-    [_headerCell.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor constant:13].active = YES;
-    [_headerCell.heightAnchor constraintEqualToConstant:68].active = YES;
 
-    _scrollView = [[UIScrollView alloc] init];
-    _scrollView.showsHorizontalScrollIndicator = NO;
-    _scrollView.showsVerticalScrollIndicator = NO;
-    _scrollView.pagingEnabled = YES;
-    _scrollView.delegate = self;
-    _scrollView.translatesAutoresizingMaskIntoConstraints = NO;
-
-    [self.view insertSubview:_scrollView belowSubview:_headerCell];
-    
     [_scrollView.leftAnchor constraintEqualToAnchor:self.view.leftAnchor].active = YES;
     [_scrollView.rightAnchor constraintEqualToAnchor:self.view.rightAnchor].active = YES;
-    [_scrollView.topAnchor constraintEqualToAnchor:_headerCell.bottomAnchor constant:13].active = YES;
+    [_scrollView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor].active = YES;
     [_scrollView.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor].active = YES;
 
     DBWExerciseCurrentSetsViewController *currentSetsViewController = [[DBWExerciseCurrentSetsViewController alloc] init];
+    currentSetsViewController.delegate = self;
     currentSetsViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     currentSetsViewController.exercise = _exercise;
     [self addChildViewController:currentSetsViewController];
@@ -92,7 +96,13 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
     [currentSetsViewController.view.widthAnchor constraintEqualToAnchor:_scrollView.frameLayoutGuide.widthAnchor constant:-25].active = YES;
     [currentSetsViewController.view.topAnchor constraintEqualToAnchor:_scrollView.frameLayoutGuide.topAnchor].active = YES;
     [currentSetsViewController.view.bottomAnchor constraintEqualToAnchor:_scrollView.frameLayoutGuide.bottomAnchor].active = YES;
-
+    [currentSetsViewController.collectionView addSubview:_headerCell];
+    [_headerCell.leftAnchor constraintEqualToAnchor:currentSetsViewController.view.leftAnchor].active = YES;
+    [_headerCell.rightAnchor constraintEqualToAnchor:currentSetsViewController.view.rightAnchor].active = YES;
+    [_headerCell.topAnchor constraintEqualToAnchor:currentSetsViewController.collectionView.contentLayoutGuide.topAnchor].active = YES;
+    [_headerCell.heightAnchor constraintEqualToConstant:68].active = YES;
+    
+    
     DBWExercisePastSetsViewController *pastSetsViewController = [[DBWExercisePastSetsViewController alloc] initWithExercisePlaceholder:_exercise.placeholder];
     pastSetsViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
 
@@ -130,6 +140,16 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
     CGFloat width = scrollView.contentSize.width / 2;
     int page = floor((scrollView.contentOffset.x - width / 2) / width) + 1;
     _pageControl.currentPage = page;
+    
+/*
+    CATransition *animation = [CATransition animation];
+    animation.duration = 1.0;
+    animation.type = kCATransitionPush;
+    animation.subtype = kCATransitionFromTop;
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    [self.navigationItem.titleView.layer addAnimation:animation forKey:@"changeTitle"];
+    
+    ((UILabel*)self.navigationItem.titleView).text = @"JACOB K";*/
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -137,6 +157,38 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
         [self.navigationItem setRightBarButtonItem:nil animated:NO];
     } else {
         [self.navigationItem setRightBarButtonItem:_plusButtonItem animated:NO];
+    }
+}
+
+#pragma mark - DBWExerciseDetailDelegate
+BOOL doneAlready = NO;
+- (void)exerciseDetailViewControllerScrolled:(UICollectionViewController *)collectionViewController {
+    NSLog(@"current offset: %@", NSStringFromCGPoint(collectionViewController.collectionView.contentOffset));
+    CGFloat yOffset = collectionViewController.collectionView.contentOffset.y;
+    
+    if (yOffset >= 68 && !doneAlready) {
+        ((UILabel*)self.navigationItem.titleView).alpha = 0;
+
+        CATransition *animation = [CATransition animation];
+        animation.duration = 0.5;
+        animation.type = kCATransitionPush;
+        animation.subtype = kCATransitionFromTop;
+        animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        [self.navigationItem.titleView.layer addAnimation:animation forKey:@"changeTitle"];
+        doneAlready = YES;
+        ((UILabel*)self.navigationItem.titleView).text = _exercise.placeholder.name;
+        ((UILabel*)self.navigationItem.titleView).alpha = 1.0;
+
+        
+    } else if (yOffset <= 0) {
+        CATransition *animation = [CATransition animation];
+        animation.duration = 1.0;
+        animation.type = kCATransitionPush;
+        animation.subtype = kCATransitionFromTop;
+        animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        [self.navigationItem.titleView.layer addAnimation:animation forKey:@"changeTitle"];
+        
+        ((UILabel*)self.navigationItem.titleView).text = @"JACOB K";
     }
 }
 

@@ -5,6 +5,7 @@ target 'Workout' do
   pod 'CompactConstraint'
   pod 'Google/SignIn'
   pod 'Realm'
+  pod 'TLYShyNavBar'
   pod 'VTAcknowledgementsViewController'
   
   post_install do | installer |

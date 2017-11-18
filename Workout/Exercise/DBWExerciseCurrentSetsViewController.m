@@ -13,6 +13,7 @@
 #import "DBWExerciseSetCollectionViewCell.h"
 #import "DBWSet.h"
 #import "DBWDatabaseManager.h"
+#import "DBWExerciseDetailDelegate.h"
 
 static NSString *const kCellIdentifier = @"set-cell-identifier";
 
@@ -26,11 +27,10 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
 
 - (instancetype)init {
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width - 25
-                                     , 100);
+    flowLayout.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width - 25, 100);
     flowLayout.minimumLineSpacing = 20;
     flowLayout.minimumInteritemSpacing = 0;
-    flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 15, 0);
+    flowLayout.sectionInset = UIEdgeInsetsMake(88, 0, 15, 0);
     self = [super initWithCollectionViewLayout:flowLayout];
     if (self) {
     //    _exercise = exercise;
@@ -44,7 +44,6 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
     
     self.collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
-
     
     self.title = [NSString stringWithFormat:@"Exercise %lu", _exerciseNumber];
     
@@ -133,6 +132,12 @@ static NSString *const kCellIdentifier = @"set-cell-identifier";
         [[DBWDatabaseManager sharedDatabaseManager] endTemplateWriting];
         [tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
+}
+
+#pragma mark - DBWExerciseDetailDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self.delegate exerciseDetailViewControllerScrolled:self];
 }
 
 @end

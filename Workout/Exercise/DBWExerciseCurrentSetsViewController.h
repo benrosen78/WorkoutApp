@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DBWExerciseDetailDelegate.h"
 
 @class DBWExercise;
 
 @interface DBWExerciseCurrentSetsViewController : UICollectionViewController
 
 @property (strong, nonatomic) DBWExercise *exercise;
+
+@property (nonatomic) id <DBWExerciseDetailDelegate> delegate;
 
 @end

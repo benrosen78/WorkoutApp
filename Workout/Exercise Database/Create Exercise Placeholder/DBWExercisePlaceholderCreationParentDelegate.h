@@ -6,12 +6,14 @@
 //  Copyright © 2017 Ben Rosen. All rights reserved.
 //
 
-@class DBWExercisePlaceholder, DBWExercisePlaceholderCreationViewController;
+#import "DBWExercisePlaceholder.h"
+
+@class DBWExercisePlaceholderCreationViewController;
 
 @protocol DBWExercisePlaceholderCreationParentDelegate
 
 @required
 - (void)creationViewController:(DBWExercisePlaceholderCreationViewController *)creationViewController changedToHeight:(CGFloat)height;
-- (void)creationViewController:(DBWExercisePlaceholderCreationViewController *)creationViewController finishedWithPlaceholder:(DBWExercisePlaceholder *)placeholder;
+- (void)creationViewController:(DBWExercisePlaceholderCreationViewController *)creationViewController finishedWithMuscleGroup:(DBWExercisePlaceholderType)group andExerciseName:(NSString *)name;
 
 @end

@@ -179,11 +179,11 @@
 #pragma mark - Workouts DB Management
 
 - (void)saveNewWorkout:(DBWWorkout *)workout {
-    [_userRealm beginWriteTransaction];
+   /* [_userRealm beginWriteTransaction];
     
     DBWCalendar *calendar = [DBWCalendar allObjectsInRealm:_userRealm][0];
     [calendar.workouts addObject:workout];
-    [_userRealm commitWriteTransaction];
+    [_userRealm commitWriteTransaction];*/
 }
 
 - (DBWWorkout *)workoutForDay:(NSInteger)day month:(NSInteger)month year:(NSInteger)year {
@@ -203,7 +203,7 @@
 - (DBWWorkout *)todaysWorkout {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *todaysComponents = [calendar components:(NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:[NSDate date]];
-    return [self workoutForDay:todaysComponents.day month:todaysComponents.month year:todaysComponents.year];
+    return nil;//[self workoutForDay:todaysComponents.day month:todaysComponents.month year:todaysComponents.year];
 }
 
 - (NSArray <NSNumber *> *)yearsInDatabase {

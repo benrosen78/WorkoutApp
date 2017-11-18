@@ -31,10 +31,8 @@ static NSString *const kMuscleSelectionReuseIdentifier = @"MuscleSelectionReuseI
     title.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:title];
     
-    
     [title.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:17].active = YES;
     [title.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
-    
     
     UITableView *muscleSelectionTableView = [[UITableView alloc] init];
     muscleSelectionTableView.scrollEnabled = NO;
@@ -48,8 +46,6 @@ static NSString *const kMuscleSelectionReuseIdentifier = @"MuscleSelectionReuseI
     [muscleSelectionTableView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:40].active = YES;
     [muscleSelectionTableView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-40].active = YES;
     [muscleSelectionTableView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant:-10].active = YES;
-    
-    
 }
 
 #pragma mark - UITableViewDataSource

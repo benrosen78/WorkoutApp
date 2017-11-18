@@ -20,6 +20,7 @@ static NSString *const kCellIdentifier = @"exercise-placeholder-cell";
 
 @property (strong, nonatomic) DBWExerciseDatabase *exerciseDatabasePlaceholders;
 
+@property (strong, nonatomic) UIVisualEffectView *blurredBackgroundView;
 @end
 
 @implementation DBWExerciseDatabaseTableViewController
@@ -58,10 +59,10 @@ static NSString *const kCellIdentifier = @"exercise-placeholder-cell";
 - (void)addExercise:(UIBarButtonItem *)sender {
     self.tableView.userInteractionEnabled = NO;
     
-    UIVisualEffectView *backgroundBlur = [[UIVisualEffectView alloc] init];
-    backgroundBlur.alpha = 0.9;
-    backgroundBlur.frame = self.view.frame;
-    [self.navigationController.view addSubview:backgroundBlur];
+    _blurredBackgroundView = [[UIVisualEffectView alloc] init];
+    _blurredBackgroundView.alpha = 0.9;
+    _blurredBackgroundView.frame = self.view.frame;
+    [self.navigationController.view addSubview:_blurredBackgroundView];
     
     DBWExercisePlaceholderCreationViewController *creationViewController = [[DBWExercisePlaceholderCreationViewController alloc] init];
     creationViewController.delegate = self;
@@ -77,28 +78,9 @@ static NSString *const kCellIdentifier = @"exercise-placeholder-cell";
     UICubicTimingParameters *blurTimingParameters = [[UICubicTimingParameters alloc] initWithControlPoint1:CGPointMake(0.3, 0.1) controlPoint2:CGPointMake(0.5, 0.25)];
     UIViewPropertyAnimator *blurAnimator = [[UIViewPropertyAnimator alloc] initWithDuration:0.3 timingParameters:blurTimingParameters];
     [blurAnimator addAnimations:^{
-        backgroundBlur.effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+        _blurredBackgroundView.effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
     }];
     [blurAnimator startAnimation];
-    
-
-    /*
-    UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"Exercise Database" message:@"What is the title of this exercise? If the exercise is already in the database, click Cancel and select it from the database." preferredStyle:UIAlertControllerStyleAlert];
-    [controller addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
-    [controller addAction:[UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSString *text = controller.textFields[0].text;
-        
-        DBWExercisePlaceholder *exercisePlaceholder = [[DBWExercisePlaceholder alloc] init];
-        exercisePlaceholder.name = text;
-        [[DBWDatabaseManager sharedDatabaseManager] saveNewExercisePlaceholder:exercisePlaceholder];
-        
-        [self.tableView reloadData];
-    }]];
-    [controller addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.placeholder = @"Partial squats";
-        textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-    }];
-    [self presentViewController:controller animated:YES completion:nil];*/
 }
 
 - (void)didReceiveMemoryWarning {
@@ -140,10 +122,35 @@ static NSString *const kCellIdentifier = @"exercise-placeholder-cell";
 
 - (void)creationViewController:(DBWExercisePlaceholderCreationViewController *)creationViewController changedToHeight:(CGFloat)height {
     creationViewController.view.frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - height, [[UIScreen mainScreen] bounds].size.width, height);
-
 }
 
-- (void)creationViewController:(DBWExercisePlaceholderCreationViewController *)creationViewController finishedWithPlaceholder:(DBWExercisePlaceholder *)placeholder {
+- (void)creationViewController:(DBWExercisePlaceholderCreationViewController *)creationViewController finishedWithMuscleGroup:(DBWExercisePlaceholderType)group andExerciseName:(NSString *)name {
     
+    DBWExercisePlaceholder *exercisePlaceholder = [[DBWExercisePlaceholder alloc] init];
+    exercisePlaceholder.type = group;
+    exercisePlaceholder.name = name;
+    [[DBWDatabaseManager sharedDatabaseManager] saveNewExercisePlaceholder:exercisePlaceholder];
+    [self.tableView reloadData];
+    
+    DBWExercisePlaceholderCreationViewController *__block localCreationViewController = creationViewController;
+    UIViewPropertyAnimator *creationViewAnimator = [[UIViewPropertyAnimator alloc] initWithDuration:0.4 dampingRatio:0.8 animations:^{
+        localCreationViewController.view.frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width, 460);
+    }];
+    [creationViewAnimator addCompletion:^(UIViewAnimatingPosition finalPosition) {
+        [localCreationViewController.view removeFromSuperview];
+        localCreationViewController = nil;
+    }];
+    [creationViewAnimator startAnimation];
+    
+    UICubicTimingParameters *blurTimingParameters = [[UICubicTimingParameters alloc] initWithControlPoint1:CGPointMake(0.3, 0.25) controlPoint2:CGPointMake(0.5, 0.1)];
+    UIViewPropertyAnimator *blurAnimator = [[UIViewPropertyAnimator alloc] initWithDuration:0.3 timingParameters:blurTimingParameters];
+    [blurAnimator addAnimations:^{
+        _blurredBackgroundView.effect = nil;
+    }];
+    [blurAnimator addCompletion:^(UIViewAnimatingPosition finalPosition) {
+        [_blurredBackgroundView removeFromSuperview];
+        _blurredBackgroundView = nil;
+    }];
+    [blurAnimator startAnimation];
 }
 @end

@@ -60,6 +60,9 @@
 		B5D71E7F1F76D3DF0012ABC1 /* DBWExerciseCurrentSetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D71E7E1F76D3DF0012ABC1 /* DBWExerciseCurrentSetsViewController.m */; };
 		B5DF74381F408DA5009FA3B4 /* DBWWorkoutTemplateList.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DF74371F408DA5009FA3B4 /* DBWWorkoutTemplateList.m */; };
 		B5DF743B1F40B3CD009FA3B4 /* DBWCustomizeWorkoutPlanCollectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DF743A1F40B3CD009FA3B4 /* DBWCustomizeWorkoutPlanCollectionHeaderView.m */; };
+		B5F41E571FB8A9440039E40E /* DBWExercisePlaceholderCreationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5F41E561FB8A9440039E40E /* DBWExercisePlaceholderCreationViewController.m */; };
+		B5F41E5B1FB8DDC50039E40E /* DBWExercisePlaceholderCreationMuscleSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5F41E5A1FB8DDC50039E40E /* DBWExercisePlaceholderCreationMuscleSelectionViewController.m */; };
+		B5F41E5F1FB8E76B0039E40E /* DBWExercisePlaceholderCreationNamingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5F41E5E1FB8E76B0039E40E /* DBWExercisePlaceholderCreationNamingViewController.m */; };
 		B5F635391F41DD6B00B866DC /* DBWDatabaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B5F635371F41DD6B00B866DC /* DBWDatabaseManager.m */; };
 		B5F6353C1F4339B400B866DC /* DBWEmailLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5F6353B1F4339B400B866DC /* DBWEmailLoginViewController.m */; };
 		C73C33F2E8B40A6707C8CE31 /* Pods_Workout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C05FB80146D5BA29DE434BD3 /* Pods_Workout.framework */; };
@@ -192,6 +195,15 @@
 		B5DF74371F408DA5009FA3B4 /* DBWWorkoutTemplateList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWWorkoutTemplateList.m; sourceTree = "<group>"; };
 		B5DF74391F40B3CD009FA3B4 /* DBWCustomizeWorkoutPlanCollectionHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWCustomizeWorkoutPlanCollectionHeaderView.h; sourceTree = "<group>"; };
 		B5DF743A1F40B3CD009FA3B4 /* DBWCustomizeWorkoutPlanCollectionHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWCustomizeWorkoutPlanCollectionHeaderView.m; sourceTree = "<group>"; };
+		B5F41E541FB75CF10039E40E /* DBWExerciseDetailDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWExerciseDetailDelegate.h; sourceTree = "<group>"; };
+		B5F41E551FB8A9440039E40E /* DBWExercisePlaceholderCreationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWExercisePlaceholderCreationViewController.h; sourceTree = "<group>"; };
+		B5F41E561FB8A9440039E40E /* DBWExercisePlaceholderCreationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWExercisePlaceholderCreationViewController.m; sourceTree = "<group>"; };
+		B5F41E591FB8DDC50039E40E /* DBWExercisePlaceholderCreationMuscleSelectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWExercisePlaceholderCreationMuscleSelectionViewController.h; sourceTree = "<group>"; };
+		B5F41E5A1FB8DDC50039E40E /* DBWExercisePlaceholderCreationMuscleSelectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWExercisePlaceholderCreationMuscleSelectionViewController.m; sourceTree = "<group>"; };
+		B5F41E5C1FB8E2870039E40E /* DBWExercisePlaceholderCreationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWExercisePlaceholderCreationDelegate.h; sourceTree = "<group>"; };
+		B5F41E5D1FB8E76B0039E40E /* DBWExercisePlaceholderCreationNamingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWExercisePlaceholderCreationNamingViewController.h; sourceTree = "<group>"; };
+		B5F41E5E1FB8E76B0039E40E /* DBWExercisePlaceholderCreationNamingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWExercisePlaceholderCreationNamingViewController.m; sourceTree = "<group>"; };
+		B5F41E601FB8E9B80039E40E /* DBWExercisePlaceholderCreationParentDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWExercisePlaceholderCreationParentDelegate.h; sourceTree = "<group>"; };
 		B5F635371F41DD6B00B866DC /* DBWDatabaseManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWDatabaseManager.m; sourceTree = "<group>"; };
 		B5F635381F41DD6B00B866DC /* DBWDatabaseManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWDatabaseManager.h; sourceTree = "<group>"; };
 		B5F6353A1F4339B400B866DC /* DBWEmailLoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWEmailLoginViewController.h; sourceTree = "<group>"; };
@@ -282,6 +294,7 @@
 				B5369C6C1F7406EA000FFD9F /* DBWExerciseDatabaseTableViewController.m */,
 				B5CEB7721F746916001F3FAD /* DBWExerciseDatabaseConfirmationViewController.h */,
 				B5CEB7731F746916001F3FAD /* DBWExerciseDatabaseConfirmationViewController.m */,
+				B5F41E581FB8DC230039E40E /* Create Exercise Placeholder */,
 			);
 			path = "Exercise Database";
 			sourceTree = "<group>";
@@ -350,6 +363,7 @@
 				B53CF2C21F3365DE00F30CB8 /* DBWExerciseSetCollectionViewCell.m */,
 				B53CF2C31F3365DE00F30CB8 /* DBWExerciseCollectionViewController.h */,
 				B53CF2C41F3365DE00F30CB8 /* DBWExerciseCollectionViewController.m */,
+				B5F41E541FB75CF10039E40E /* DBWExerciseDetailDelegate.h */,
 				B5D71E7D1F76D3DF0012ABC1 /* DBWExerciseCurrentSetsViewController.h */,
 				B5D71E7E1F76D3DF0012ABC1 /* DBWExerciseCurrentSetsViewController.m */,
 				B52B52611F7927FC00DD90CF /* DBWExercisePastSetsViewController.h */,
@@ -490,6 +504,21 @@
 				B5D2E3031F2A93B800CB4540 /* Info.plist */,
 			);
 			path = WorkoutUITests;
+			sourceTree = "<group>";
+		};
+		B5F41E581FB8DC230039E40E /* Create Exercise Placeholder */ = {
+			isa = PBXGroup;
+			children = (
+				B5F41E601FB8E9B80039E40E /* DBWExercisePlaceholderCreationParentDelegate.h */,
+				B5F41E551FB8A9440039E40E /* DBWExercisePlaceholderCreationViewController.h */,
+				B5F41E561FB8A9440039E40E /* DBWExercisePlaceholderCreationViewController.m */,
+				B5F41E591FB8DDC50039E40E /* DBWExercisePlaceholderCreationMuscleSelectionViewController.h */,
+				B5F41E5A1FB8DDC50039E40E /* DBWExercisePlaceholderCreationMuscleSelectionViewController.m */,
+				B5F41E5D1FB8E76B0039E40E /* DBWExercisePlaceholderCreationNamingViewController.h */,
+				B5F41E5E1FB8E76B0039E40E /* DBWExercisePlaceholderCreationNamingViewController.m */,
+				B5F41E5C1FB8E2870039E40E /* DBWExercisePlaceholderCreationDelegate.h */,
+			);
+			path = "Create Exercise Placeholder";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -708,6 +737,7 @@
 				B57E6D221F51EC6B00849CB6 /* DBWCalendarCollectionViewCell.m in Sources */,
 				B57E6D251F51F17600849CB6 /* DBWCalendarCellLabel.m in Sources */,
 				B57E6D2B1F53521C00849CB6 /* DBWColorTableViewCell.m in Sources */,
+				B5F41E5B1FB8DDC50039E40E /* DBWExercisePlaceholderCreationMuscleSelectionViewController.m in Sources */,
 				B5D2E2DF1F2A93B800CB4540 /* AppDelegate.m in Sources */,
 				B5F6353C1F4339B400B866DC /* DBWEmailLoginViewController.m in Sources */,
 				B53CF2C91F3365FC00F30CB8 /* DBWWorkoutCalendarViewController.m in Sources */,
@@ -728,8 +758,10 @@
 				B53CF2CF1F33661300F30CB8 /* DBWSet.m in Sources */,
 				B53CF2D01F33661300F30CB8 /* DBWWorkout.m in Sources */,
 				B5F635391F41DD6B00B866DC /* DBWDatabaseManager.m in Sources */,
+				B5F41E5F1FB8E76B0039E40E /* DBWExercisePlaceholderCreationNamingViewController.m in Sources */,
 				B58F66F11F8D26420082A30C /* DBWStopwatchCircularCollectionViewLayout.m in Sources */,
 				B5DF74381F408DA5009FA3B4 /* DBWWorkoutTemplateList.m in Sources */,
+				B5F41E571FB8A9440039E40E /* DBWExercisePlaceholderCreationViewController.m in Sources */,
 				B5B192BF1F537C10005B3F8B /* UIColor+ColorPalette.m in Sources */,
 				B57E6D1F1F51C6D900849CB6 /* DBWStopwatchViewController.m in Sources */,
 				B5CEB7741F746916001F3FAD /* DBWExerciseDatabaseConfirmationViewController.m in Sources */,

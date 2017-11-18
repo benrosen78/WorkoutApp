@@ -12,4 +12,6 @@
 
 @required
 - (void)selectedMuscleGroup:(DBWExercisePlaceholderType)muscleGroup;
+- (void)exerciseNamed:(NSString *)name;
+
 @end

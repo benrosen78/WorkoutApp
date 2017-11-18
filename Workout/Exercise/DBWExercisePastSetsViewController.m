@@ -34,7 +34,7 @@ static NSString * const kSetCell = @"date.set.cell";
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.minimumLineSpacing = 1;
     flowLayout.minimumInteritemSpacing = 0;
-    flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 30, 0);
+    flowLayout.sectionInset = UIEdgeInsetsMake(100, 0, 30, 0);
     self = [super initWithCollectionViewLayout:flowLayout];
     if (self) {
         _placeholder = placeholder;

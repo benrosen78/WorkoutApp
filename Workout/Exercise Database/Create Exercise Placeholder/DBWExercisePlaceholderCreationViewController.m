@@ -11,12 +11,13 @@
 #import "DBWExercisePlaceholderCreationDelegate.h"
 #import "DBWExercisePlaceholderCreationNamingViewController.h"
 
-
 @interface DBWExercisePlaceholderCreationViewController () <DBWExercisePlaceholderCreationDelegate>
 
 @property (strong, nonatomic) DBWExercisePlaceholderCreationMuscleSelectionViewController *muscleSelectionViewController;
 
 @property (strong, nonatomic) DBWExercisePlaceholderCreationNamingViewController *namingViewController;
+
+@property (nonatomic) DBWExercisePlaceholderType muscleGroup;
 
 @end
 
@@ -41,10 +42,9 @@
     [_muscleSelectionViewController.view.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
     [_muscleSelectionViewController.view.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
     [_muscleSelectionViewController.view.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
-
     
     _namingViewController = [[DBWExercisePlaceholderCreationNamingViewController alloc] init];
-    //_namingViewController.completionDelegate = self;
+    _namingViewController.completionDelegate = self;
     [self addChildViewController:_namingViewController];
     _namingViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_namingViewController.view];
@@ -54,12 +54,18 @@
     [_namingViewController.view.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
     [_namingViewController.view.widthAnchor constraintEqualToAnchor:self.view.widthAnchor].active = YES;
     [_namingViewController.view.leadingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
+
+    // if one of the sub view controllers show a keyboard, the view height will be changed here
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardNotification:) name:UIKeyboardWillChangeFrameNotification object:nil];
+
     
 }
 
 #pragma mark - DBWExercisePlaceholderCreationDelegate
 
 - (void)selectedMuscleGroup:(DBWExercisePlaceholderType)muscleGroup {
+    _muscleGroup = muscleGroup;
+    
     // remove, add to remove the old constraints
     [_muscleSelectionViewController.view removeFromSuperview];
     [self.view addSubview:_muscleSelectionViewController.view];
@@ -80,8 +86,18 @@
     
     [UIView animateWithDuration:0.5 animations:^{
         [self.view layoutIfNeeded];
-        [self.delegate creationViewController:self changedToHeight:225];
+        [self.delegate creationViewController:self changedToHeight:255];
     }];
+}
+
+- (void)exerciseNamed:(NSString *)name {
+    [self.delegate creationViewController:self finishedWithMuscleGroup:_muscleGroup andExerciseName:name];
+}
+
+#pragma mark - UIKeyboardWillChangeFrameNotification
+- (void)keyboardNotification:(NSNotification *)notification {
+    CGSize keyboardSize = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    [self.delegate creationViewController:self changedToHeight:CGRectGetHeight(self.view.frame) + keyboardSize.height];
 }
 
 @end

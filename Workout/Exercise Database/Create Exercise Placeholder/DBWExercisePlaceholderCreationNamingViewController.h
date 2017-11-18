@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DBWExercisePlaceholderCreationDelegate.h"
 
 @interface DBWExercisePlaceholderCreationNamingViewController : UIViewController
+
+@property (nonatomic, weak) id<DBWExercisePlaceholderCreationDelegate> completionDelegate;
 
 @end
