@@ -16,6 +16,11 @@
 
 static NSString *const kCellIdentifier = @"exercise-placeholder-cell";
 
+typedef NS_ENUM(NSInteger, DBWExerciseDatabaseCreationState) {
+    DBWExerciseDatabaseCreationExpandedState,
+    DBWExerciseDatabaseCreationCondensedState
+};
+
 @interface DBWExerciseDatabaseTableViewController () <DBWExercisePlaceholderCreationParentDelegate, UISearchResultsUpdating>
 
 @property (strong, nonatomic) DBWExerciseDatabase *exerciseDatabasePlaceholders;
@@ -25,6 +30,14 @@ static NSString *const kCellIdentifier = @"exercise-placeholder-cell";
 @property (strong, nonatomic) UIVisualEffectView *blurredBackgroundView;
 
 @property (nonatomic) DBWExercisePlaceholderType currentFilterType;
+
+@property (nonatomic) DBWExerciseDatabaseCreationState creationState;
+
+@property (strong, nonatomic) NSMutableArray<UIViewPropertyAnimator *> *animators;
+
+@property (strong, nonatomic) DBWExercisePlaceholderCreationViewController *creationViewController;
+
+@property (nonatomic) CGFloat progressWhenInterrupted;
 
 @end
 
@@ -46,6 +59,8 @@ static NSString *const kCellIdentifier = @"exercise-placeholder-cell";
     self.tableView.tableHeaderView = segmentedControl;
     [segmentedControl addTarget:self action:@selector(filterChanged:) forControlEvents:UIControlEventValueChanged];
 
+    _animators = [NSMutableArray array];
+    
     UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     searchController.definesPresentationContext = YES;
     searchController.searchResultsUpdater = self;
@@ -77,15 +92,22 @@ static NSString *const kCellIdentifier = @"exercise-placeholder-cell";
     _blurredBackgroundView.frame = self.view.frame;
     [self.navigationController.view addSubview:_blurredBackgroundView];
     
-    DBWExercisePlaceholderCreationViewController *creationViewController = [[DBWExercisePlaceholderCreationViewController alloc] init];
-    creationViewController.delegate = self;
-    [self.navigationController addChildViewController:creationViewController];
-    [self.navigationController.view addSubview:creationViewController.view];
-    creationViewController.view.frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width, 460);
-    [creationViewController didMoveToParentViewController:self];
+    UITapGestureRecognizer *backgroundTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDismiss:)];
+    [self.navigationController.view addGestureRecognizer:backgroundTap];
+    UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(gestureRecognizerPanned:)];
+
+    [self.navigationController.view addGestureRecognizer:backgroundTap];
+    [self.navigationController.view addGestureRecognizer:panGestureRecognizer];
+
+    _creationViewController = [[DBWExercisePlaceholderCreationViewController alloc] init];
+    _creationViewController.delegate = self;
+    [self.navigationController addChildViewController:_creationViewController];
+    [self.navigationController.view addSubview:_creationViewController.view];
+    _creationViewController.view.frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width, 460);
+    [_creationViewController didMoveToParentViewController:self];
     
     [[[UIViewPropertyAnimator alloc] initWithDuration:0.4 dampingRatio:0.8 animations:^{
-        creationViewController.view.frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 460, [[UIScreen mainScreen] bounds].size.width, 460);
+        _creationViewController.view.frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 460, [[UIScreen mainScreen] bounds].size.width, 460);
     }] startAnimation];
     
     UICubicTimingParameters *blurTimingParameters = [[UICubicTimingParameters alloc] initWithControlPoint1:CGPointMake(0.3, 0.1) controlPoint2:CGPointMake(0.5, 0.25)];
@@ -176,6 +198,8 @@ static NSString *const kCellIdentifier = @"exercise-placeholder-cell";
         _blurredBackgroundView = nil;
     }];
     [blurAnimator startAnimation];
+    
+    _creationState = [self nextCreationState];
 }
 
 #pragma mark - UISearchResultsUpdating
@@ -183,6 +207,107 @@ static NSString *const kCellIdentifier = @"exercise-placeholder-cell";
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     _filteredExercisePlaceholders = [_exerciseDatabasePlaceholders.list objectsWithPredicate:[NSPredicate predicateWithFormat:@"name contains[cd] %@ && type == %lu", searchController.searchBar.text, _currentFilterType]];
     [self.tableView reloadData];
+}
+
+#pragma mark - Gesture Animations
+
+- (void)tapDismiss:(UITapGestureRecognizer *)recognizer {
+    
+}
+
+- (void)gestureRecognizerPanned:(UIPanGestureRecognizer *)recognizer {
+    CGPoint p = [recognizer locationInView:self.view];
+    switch (recognizer.state) {
+        case UIGestureRecognizerStateBegan:
+            [self startInteractiveTransition:[self nextCreationState]];
+            break;
+        case UIGestureRecognizerStateChanged:
+            [self updateInteractiveTransition:[self percentageCompleteForState:[self nextCreationState] translation:[recognizer translationInView:self.view]]];
+            break;
+        case UIGestureRecognizerStateEnded:
+            [self continueInteractiveTransition:[self percentageCompleteForState:[self nextCreationState] translation:[recognizer translationInView:self.view]]];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)startInteractiveTransition:(DBWExerciseDatabaseCreationState)state {
+    [self addAnimatorsIfNeeded:state];
+}
+
+- (void)updateInteractiveTransition:(CGFloat)percentageComplete {
+    for (UIViewPropertyAnimator *animator in _animators) {
+        animator.fractionComplete = percentageComplete;
+    }
+}
+
+- (void)addAnimatorsIfNeeded:(DBWExerciseDatabaseCreationState)state {
+    if (_animators.count == 0) {
+        [self animateFrames:state];
+        [self animateBlur:state];
+    }
+    for (UIViewPropertyAnimator *animator in _animators) {
+        [animator pauseAnimation];
+    }
+    _progressWhenInterrupted = _animators[0].fractionComplete ?: 0;
+}
+
+- (DBWExerciseDatabaseCreationState)nextCreationState {
+    switch (_creationState) {
+        case DBWExerciseDatabaseCreationExpandedState:
+            return DBWExerciseDatabaseCreationCondensedState;
+        case DBWExerciseDatabaseCreationCondensedState:
+            return DBWExerciseDatabaseCreationExpandedState;
+    }
+}
+
+- (CGFloat)percentageCompleteForState:(DBWExerciseDatabaseCreationState)state translation:(CGPoint)translation {
+    CGFloat translationY = state == DBWExerciseDatabaseCreationExpandedState ? -translation.y : translation.y;
+    return (translationY / _creationViewController.view.frame.size.height) + _progressWhenInterrupted;
+}
+
+- (void)continueInteractiveTransition:(CGFloat)percentageCompleted {
+    if (percentageCompleted < 0.4) {
+        for (UIViewPropertyAnimator *animator in _animators) {
+            animator.reversed = !animator.reversed;
+            [animator continueAnimationWithTimingParameters:nil durationFactor:0];
+        }
+    } else {
+        UICubicTimingParameters *curvedTimingParameters = [[UICubicTimingParameters alloc] initWithAnimationCurve:UIViewAnimationCurveEaseOut];
+        for (UIViewPropertyAnimator *animator in _animators) {
+            [animator continueAnimationWithTimingParameters:curvedTimingParameters durationFactor:0];
+        }
+    }
+}
+
+- (void)animateFrames:(DBWExerciseDatabaseCreationState)state {
+    UIViewPropertyAnimator *creationViewAnimator = [[UIViewPropertyAnimator alloc] initWithDuration:0.4 dampingRatio:0.8 animations:^{
+        _creationViewController.view.frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width, 460);
+    }];
+    [creationViewAnimator addCompletion:^(UIViewAnimatingPosition finalPosition) {
+        if (finalPosition == UIViewAnimatingPositionEnd) {
+            [_creationViewController.view removeFromSuperview];
+            [_creationViewController willMoveToParentViewController:nil];
+        
+            [_creationViewController removeFromParentViewController];
+            _creationViewController = nil;
+            _creationState = [self nextCreationState];
+        }
+        self.animators = [NSMutableArray array];
+    }];
+    [_animators addObject:creationViewAnimator];
+}
+
+- (void)animateBlur:(DBWExerciseDatabaseCreationState)state {
+    UICubicTimingParameters *blurTimingParameters = [[UICubicTimingParameters alloc] initWithControlPoint1:CGPointMake(0.25, 0.3) controlPoint2:CGPointMake(0.1, 0.5)];
+    UIViewPropertyAnimator *blurAnimator = [[UIViewPropertyAnimator alloc] initWithDuration:0.3 timingParameters:blurTimingParameters];
+    blurAnimator.scrubsLinearly = NO;
+    [blurAnimator addAnimations:^{
+        _blurredBackgroundView.alpha = 0;
+    }];
+    [_animators addObject:blurAnimator];
+
 }
 
 @end
