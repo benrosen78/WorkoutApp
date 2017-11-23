@@ -16,13 +16,16 @@
 
 static NSString *const kCellIdentifier = @"exercise-placeholder-cell";
 
-@interface DBWExerciseDatabaseTableViewController () <DBWExercisePlaceholderCreationParentDelegate>
+@interface DBWExerciseDatabaseTableViewController () <DBWExercisePlaceholderCreationParentDelegate, UISearchResultsUpdating>
 
 @property (strong, nonatomic) DBWExerciseDatabase *exerciseDatabasePlaceholders;
 
 @property (strong, nonatomic) RLMResults *filteredExercisePlaceholders;
 
 @property (strong, nonatomic) UIVisualEffectView *blurredBackgroundView;
+
+@property (nonatomic) DBWExercisePlaceholderType currentFilterType;
+
 @end
 
 @implementation DBWExerciseDatabaseTableViewController
@@ -32,17 +35,23 @@ static NSString *const kCellIdentifier = @"exercise-placeholder-cell";
     
     _exerciseDatabasePlaceholders = [[DBWDatabaseManager sharedDatabaseManager] allExercisePlaceholders];
     _filteredExercisePlaceholders = [_exerciseDatabasePlaceholders.list objectsWithPredicate:[NSPredicate predicateWithFormat:@"type == 0"]];
-
+    _currentFilterType = DBWExercisePlaceholderChestType;
+    
     self.title = @"Exercise Database";
     
     self.navigationController.navigationBar.prefersLargeTitles = NO;
     
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Chest", @"Back", @"Shoulders", @"Core", @"Arms", @"Legs"]];
-    [segmentedControl setSelectedSegmentIndex:0];
+    [segmentedControl setSelectedSegmentIndex:_currentFilterType];
     self.tableView.tableHeaderView = segmentedControl;
     [segmentedControl addTarget:self action:@selector(filterChanged:) forControlEvents:UIControlEventValueChanged];
 
     UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    searchController.definesPresentationContext = YES;
+    searchController.searchResultsUpdater = self;
+    searchController.delegate = self;
+    searchController.obscuresBackgroundDuringPresentation = NO;
+    searchController.searchBar.placeholder = @"Search Exercise Database";
     self.navigationItem.searchController = searchController;
     self.navigationItem.hidesSearchBarWhenScrolling = NO;
     
@@ -55,7 +64,8 @@ static NSString *const kCellIdentifier = @"exercise-placeholder-cell";
 }
 
 - (void)filterChanged:(UISegmentedControl *)control {
-    _filteredExercisePlaceholders = [_exerciseDatabasePlaceholders.list objectsWithPredicate:[NSPredicate predicateWithFormat:@"type == %lu", control.selectedSegmentIndex]];
+    _currentFilterType = control.selectedSegmentIndex;
+    _filteredExercisePlaceholders = [_exerciseDatabasePlaceholders.list objectsWithPredicate:[NSPredicate predicateWithFormat:@"type == %lu", _currentFilterType]];
     [self.tableView reloadData];
 }
 
@@ -72,7 +82,7 @@ static NSString *const kCellIdentifier = @"exercise-placeholder-cell";
     [self.navigationController addChildViewController:creationViewController];
     [self.navigationController.view addSubview:creationViewController.view];
     creationViewController.view.frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width, 460);
-    [creationViewController didMoveToParentViewController:self.navigationController];
+    [creationViewController didMoveToParentViewController:self];
     
     [[[UIViewPropertyAnimator alloc] initWithDuration:0.4 dampingRatio:0.8 animations:^{
         creationViewController.view.frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 460, [[UIScreen mainScreen] bounds].size.width, 460);
@@ -109,10 +119,11 @@ static NSString *const kCellIdentifier = @"exercise-placeholder-cell";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     DBWExercisePlaceholder *placeholder = _filteredExercisePlaceholders[indexPath.row];
-    
     
     DBWExerciseDatabaseConfirmationViewController *confirmationViewController = [[DBWExerciseDatabaseConfirmationViewController alloc] init];
     confirmationViewController.title = placeholder.name;
@@ -129,6 +140,11 @@ static NSString *const kCellIdentifier = @"exercise-placeholder-cell";
 
 - (void)creationViewController:(DBWExercisePlaceholderCreationViewController *)creationViewController finishedWithMuscleGroup:(DBWExercisePlaceholderType)group andExerciseName:(NSString *)name {
     self.tableView.userInteractionEnabled = YES;
+    
+    _currentFilterType = group;
+    _filteredExercisePlaceholders = [_exerciseDatabasePlaceholders.list objectsWithPredicate:[NSPredicate predicateWithFormat:@"type == %lu", group]];
+    [self.tableView reloadData];
+    ((UISegmentedControl *)self.tableView.tableHeaderView).selectedSegmentIndex = _currentFilterType;
 
     DBWExercisePlaceholderCreationViewController *__block localCreationViewController = creationViewController;
     UIViewPropertyAnimator *creationViewAnimator = [[UIViewPropertyAnimator alloc] initWithDuration:0.4 dampingRatio:0.8 animations:^{
@@ -137,6 +153,8 @@ static NSString *const kCellIdentifier = @"exercise-placeholder-cell";
     [creationViewAnimator addCompletion:^(UIViewAnimatingPosition finalPosition) {
         [localCreationViewController.view removeFromSuperview];
         [localCreationViewController willMoveToParentViewController:nil];
+        
+        [localCreationViewController removeFromParentViewController];
         localCreationViewController = nil;
         
         DBWExercisePlaceholder *exercisePlaceholder = [[DBWExercisePlaceholder alloc] init];
@@ -159,4 +177,12 @@ static NSString *const kCellIdentifier = @"exercise-placeholder-cell";
     }];
     [blurAnimator startAnimation];
 }
+
+#pragma mark - UISearchResultsUpdating
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    _filteredExercisePlaceholders = [_exerciseDatabasePlaceholders.list objectsWithPredicate:[NSPredicate predicateWithFormat:@"name contains[cd] %@ && type == %lu", searchController.searchBar.text, _currentFilterType]];
+    [self.tableView reloadData];
+}
+
 @end

@@ -30,7 +30,7 @@
     self.view.layer.cornerRadius = 20;
     self.view.layer.maskedCorners = (kCALayerMaxXMinYCorner | kCALayerMinXMinYCorner);
     self.view.layer.masksToBounds = YES;
-
+    
     _muscleSelectionViewController = [[DBWExercisePlaceholderCreationMuscleSelectionViewController alloc] init];
     _muscleSelectionViewController.completionDelegate = self;
     [self addChildViewController:_muscleSelectionViewController];

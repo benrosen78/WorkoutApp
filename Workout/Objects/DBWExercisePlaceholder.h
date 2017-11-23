@@ -23,4 +23,6 @@ typedef NS_ENUM(NSInteger, DBWExercisePlaceholderType) {
 
 @property DBWExercisePlaceholderType type;
 
++ (NSString *)stringForExercisePlaceholderType:(DBWExercisePlaceholderType)type;
+
 @end

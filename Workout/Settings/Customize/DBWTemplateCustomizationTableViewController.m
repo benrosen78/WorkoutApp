@@ -144,7 +144,7 @@ static NSString *const kDeleteCellIdentifier = @"delete-cell";
             
             NSString *setsString = exercise.expectedSets == 1 ? @"set" : @"sets";
             NSString *repsString = exercise.expectedReps == 1 ? @"rep" : @"reps";
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu %@ | %lu %@", exercise.expectedSets, setsString, exercise.expectedReps, repsString];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%lu %@ | %lu %@ | %@", exercise.expectedSets, setsString, exercise.expectedReps, repsString, [DBWExercisePlaceholder stringForExercisePlaceholderType:exercise.placeholder.type]];
             return cell;
         }
     } else if (indexPath.section == 3) {

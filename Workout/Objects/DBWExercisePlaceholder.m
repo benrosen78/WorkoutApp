@@ -23,4 +23,21 @@
     return @"primaryKey";
 }
 
++ (NSString *)stringForExercisePlaceholderType:(DBWExercisePlaceholderType)type {
+    switch (type) {
+        case DBWExercisePlaceholderChestType:
+            return @"Chest";
+        case DBWExercisePlaceholderBackType:
+            return @"Back";
+        case DBWExercisePlaceholderShouldersType:
+            return @"Shoulders";
+        case DBWExercisePlaceholderCoreType:
+            return @"Core";
+        case DBWExercisePlaceholderArmsType:
+            return @"Arms";
+        case DBWExercisePlaceholderLegsType:
+            return @"Legs";
+    }
+}
+
 @end
