@@ -64,7 +64,6 @@
 #pragma mark - DBWExercisePlaceholderCreationDelegate
 
 - (void)selectedMuscleGroup:(DBWExercisePlaceholderType)muscleGroup {
-    NSLog(@"YES");
     _muscleGroup = muscleGroup;
     
     // remove, add to remove the old constraints
@@ -103,8 +102,10 @@
 
 #pragma mark - UIKeyboardWillChangeFrameNotification
 - (void)keyboardNotification:(NSNotification *)notification {
-    CGSize keyboardSize = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
-    [self.delegate creationViewController:self changedToHeight:CGRectGetHeight(self.view.frame) + keyboardSize.height];
+    CGRect beforeKeyboardSize = [notification.userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+    CGRect afterKeyboardSize = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGFloat offset = afterKeyboardSize.origin.y - beforeKeyboardSize.origin.y;
+    [self.delegate creationViewController:self changedToHeight:CGRectGetHeight(self.view.frame) - offset];
 }
 
 @end

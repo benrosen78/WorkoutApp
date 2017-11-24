@@ -8,6 +8,8 @@
 
 #import "DBWExercisePlaceholderCreationNamingViewController.h"
 #import "UIColor+ColorPalette.h"
+#import "DBWDatabaseManager.h"
+#import "DBWExerciseDatabase.h"
 
 @interface DBWExercisePlaceholderCreationNamingViewController ()
 
@@ -26,8 +28,7 @@
     title.textAlignment = NSTextAlignmentCenter;
     title.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:title];
-    
-    
+
     [title.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:17].active = YES;
     [title.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
     
@@ -72,23 +73,38 @@
 }
 
 - (void)addExercise {
-    if ([_nameTextField.text isEqualToString:@""]) {
-        UINotificationFeedbackGenerator *feedbackGenerator = [[UINotificationFeedbackGenerator alloc] init];
-            [feedbackGenerator notificationOccurred:UINotificationFeedbackTypeError];
-        
-        _nameTextField.transform = CGAffineTransformMakeTranslation(4.0, 0);
-        
-        [UIView animateWithDuration:0.04 delay:0.0 options:UIViewAnimationOptionAutoreverse animations:^{
-            UIView.animationRepeatCount = 4;
-            _nameTextField.transform = CGAffineTransformMakeTranslation(-4.0, 0);
-        } completion:^(BOOL finished) {
-            _nameTextField.transform = CGAffineTransformIdentity;
-        }];
-        
+    NSString *proposedName = _nameTextField.text;
+    if ([proposedName isEqualToString:@""]) {
+        [self triggerInvalidFeedback];
+        [self triggerInvalidAnimation];
+        return;
+    }
+    if ([[[DBWDatabaseManager sharedDatabaseManager] allExercisePlaceholders].list objectsWithPredicate:[NSPredicate predicateWithFormat:@"name == [c]%@", proposedName]].count > 0) {
+        [self triggerInvalidFeedback];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Invalid Name" message:@"An exercise with this name already appears to be in the exercise database." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:defaultAction];
+        [self presentViewController:alert animated:YES completion:nil];
         return;
     }
     [_nameTextField resignFirstResponder];
     [self.completionDelegate exerciseNamed:_nameTextField.text];
+}
+
+- (void)triggerInvalidFeedback {
+    UINotificationFeedbackGenerator *feedbackGenerator = [[UINotificationFeedbackGenerator alloc] init];
+    [feedbackGenerator notificationOccurred:UINotificationFeedbackTypeError];
+}
+
+- (void)triggerInvalidAnimation {
+    _nameTextField.transform = CGAffineTransformMakeTranslation(4.0, 0);
+    
+    [UIView animateWithDuration:0.04 delay:0.0 options:UIViewAnimationOptionAutoreverse animations:^{
+        UIView.animationRepeatCount = 4;
+        _nameTextField.transform = CGAffineTransformMakeTranslation(-4.0, 0);
+    } completion:^(BOOL finished) {
+        _nameTextField.transform = CGAffineTransformIdentity;
+    }];
 }
 
 @end
