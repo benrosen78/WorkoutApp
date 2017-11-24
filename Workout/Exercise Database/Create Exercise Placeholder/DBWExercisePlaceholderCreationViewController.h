@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "DBWExercisePlaceholderCreationParentDelegate.h"
 
-@interface DBWExercisePlaceholderCreationViewController : UIViewController
+@interface DBWExercisePlaceholderCreationViewController : UIViewController <UIGestureRecognizerDelegate>
 
 @property (nonatomic, weak) id<DBWExercisePlaceholderCreationParentDelegate> delegate;
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch;
 
 @end

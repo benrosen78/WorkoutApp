@@ -14,6 +14,8 @@ static NSString *const kMuscleSelectionReuseIdentifier = @"MuscleSelectionReuseI
 
 @property (strong, nonatomic) NSArray *musclesNames, *muscleImageNames;
 
+@property (strong, nonatomic) UITableView *muscleSelectionTableView;
+
 @end
 
 @implementation DBWExercisePlaceholderCreationMuscleSelectionViewController
@@ -34,19 +36,21 @@ static NSString *const kMuscleSelectionReuseIdentifier = @"MuscleSelectionReuseI
     [title.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:17].active = YES;
     [title.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
     
-    UITableView *muscleSelectionTableView = [[UITableView alloc] init];
-    muscleSelectionTableView.scrollEnabled = NO;
-    muscleSelectionTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    muscleSelectionTableView.delegate = self;
-    muscleSelectionTableView.dataSource = self;
-    muscleSelectionTableView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:muscleSelectionTableView];
+    _muscleSelectionTableView = [[UITableView alloc] init];
+    _muscleSelectionTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _muscleSelectionTableView.scrollEnabled = NO;
+    _muscleSelectionTableView.delegate = self;
+    _muscleSelectionTableView.dataSource = self;
+    _muscleSelectionTableView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:_muscleSelectionTableView];
     
-    [muscleSelectionTableView.topAnchor constraintEqualToAnchor:title.bottomAnchor constant:17].active = YES;
-    [muscleSelectionTableView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:40].active = YES;
-    [muscleSelectionTableView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-40].active = YES;
-    [muscleSelectionTableView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant:-10].active = YES;
+    [_muscleSelectionTableView.topAnchor constraintEqualToAnchor:title.bottomAnchor constant:17].active = YES;
+    [_muscleSelectionTableView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:40].active = YES;
+    [_muscleSelectionTableView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-40].active = YES;
+    [_muscleSelectionTableView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant:-10].active = YES;
 }
+
+
 
 #pragma mark - UITableViewDataSource
 
@@ -75,6 +79,15 @@ static NSString *const kMuscleSelectionReuseIdentifier = @"MuscleSelectionReuseI
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.completionDelegate selectedMuscleGroup:indexPath.row];
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if ([touch.view isDescendantOfView:_muscleSelectionTableView]) {
+        return NO;
+    }
+    return YES;
 }
 
 @end

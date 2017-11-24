@@ -21,7 +21,7 @@ typedef NS_ENUM(NSInteger, DBWExerciseDatabaseCreationState) {
     DBWExerciseDatabaseCreationCondensedState
 };
 
-@interface DBWExerciseDatabaseTableViewController () <DBWExercisePlaceholderCreationParentDelegate, UISearchResultsUpdating>
+@interface DBWExerciseDatabaseTableViewController () <DBWExercisePlaceholderCreationParentDelegate, UISearchResultsUpdating, UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) DBWExerciseDatabase *exerciseDatabasePlaceholders;
 
@@ -39,12 +39,19 @@ typedef NS_ENUM(NSInteger, DBWExerciseDatabaseCreationState) {
 
 @property (nonatomic) CGFloat progressWhenInterrupted;
 
+// for maneuvering (thanks dictionary.com) the creation view
+@property (strong, nonatomic) UITapGestureRecognizer *tapGestureRecognizer;
+
+@property (strong, nonatomic) UIPanGestureRecognizer *panGestureRecognizer;
+
 @end
 
 @implementation DBWExerciseDatabaseTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    _creationState = DBWExerciseDatabaseCreationCondensedState;
     
     _exerciseDatabasePlaceholders = [[DBWDatabaseManager sharedDatabaseManager] allExercisePlaceholders];
     _filteredExercisePlaceholders = [_exerciseDatabasePlaceholders.list objectsWithPredicate:[NSPredicate predicateWithFormat:@"type == 0"]];
@@ -64,7 +71,6 @@ typedef NS_ENUM(NSInteger, DBWExerciseDatabaseCreationState) {
     UISearchController *searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     searchController.definesPresentationContext = YES;
     searchController.searchResultsUpdater = self;
-    searchController.delegate = self;
     searchController.obscuresBackgroundDuringPresentation = NO;
     searchController.searchBar.placeholder = @"Search Exercise Database";
     self.navigationItem.searchController = searchController;
@@ -88,16 +94,17 @@ typedef NS_ENUM(NSInteger, DBWExerciseDatabaseCreationState) {
     self.tableView.userInteractionEnabled = NO;
     
     _blurredBackgroundView = [[UIVisualEffectView alloc] init];
-    _blurredBackgroundView.alpha = 0.9;
+    _blurredBackgroundView.alpha = 1.0;
     _blurredBackgroundView.frame = self.view.frame;
     [self.navigationController.view addSubview:_blurredBackgroundView];
     
-    UITapGestureRecognizer *backgroundTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDismiss:)];
-    [self.navigationController.view addGestureRecognizer:backgroundTap];
-    UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(gestureRecognizerPanned:)];
+    _tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDismiss:)];
+    _tapGestureRecognizer.delegate = self;
+    [self.navigationController.view addGestureRecognizer:_tapGestureRecognizer];
 
-    [self.navigationController.view addGestureRecognizer:backgroundTap];
-    [self.navigationController.view addGestureRecognizer:panGestureRecognizer];
+    _panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(gestureRecognizerPanned:)];
+    _panGestureRecognizer.delegate = self;
+    [self.navigationController.view addGestureRecognizer:_panGestureRecognizer];
 
     _creationViewController = [[DBWExercisePlaceholderCreationViewController alloc] init];
     _creationViewController.delegate = self;
@@ -116,6 +123,8 @@ typedef NS_ENUM(NSInteger, DBWExerciseDatabaseCreationState) {
         _blurredBackgroundView.effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
     }];
     [blurAnimator startAnimation];
+    
+    _creationState = DBWExerciseDatabaseCreationExpandedState;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -141,8 +150,6 @@ typedef NS_ENUM(NSInteger, DBWExerciseDatabaseCreationState) {
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     DBWExercisePlaceholder *placeholder = _filteredExercisePlaceholders[indexPath.row];
@@ -209,14 +216,17 @@ typedef NS_ENUM(NSInteger, DBWExerciseDatabaseCreationState) {
     [self.tableView reloadData];
 }
 
-#pragma mark - Gesture Animations
+#pragma mark - Gesture Interactive Animations
 
 - (void)tapDismiss:(UITapGestureRecognizer *)recognizer {
-    
+    // add all the animators, start them (they are paused in the method by default)
+    [self startInteractiveTransition:[self nextCreationState]];
+    for (UIViewPropertyAnimator *animator in _animators) {
+        [animator startAnimation];
+    }
 }
 
 - (void)gestureRecognizerPanned:(UIPanGestureRecognizer *)recognizer {
-    CGPoint p = [recognizer locationInView:self.view];
     switch (recognizer.state) {
         case UIGestureRecognizerStateBegan:
             [self startInteractiveTransition:[self nextCreationState]];
@@ -268,7 +278,7 @@ typedef NS_ENUM(NSInteger, DBWExerciseDatabaseCreationState) {
 }
 
 - (void)continueInteractiveTransition:(CGFloat)percentageCompleted {
-    if (percentageCompleted < 0.4) {
+    if (percentageCompleted < 0.26) {
         for (UIViewPropertyAnimator *animator in _animators) {
             animator.reversed = !animator.reversed;
             [animator continueAnimationWithTimingParameters:nil durationFactor:0];
@@ -282,8 +292,8 @@ typedef NS_ENUM(NSInteger, DBWExerciseDatabaseCreationState) {
 }
 
 - (void)animateFrames:(DBWExerciseDatabaseCreationState)state {
-    UIViewPropertyAnimator *creationViewAnimator = [[UIViewPropertyAnimator alloc] initWithDuration:0.4 dampingRatio:0.8 animations:^{
-        _creationViewController.view.frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width, 460);
+    UIViewPropertyAnimator *creationViewAnimator = [[UIViewPropertyAnimator alloc] initWithDuration:0.4 dampingRatio:1 animations:^{
+        _creationViewController.view.frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width, CGRectGetHeight(_creationViewController.view.frame));
     }];
     [creationViewAnimator addCompletion:^(UIViewAnimatingPosition finalPosition) {
         if (finalPosition == UIViewAnimatingPositionEnd) {
@@ -293,6 +303,13 @@ typedef NS_ENUM(NSInteger, DBWExerciseDatabaseCreationState) {
             [_creationViewController removeFromParentViewController];
             _creationViewController = nil;
             _creationState = [self nextCreationState];
+            
+            // remove these for now...they'll be re-added when the creation screen is presented again
+            [self.view removeGestureRecognizer:_tapGestureRecognizer];
+            [self.view removeGestureRecognizer:_panGestureRecognizer];
+            _tapGestureRecognizer = nil;
+            _panGestureRecognizer = nil;
+            self.tableView.userInteractionEnabled = YES;
         }
         self.animators = [NSMutableArray array];
     }];
@@ -308,6 +325,13 @@ typedef NS_ENUM(NSInteger, DBWExerciseDatabaseCreationState) {
     }];
     [_animators addObject:blurAnimator];
 
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if ([touch.view isDescendantOfView:self.tableView] || ![_creationViewController gestureRecognizer:gestureRecognizer shouldReceiveTouch:touch]) {
+        return NO;
+    }
+    return YES;
 }
 
 @end

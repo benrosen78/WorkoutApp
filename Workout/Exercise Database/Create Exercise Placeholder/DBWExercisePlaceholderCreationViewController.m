@@ -13,11 +13,11 @@
 
 @interface DBWExercisePlaceholderCreationViewController () <DBWExercisePlaceholderCreationDelegate>
 
+@property (nonatomic) DBWExercisePlaceholderType muscleGroup;
+
 @property (strong, nonatomic) DBWExercisePlaceholderCreationMuscleSelectionViewController *muscleSelectionViewController;
 
 @property (strong, nonatomic) DBWExercisePlaceholderCreationNamingViewController *namingViewController;
-
-@property (nonatomic) DBWExercisePlaceholderType muscleGroup;
 
 @end
 
@@ -64,6 +64,7 @@
 #pragma mark - DBWExercisePlaceholderCreationDelegate
 
 - (void)selectedMuscleGroup:(DBWExercisePlaceholderType)muscleGroup {
+    NSLog(@"YES");
     _muscleGroup = muscleGroup;
     
     // remove, add to remove the old constraints
@@ -92,6 +93,12 @@
 
 - (void)exerciseNamed:(NSString *)name {
     [self.delegate creationViewController:self finishedWithMuscleGroup:_muscleGroup andExerciseName:name];
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    return [_muscleSelectionViewController gestureRecognizer:gestureRecognizer shouldReceiveTouch:touch];
 }
 
 #pragma mark - UIKeyboardWillChangeFrameNotification
