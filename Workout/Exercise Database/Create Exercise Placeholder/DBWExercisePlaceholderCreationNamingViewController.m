@@ -72,6 +72,21 @@
 }
 
 - (void)addExercise {
+    if ([_nameTextField.text isEqualToString:@""]) {
+        UINotificationFeedbackGenerator *feedbackGenerator = [[UINotificationFeedbackGenerator alloc] init];
+            [feedbackGenerator notificationOccurred:UINotificationFeedbackTypeError];
+        
+        _nameTextField.transform = CGAffineTransformMakeTranslation(4.0, 0);
+        
+        [UIView animateWithDuration:0.04 delay:0.0 options:UIViewAnimationOptionAutoreverse animations:^{
+            UIView.animationRepeatCount = 4;
+            _nameTextField.transform = CGAffineTransformMakeTranslation(-4.0, 0);
+        } completion:^(BOOL finished) {
+            _nameTextField.transform = CGAffineTransformIdentity;
+        }];
+        
+        return;
+    }
     [_nameTextField resignFirstResponder];
     [self.completionDelegate exerciseNamed:_nameTextField.text];
 }
