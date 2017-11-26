@@ -19,7 +19,7 @@
 
 static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
 
-@interface DBWStopwatchViewController () <UICollectionViewDelegate, UICollectionViewDataSource, DBWStopwatchCompletionDelegate>
+@interface DBWStopwatchViewController () <UICollectionViewDelegate, UICollectionViewDataSource, DBWStopwatchCompletionDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) UICollectionView *collectionView;
 
@@ -35,6 +35,10 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
 @property (strong, nonatomic) DBWStopwatchActiveViewController *currentActiveViewController;
 // snapshot of current view, used for animations. will be nil otherwise
 @property (strong, nonatomic) UIView *animationSnapshotView;
+
+@property (strong, nonatomic) NSLayoutConstraint *stackViewTopConstraint, *stackViewBottomConstraint;
+
+@property (nonatomic) NSString *minutes, *seconds;
 
 @end
 
@@ -61,13 +65,15 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
     [self.view addSubview:detailTitleLabel];
     
     [detailTitleLabel.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor constant: 15].active = YES;
+    [detailTitleLabel.heightAnchor constraintEqualToConstant:40].active = YES;
+
     [detailTitleLabel.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor].active = YES;
     [detailTitleLabel.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor].active = YES;
 
     
     DBWStopwatchCircularCollectionViewLayout *circularLayout = [[DBWStopwatchCircularCollectionViewLayout alloc] init];
     circularLayout.itemSize = CGSizeMake(100, 100);
-    circularLayout.radius = (self.view.frame.size.width / 2) + 100;
+    circularLayout.radius = (self.view.frame.size.width / 2) + 120;
     _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:circularLayout];
     [_collectionView registerClass:[DBWStopwatchCollectionViewCell class] forCellWithReuseIdentifier:kStopwatchCellIdentifier];
     _collectionView.backgroundColor = [UIColor clearColor];
@@ -79,7 +85,7 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
     _collectionView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_collectionView];
     
-    [_collectionView.topAnchor constraintEqualToAnchor:detailTitleLabel.bottomAnchor constant:15].active = YES;
+    [_collectionView.topAnchor constraintEqualToAnchor:detailTitleLabel.bottomAnchor constant:60].active = YES;
     [_collectionView.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor].active = YES;
     [_collectionView.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor].active = YES;
     [_collectionView.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor].active = YES;
@@ -90,19 +96,27 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
     _feedbackChevronImageView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_feedbackChevronImageView];
     
+    [_feedbackChevronImageView.heightAnchor constraintEqualToConstant:_feedbackChevronImageView.image.size.height].active = YES;
+    [_feedbackChevronImageView.widthAnchor constraintEqualToConstant:_feedbackChevronImageView.image.size.width].active = YES;
+
     [_feedbackChevronImageView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
     [_feedbackChevronImageView.topAnchor constraintEqualToAnchor:self.collectionView.topAnchor constant:circularLayout.itemSize.height + 22].active = YES;
 
     UIStackView *bottomStackView = [[UIStackView alloc] init];
-    bottomStackView.spacing = 60;
+    bottomStackView.backgroundColor =  [UIColor groupTableViewBackgroundColor];
+    bottomStackView.spacing = 15;
+    bottomStackView.distribution = UIStackViewDistributionEqualSpacing;
     bottomStackView.axis = UILayoutConstraintAxisVertical;
     bottomStackView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:bottomStackView];
     
-    [bottomStackView.topAnchor constraintEqualToAnchor:_feedbackChevronImageView.bottomAnchor constant:35].active = YES;
+    _stackViewTopConstraint = [bottomStackView.topAnchor constraintEqualToAnchor:_feedbackChevronImageView.bottomAnchor constant:60];
+    _stackViewTopConstraint.active = YES;
     [bottomStackView.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor].active = YES;
     [bottomStackView.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor].active = YES;
-    [bottomStackView.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor constant:-bottomStackView.spacing].active = YES;
+    _stackViewBottomConstraint = [bottomStackView.bottomAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor constant:-100];
+    _stackViewBottomConstraint.active = YES;
+    
  
     UIView *separator = [[UIView alloc] init];
     separator.backgroundColor = [UIColor colorWithRed:0.678 green:0.729 blue:0.757 alpha:1.00];
@@ -125,6 +139,8 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
     [orLabel.widthAnchor constraintEqualToConstant:35].active = YES;
     
     UITextField *customTextField = [[UITextField alloc] init];
+    customTextField.delegate = self;
+    customTextField.keyboardType = UIKeyboardTypeNumberPad;
     NSMutableAttributedString *textFieldPlaceholderAttibute = [[NSMutableAttributedString alloc] initWithString:@"m" attributes:@{NSForegroundColorAttributeName: [UIColor colorWithRed:0.678 green:0.729 blue:0.757 alpha:1.00]}];
     [textFieldPlaceholderAttibute appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@" : " attributes:@{NSForegroundColorAttributeName: [UIColor blackColor]}]];
      [textFieldPlaceholderAttibute appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@"ss" attributes:@{NSForegroundColorAttributeName: [UIColor colorWithRed:0.678 green:0.729 blue:0.757 alpha:1.00]}]];
@@ -133,6 +149,7 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
     customTextField.attributedPlaceholder = textFieldPlaceholderAttibute;
     customTextField.font = [UIFont systemFontOfSize:36 weight:UIFontWeightMedium];
     customTextField.textAlignment = NSTextAlignmentCenter;
+    customTextField.tintColor = [UIColor clearColor];
     [bottomStackView addArrangedSubview:customTextField];
 
     [customTextField.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = YES;
@@ -151,6 +168,8 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
     [startButton.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor constant:45].active = YES;
     [startButton.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor constant:-45].active = YES;
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardNotification:) name:UIKeyboardWillChangeFrameNotification object:nil];
+    
 }
 
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
@@ -201,7 +220,17 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
         subview.alpha = 0;
     }
     
-    _currentActiveViewController = [[DBWStopwatchActiveViewController alloc] initWithStopwatch:_stopwatchList.list[_currentIndexPath.row]];
+    DBWStopwatch *startingStopwatch = _stopwatchList.list[_currentIndexPath.row];
+    if (_minutes && _seconds) {
+        [self.view endEditing:YES];
+        DBWStopwatch *stopwatch = [[DBWStopwatch alloc] init];
+        stopwatch.minutes = [_minutes integerValue];
+        stopwatch.seconds = [_seconds integerValue];
+        startingStopwatch = stopwatch;
+    }
+
+    
+    _currentActiveViewController = [[DBWStopwatchActiveViewController alloc] initWithStopwatch:startingStopwatch];
     _currentActiveViewController.delegate = self;
     [self addChildViewController:_currentActiveViewController];
     _currentActiveViewController.view.frame = self.view.frame;
@@ -246,6 +275,121 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
         _animationSnapshotView = nil;
     }];
     
+}
+
+#pragma mark - UIKeyboardWillChangeFrameNotification
+
+- (void)keyboardNotification:(NSNotification *)notification {
+    CGRect beforeKeyboardSize = [notification.userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+    CGRect afterKeyboardSize = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    CGFloat offset = beforeKeyboardSize.origin.y - afterKeyboardSize.origin.y;
+    CGFloat constant = offset > 0 ? -100 : 100;
+    _stackViewTopConstraint.constant -= offset + constant;
+    _stackViewBottomConstraint.constant -= offset + constant;
+
+    
+    NSLog(@"offset = %f", offset);
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.view layoutIfNeeded];
+
+        if (offset > 0) {
+            self.collectionView.transform = CGAffineTransformMakeScale(0.3, 0.3);
+            self.collectionView.center = CGPointMake(self.view.center.x, 280);
+            self.collectionView.alpha = 0;
+            
+            _feedbackChevronImageView.transform = CGAffineTransformMakeScale(0.3, 0.3);
+            _feedbackChevronImageView.center = CGPointMake(self.view.center.x, 280);
+            _feedbackChevronImageView.alpha = 0;
+        } else {
+            self.collectionView.transform = CGAffineTransformIdentity;
+            self.collectionView.center = self.view.center;
+            self.collectionView.alpha = 0;
+            
+            _feedbackChevronImageView.transform = CGAffineTransformIdentity;
+            _feedbackChevronImageView.center = self.view.center;
+            _feedbackChevronImageView.alpha = 0;
+        }
+
+
+    }];
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if ([string isEqualToString:@""]) {
+        if (_seconds.length == 2) {
+            _seconds = [_seconds substringToIndex:1];
+            NSMutableAttributedString *textFieldPlaceholderAttibute = [[NSMutableAttributedString alloc] initWithString:_minutes attributes:@{NSForegroundColorAttributeName: [UIColor blackColor]}];
+            [textFieldPlaceholderAttibute appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@" : " attributes:@{NSForegroundColorAttributeName: [UIColor blackColor]}]];
+            [textFieldPlaceholderAttibute appendAttributedString:[[NSMutableAttributedString alloc] initWithString:[_seconds stringByAppendingString:@"s"] attributes:@{NSForegroundColorAttributeName: [UIColor colorWithRed:0.678 green:0.729 blue:0.757 alpha:1.00]}]];
+            
+            textField.attributedText = textFieldPlaceholderAttibute;
+
+        } else if (_seconds) {
+            
+            
+            NSMutableAttributedString *textFieldPlaceholderAttibute = [[NSMutableAttributedString alloc] initWithString:_minutes attributes:@{NSForegroundColorAttributeName: [UIColor blackColor]}];
+            [textFieldPlaceholderAttibute appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@" : " attributes:@{NSForegroundColorAttributeName: [UIColor blackColor]}]];
+            [textFieldPlaceholderAttibute appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@"ss" attributes:@{NSForegroundColorAttributeName: [UIColor colorWithRed:0.678 green:0.729 blue:0.757 alpha:1.00]}]];
+            textField.attributedText = textFieldPlaceholderAttibute;
+
+            
+            _seconds = nil;
+        } else if (_minutes) {
+            _minutes = nil;
+            NSMutableAttributedString *textFieldPlaceholderAttibute = [[NSMutableAttributedString alloc] initWithString:@"m" attributes:@{NSForegroundColorAttributeName: [UIColor colorWithRed:0.678 green:0.729 blue:0.757 alpha:1.00]}];
+            [textFieldPlaceholderAttibute appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@" : " attributes:@{NSForegroundColorAttributeName: [UIColor blackColor]}]];
+            [textFieldPlaceholderAttibute appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@"ss" attributes:@{NSForegroundColorAttributeName: [UIColor colorWithRed:0.678 green:0.729 blue:0.757 alpha:1.00]}]];
+            
+            
+            textField.attributedText = textFieldPlaceholderAttibute;
+        }
+        return NO;
+    }
+    NSCharacterSet *notDigits = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+    if ([string rangeOfCharacterFromSet:notDigits].location == NSNotFound) {
+        if (!_minutes) {
+            NSMutableAttributedString *textFieldPlaceholderAttibute = [[NSMutableAttributedString alloc] initWithString:string attributes:@{NSForegroundColorAttributeName: [UIColor blackColor]}];
+            [textFieldPlaceholderAttibute appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@" : " attributes:@{NSForegroundColorAttributeName: [UIColor blackColor]}]];
+            [textFieldPlaceholderAttibute appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@"ss" attributes:@{NSForegroundColorAttributeName: [UIColor colorWithRed:0.678 green:0.729 blue:0.757 alpha:1.00]}]];
+            
+            _minutes = string;
+            textField.attributedText = textFieldPlaceholderAttibute;
+
+        } else if (!_seconds) {
+            NSInteger seconds = [string integerValue];
+            if (seconds >= 6) {
+                NSInteger minutesToAdd = seconds / 6;
+                NSInteger secondsToAdd = seconds % 6;
+                _minutes = [NSString stringWithFormat:@"%lu", [_minutes integerValue] + minutesToAdd];
+                string = [NSString stringWithFormat:@"%lu", secondsToAdd];
+            }
+            NSMutableAttributedString *textFieldPlaceholderAttibute = [[NSMutableAttributedString alloc] initWithString:_minutes attributes:@{NSForegroundColorAttributeName: [UIColor blackColor]}];
+            [textFieldPlaceholderAttibute appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@" : " attributes:@{NSForegroundColorAttributeName: [UIColor blackColor]}]];
+            [textFieldPlaceholderAttibute appendAttributedString:[[NSMutableAttributedString alloc] initWithString:[string stringByAppendingString:@"s"] attributes:@{NSForegroundColorAttributeName: [UIColor colorWithRed:0.678 green:0.729 blue:0.757 alpha:1.00]}]];
+            
+            _seconds = string;
+            textField.attributedText = textFieldPlaceholderAttibute;
+
+        } else if (_seconds.length == 1) {
+            NSMutableAttributedString *textFieldPlaceholderAttibute = [[NSMutableAttributedString alloc] initWithString:_minutes attributes:@{NSForegroundColorAttributeName: [UIColor blackColor]}];
+            [textFieldPlaceholderAttibute appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@" : " attributes:@{NSForegroundColorAttributeName: [UIColor blackColor]}]];
+            [textFieldPlaceholderAttibute appendAttributedString:[[NSMutableAttributedString alloc] initWithString:[_seconds stringByAppendingString:string] attributes:@{NSForegroundColorAttributeName: [UIColor blackColor]}]];
+            
+            _seconds = [_seconds stringByAppendingString:string];
+            textField.attributedText = textFieldPlaceholderAttibute;
+        }
+
+        
+        
+        return NO;
+    } else {
+        return NO;
+        
+    }
+
+    return YES;
 }
 
 @end

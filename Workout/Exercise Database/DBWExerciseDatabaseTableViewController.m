@@ -63,6 +63,7 @@ typedef NS_ENUM(NSInteger, DBWExerciseDatabaseCreationState) {
     
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Chest", @"Back", @"Shoulders", @"Core", @"Arms", @"Legs"]];
     [segmentedControl setSelectedSegmentIndex:_currentFilterType];
+    
     self.tableView.tableHeaderView = segmentedControl;
     [segmentedControl addTarget:self action:@selector(filterChanged:) forControlEvents:UIControlEventValueChanged];
 
