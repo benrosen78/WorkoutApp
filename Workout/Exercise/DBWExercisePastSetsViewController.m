@@ -17,7 +17,7 @@
 #import <CompactConstraint/CompactConstraint.h>
 #import "UIColor+ColorPalette.h"
 
-@interface DBWExercisePastSetsViewController ()
+@interface DBWExercisePastSetsViewController () <UIScrollViewDelegate>
 
 @property (strong, nonatomic) DBWExercisePlaceholder *placeholder;
 
@@ -34,7 +34,7 @@ static NSString * const kSetCell = @"date.set.cell";
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.minimumLineSpacing = 1;
     flowLayout.minimumInteritemSpacing = 0;
-    flowLayout.sectionInset = UIEdgeInsetsMake(100, 0, 30, 0);
+    flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 20, 0);
     self = [super initWithCollectionViewLayout:flowLayout];
     if (self) {
         _placeholder = placeholder;
@@ -47,7 +47,7 @@ static NSString * const kSetCell = @"date.set.cell";
     [super viewDidLoad];
     
     self.collectionView.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    
+    self.collectionView.delegate = self;
     _exercises = [[DBWDatabaseManager sharedDatabaseManager] pastExercisesForPlaceholder:_placeholder];
 
     [self.collectionView registerClass:[DBWExercisePastSetsCollectionViewCell class] forCellWithReuseIdentifier:kDateHeaderCell];
@@ -120,5 +120,17 @@ static NSString * const kSetCell = @"date.set.cell";
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return CGSizeMake([[UIScreen mainScreen] bounds].size.width - 25, indexPath.row == 0 ? 80 : 64);
 }
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    return UIEdgeInsetsMake(section == 0 ? 88 : 0, 0, 20, 0);
+}
+
+#pragma mark - DBWExerciseDetailDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self.delegate exerciseDetailViewControllerScrolled:self];
+}
+
+
 
 @end

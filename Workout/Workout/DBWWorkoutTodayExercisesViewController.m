@@ -39,7 +39,8 @@ static NSString * const reuseIdentifier = @"Cell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self registerForPreviewingWithDelegate:self sourceView:self.collectionView];
-    
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+
     self.title = @"Today's Gains";
     
     _headerCell = [[DBWWorkoutPlanDayCell alloc] init];

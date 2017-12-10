@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DBWExerciseDetailDelegate.h"
 
 @class DBWExercisePlaceholder;
 
 @interface DBWExercisePastSetsViewController : UICollectionViewController
 
 - (instancetype)initWithExercisePlaceholder:(DBWExercisePlaceholder *)placeholder;
+
+@property (nonatomic) id <DBWExerciseDetailDelegate> delegate;
 
 @end

@@ -39,6 +39,7 @@
 		B57E6D281F5329C800849CB6 /* DBWCalendarDatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B57E6D271F5329C800849CB6 /* DBWCalendarDatePickerViewController.m */; };
 		B57E6D2B1F53521C00849CB6 /* DBWColorTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B57E6D2A1F53521C00849CB6 /* DBWColorTableViewCell.m */; };
 		B57E6D2E1F536F7500849CB6 /* DBWSettingsSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B57E6D2D1F536F7500849CB6 /* DBWSettingsSplitViewController.m */; };
+		B581D4331FDD867F001A93BA /* DBWExerciseDetailNavigationTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = B581D4321FDD867F001A93BA /* DBWExerciseDetailNavigationTitleView.m */; };
 		B58F66F11F8D26420082A30C /* DBWStopwatchCircularCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = B58F66F01F8D26420082A30C /* DBWStopwatchCircularCollectionViewLayout.m */; };
 		B58F66F41F8D2A6D0082A30C /* DBWStopwatchCircularCollectionViewLayoutAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = B58F66F31F8D2A6D0082A30C /* DBWStopwatchCircularCollectionViewLayoutAttributes.m */; };
 		B58F66F71F8D2E490082A30C /* DBWStopwatchCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B58F66F61F8D2E490082A30C /* DBWStopwatchCollectionViewCell.m */; };
@@ -151,6 +152,8 @@
 		B57E6D2A1F53521C00849CB6 /* DBWColorTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWColorTableViewCell.m; sourceTree = "<group>"; };
 		B57E6D2C1F536F7500849CB6 /* DBWSettingsSplitViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWSettingsSplitViewController.h; sourceTree = "<group>"; };
 		B57E6D2D1F536F7500849CB6 /* DBWSettingsSplitViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWSettingsSplitViewController.m; sourceTree = "<group>"; };
+		B581D4311FDD867F001A93BA /* DBWExerciseDetailNavigationTitleView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWExerciseDetailNavigationTitleView.h; sourceTree = "<group>"; };
+		B581D4321FDD867F001A93BA /* DBWExerciseDetailNavigationTitleView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWExerciseDetailNavigationTitleView.m; sourceTree = "<group>"; };
 		B58F66EF1F8D26420082A30C /* DBWStopwatchCircularCollectionViewLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWStopwatchCircularCollectionViewLayout.h; sourceTree = "<group>"; };
 		B58F66F01F8D26420082A30C /* DBWStopwatchCircularCollectionViewLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBWStopwatchCircularCollectionViewLayout.m; sourceTree = "<group>"; };
 		B58F66F21F8D2A6D0082A30C /* DBWStopwatchCircularCollectionViewLayoutAttributes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBWStopwatchCircularCollectionViewLayoutAttributes.h; sourceTree = "<group>"; };
@@ -363,6 +366,8 @@
 				B53CF2C21F3365DE00F30CB8 /* DBWExerciseSetCollectionViewCell.m */,
 				B53CF2C31F3365DE00F30CB8 /* DBWExerciseCollectionViewController.h */,
 				B53CF2C41F3365DE00F30CB8 /* DBWExerciseCollectionViewController.m */,
+				B581D4311FDD867F001A93BA /* DBWExerciseDetailNavigationTitleView.h */,
+				B581D4321FDD867F001A93BA /* DBWExerciseDetailNavigationTitleView.m */,
 				B5F41E541FB75CF10039E40E /* DBWExerciseDetailDelegate.h */,
 				B5D71E7D1F76D3DF0012ABC1 /* DBWExerciseCurrentSetsViewController.h */,
 				B5D71E7E1F76D3DF0012ABC1 /* DBWExerciseCurrentSetsViewController.m */,
@@ -756,6 +761,7 @@
 				B515D7691F5AE6BB00828E99 /* DBWExerciseCollectionViewCell.m in Sources */,
 				B5CEB7711F7430F1001F3FAD /* DBWExerciseDatabase.m in Sources */,
 				B53CF2CF1F33661300F30CB8 /* DBWSet.m in Sources */,
+				B581D4331FDD867F001A93BA /* DBWExerciseDetailNavigationTitleView.m in Sources */,
 				B53CF2D01F33661300F30CB8 /* DBWWorkout.m in Sources */,
 				B5F635391F41DD6B00B866DC /* DBWDatabaseManager.m in Sources */,
 				B5F41E5F1FB8E76B0039E40E /* DBWExercisePlaceholderCreationNamingViewController.m in Sources */,
