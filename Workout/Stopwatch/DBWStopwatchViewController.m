@@ -38,6 +38,9 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
 
 @property (strong, nonatomic) NSLayoutConstraint *stackViewTopConstraint, *stackViewBottomConstraint;
 
+// old centers of some views, used for animations to store values
+@property (nonatomic) CGPoint oldCollectionViewCenter, oldChevronViewCenter;
+
 @property (nonatomic) NSString *minutes, *seconds;
 
 @end
@@ -208,41 +211,47 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
 }
 
 - (void)startTimer {
-    _animationSnapshotView = [self.view snapshotViewAfterScreenUpdates:NO];
-    [self.view addSubview:_animationSnapshotView];
-
-    [UIView animateWithDuration:0.3 animations:^{
-        _animationSnapshotView.transform = CGAffineTransformMakeScale(1.3, 1.3);
-        _animationSnapshotView.alpha = 0;
-    }];
-    
-    for (UIView *subview in self.view.subviews) {
-        subview.alpha = 0;
-    }
-    
-    DBWStopwatch *startingStopwatch = _stopwatchList.list[_currentIndexPath.row];
-    if (_minutes && _seconds) {
-        [self.view endEditing:YES];
-        DBWStopwatch *stopwatch = [[DBWStopwatch alloc] init];
-        stopwatch.minutes = [_minutes integerValue];
-        stopwatch.seconds = [_seconds integerValue];
-        startingStopwatch = stopwatch;
-    }
-
-    
-    _currentActiveViewController = [[DBWStopwatchActiveViewController alloc] initWithStopwatch:startingStopwatch];
-    _currentActiveViewController.delegate = self;
-    [self addChildViewController:_currentActiveViewController];
-    _currentActiveViewController.view.frame = self.view.frame;
-    _currentActiveViewController.view.alpha = 0;
-    _currentActiveViewController.view.transform = CGAffineTransformMakeScale(0.3, 0.3);
-
-    [self.view addSubview:_currentActiveViewController.view];
-    [_currentActiveViewController didMoveToParentViewController:self];
-    [UIView animateWithDuration:0.25 delay: 0.1 options:kNilOptions animations:^{
-        _currentActiveViewController.view.transform = CGAffineTransformIdentity;
-        _currentActiveViewController.view.alpha = 1;
-    } completion:nil];
+    [self.view endEditing:YES];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        _animationSnapshotView = [self.view snapshotViewAfterScreenUpdates:NO];
+        [self.view addSubview:_animationSnapshotView];
+        
+        
+        [UIView animateWithDuration:0.3 animations:^{
+            _animationSnapshotView.transform = CGAffineTransformMakeScale(1.3, 1.3);
+            _animationSnapshotView.alpha = 0;
+        }];
+        
+        for (UIView *subview in self.view.subviews) {
+            subview.alpha = 0;
+        }
+        
+        
+        DBWStopwatch *startingStopwatch = _stopwatchList.list[_currentIndexPath.row];
+        if (_minutes && _seconds) {
+            [self.view endEditing:YES];
+            DBWStopwatch *stopwatch = [[DBWStopwatch alloc] init];
+            stopwatch.minutes = [_minutes integerValue];
+            stopwatch.seconds = [_seconds integerValue];
+            startingStopwatch = stopwatch;
+        }
+        
+        
+        _currentActiveViewController = [[DBWStopwatchActiveViewController alloc] initWithStopwatch:startingStopwatch];
+        _currentActiveViewController.delegate = self;
+        [self addChildViewController:_currentActiveViewController];
+        _currentActiveViewController.view.frame = self.view.frame;
+        _currentActiveViewController.view.alpha = 0;
+        _currentActiveViewController.view.transform = CGAffineTransformMakeScale(0.3, 0.3);
+        
+        [self.view addSubview:_currentActiveViewController.view];
+        [_currentActiveViewController didMoveToParentViewController:self];
+        [UIView animateWithDuration:0.25 delay: 0.1 options:kNilOptions animations:^{
+            _currentActiveViewController.view.transform = CGAffineTransformIdentity;
+            _currentActiveViewController.view.alpha = 1;
+        } completion:nil];
+    });
+   
 }
 
 - (CGRect)getSelectedFrame {
@@ -252,8 +261,7 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
 #pragma mark - DBWStopwatchCompletionDelegate
 
 - (void)stopwatchCompleted {
-    
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.30 animations:^{
         _currentActiveViewController.view.alpha = 0;
         _currentActiveViewController.view.transform = CGAffineTransformMakeScale(0.3, 0.3);
     } completion:^(BOOL finished) {
@@ -263,9 +271,10 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
         _currentActiveViewController = nil;
     }];
 
-    [UIView animateWithDuration:0.25 delay: 0.1 options:kNilOptions animations:^{
+    [UIView animateWithDuration:0.20 delay: 0.1 options:kNilOptions animations:^{
         _animationSnapshotView.transform = CGAffineTransformIdentity;
         _animationSnapshotView.alpha = 1;
+
     } completion:^(BOOL finished) {
         for (UIView *subview in self.view.subviews) {
             subview.alpha = 1;
@@ -287,30 +296,28 @@ static NSString *const kStopwatchCellIdentifier = @"stopwatch.cell.identifier";
     _stackViewTopConstraint.constant -= offset + constant;
     _stackViewBottomConstraint.constant -= offset + constant;
 
-    
-    NSLog(@"offset = %f", offset);
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.20 animations:^{
         [self.view layoutIfNeeded];
 
         if (offset > 0) {
             self.collectionView.transform = CGAffineTransformMakeScale(0.3, 0.3);
+            _oldCollectionViewCenter = self.collectionView.center;
             self.collectionView.center = CGPointMake(self.view.center.x, 280);
             self.collectionView.alpha = 0;
             
             _feedbackChevronImageView.transform = CGAffineTransformMakeScale(0.3, 0.3);
+            _oldChevronViewCenter = _feedbackChevronImageView.center;
             _feedbackChevronImageView.center = CGPointMake(self.view.center.x, 280);
-            _feedbackChevronImageView.alpha = 0;
+           _feedbackChevronImageView.alpha = 0;
         } else {
             self.collectionView.transform = CGAffineTransformIdentity;
-            self.collectionView.center = self.view.center;
-            self.collectionView.alpha = 0;
+            self.collectionView.center = _oldCollectionViewCenter;
+            self.collectionView.alpha = 1;
             
             _feedbackChevronImageView.transform = CGAffineTransformIdentity;
-            _feedbackChevronImageView.center = self.view.center;
-            _feedbackChevronImageView.alpha = 0;
+            _feedbackChevronImageView.center = _oldChevronViewCenter;
+            _feedbackChevronImageView.alpha = 1;
         }
-
-
     }];
 }
 
